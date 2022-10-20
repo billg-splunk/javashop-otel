@@ -7,5 +7,5 @@ EXPOSE 8030
 ADD https://github.com/signalfx/splunk-otel-java/releases/latest/download/splunk-otel-javaagent-all.jar .
 
 
-ENTRYPOINT ["java","-javaagent:splunk-otel-javaagent-all.jar", "-Dotel.exporter.jaeger.service.name=stock,environment=${USERNAME}-Apm-Workshop -Dotel.exporter.jaeger.endpoint=https://localhost:9080/v1/trace", "-jar", "app.jar"]
+ENTRYPOINT ["java","-javaagent:splunk-otel-javaagent-all.jar", "-Dotel.resource.attributes=service.name=stock,deployment.environment=Apm_Instrumentation_Shop","-Dotel.exporter.otlp.endpoint=http://172.31.17.42:4317", "-jar", "app.jar"]
 
