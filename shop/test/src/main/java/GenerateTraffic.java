@@ -21,7 +21,7 @@ public class GenerateTraffic {
 		}
 	*/	// args[0];
 		
-		String url = "http://10.0.0.192:32247//";
+		String url = "http://13.57.234.105:8010//";
 		
 		System.out.println("Utah Location");
 		for (int j=0; j<50; j++) {
