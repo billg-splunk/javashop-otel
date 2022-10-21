@@ -13,16 +13,11 @@ public class GenerateTraffic {
 	
 	public static void main(String[] args) {
 	
-	// arg 1 = URL 
-	/*
-		if (args.length <1 ) {
-			System.out.println("You must supply the URL of the Javasahop to be called.");
-			return;
-		}
-	*/	// args[0];
-		
-		String url = "http://13.57.234.105:8010//";
-		
+	String url ="http://shop:8010";
+	if (null != args && args.length >0 ) {
+		url = args[0];
+	}
+
 		System.out.println("Utah Location");
 		for (int j=0; j<50; j++) {
 			

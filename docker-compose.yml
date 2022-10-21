@@ -30,3 +30,13 @@ services:
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT}
+  shoptester:
+          #network_mode: host
+    image: shabushabu/javashop.tester:latest
+    #command: -server -advertise HOSTIP -bootstrap
+    links:
+      - shop
+    environment:
+      - USERNAME=${USERNAME}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT}
+
