@@ -1,9 +1,11 @@
 ### Maven template
+test/.classpath
+.classpath
 target/
 build/
 release.properties
 buildNumber.properties
-
+target/maven-archiver/pom.properties
 ### Java template
 *.prefs
 *.class
