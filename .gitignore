@@ -1,4 +1,6 @@
 ### Maven template
+
+.classpath
 target/
 build/
 release.properties
