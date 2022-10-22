@@ -15,6 +15,7 @@
     <module>shop</module>
     <module>stock</module>
     <module>products</module>
+    <module>javaOtelAnnotator</module>
 </modules>
 
 

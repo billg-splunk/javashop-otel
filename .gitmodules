@@ -1,0 +1,4 @@
+[submodule "javaOtelAnnotator"]
+	path = javaOtelAnnotator
+	url = https://github.com/shabuhabs/javaOtelAnnotator.git
+	branch = workshop
