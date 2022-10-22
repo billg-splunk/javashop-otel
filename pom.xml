@@ -4,13 +4,14 @@
   <groupId>com.splunk</groupId>
   <artifactId>javashop</artifactId>
   <packaging>pom</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>latest</version>
   
 
-  <name>javashop</name>
+  <name>InstrumenT-ation Shop</name>
   <url>http://maven.apache.org</url>
   
-<modules>
+  <modules>
+    <module>test</module>
     <module>shop</module>
     <module>stock</module>
     <module>products</module>

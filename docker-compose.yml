@@ -1,42 +1,62 @@
 version: '3'
 services:
+  splunk-otel-collector:
+    image: quay.io/signalfx/splunk-otel-collector:0.59.1
+    environment:
+      - SPLUNK_ACCESS_TOKEN=${SPLUNK_ACCESS_TOKEN}
+      - SPLUNK_REALM=${SPLUNK_REALM}
+    ports:
+      - "13133:13133"
+      - "14250:14250"
+      - "14268:14268"
+      - "4317:4317"
+      - "6060:6060"
+      - "8888:8888"
+      - "9080:9080"
+      - "9411:9411"
+      - "9943:9943" 
   shop:
-          #network_mode: host
     image: shabushabu/javashop.shop:latest
-    #command: -server -advertise HOSTIP -bootstrap
     ports:
       - "8010:8010"
     links:
+      - splunk-otel-collector
       - products
       - stock
     environment:
-     - USERNAME=${USERNAME}
-     - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT}
+      - USERNAME=${USERNAME}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    depends_on:
+      - splunk-otel-collector
   products:
-          #network_mode: host
     image:  shabushabu/javashop.products:latest
-    #command: -server -advertise HOSTIP -bootstrap
     ports:
       - "8020:8020"
+    links:
+      - splunk-otel-collector
     environment:
       - USERNAME=${USERNAME}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    depends_on:    
+      - splunk-otel-collector
   stock:
-          #network_mode: host
     image: shabushabu/javashop.stock:latest
-    #command: -server -advertise HOSTIP -bootstrap
     ports:
       - "8030:8030"
+    links:
+      - splunk-otel-collector
     environment:
       - USERNAME=${USERNAME}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    depends_on:
+      - splunk-otel-collector
   shoptester:
-          #network_mode: host
     image: shabushabu/javashop.tester:latest
-    #command: -server -advertise HOSTIP -bootstrap
     links:
       - shop
+      - splunk-otel-collector
     environment:
       - USERNAME=${USERNAME}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT}
-
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    depends_on:
+      - shop
