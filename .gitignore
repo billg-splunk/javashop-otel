@@ -1,4 +1,5 @@
 ### Maven template
+postgres-data
 test/.classpath
 .classpath
 target/
