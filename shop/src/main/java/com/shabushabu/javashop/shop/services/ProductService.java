@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shabushabu.javashop.shop.model.Product;
 import com.shabushabu.javashop.shop.repo.StockRepo;
-import com.shabushabu.javashop.shop.repo.InstrumentRepo;
 import com.shabushabu.javashop.shop.repo.ProductRepo;
 import com.shabushabu.javashop.shop.services.dto.ProductDTO;
 import com.shabushabu.javashop.shop.services.dto.StockDTO;
-import com.shabushabu.javashop.shop.services.dto.InstrumentDTO;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,25 +21,7 @@ public class ProductService {
 
     @Autowired
     private ProductRepo productRepo;
-    
-    @Autowired
-    private InstrumentRepo instrumentRepo;
 
-    public List<Product> getInstruments() {
-        Map<String, InstrumentDTO> instrumentsDTO = instrumentRepo.getinstrumentDTOs();
-        Map<String, StockDTO> stockDTOMap = stockRepo.getStockDTOs();
-
-        // Merge productDTOs and stockDTOs to a List of Products
-        return instrumentsDTO.values().stream()
-                .map(instrumentDTO -> {
-                    StockDTO stockDTO = stockDTOMap.get(instrumentDTO.getID());
-                    if (stockDTO == null) {
-                        stockDTO = StockDTO.DEFAULT_STOCK_DTO;
-                    }
-                    return new Product(productDTO.getId(), stockDTO.getSku(), productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), stockDTO.getAmountAvailable());
-                })
-                .collect(Collectors.toList());
-    }
 
     public List<Product> getProducts() {
         Map<String, ProductDTO> productDTOs = productRepo.getProductDTOs();
@@ -79,3 +59,4 @@ public class ProductService {
         return Collections.EMPTY_LIST;
     }
 }
+
