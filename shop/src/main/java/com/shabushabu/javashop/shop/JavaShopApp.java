@@ -8,10 +8,10 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableHystrix
-public class ShopfrontApplication {
+public class JavaShopApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(ShopfrontApplication.class, args);
+        SpringApplication.run(JavaShopApp.class, args);
     }
 
     @Bean(name = "stdRestTemplate")

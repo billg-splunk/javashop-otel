@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS InstrumentsForSale;
 CREATE TABLE IF NOT EXISTS InstrumentsForSale(
-   ID              VARCHAR(50) NOT NULL PRIMARY KEY
+   ID              INTEGER  NOT NULL PRIMARY KEY 
   ,Title           VARCHAR(140) NOT NULL
   ,Sub_title       VARCHAR(58) NOT NULL
   ,Price           VARCHAR(12) NOT NULL

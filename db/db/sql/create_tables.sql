@@ -11,3 +11,10 @@ CREATE TABLE IF NOT EXISTS InstrumentsForSale(
   ,Seller_type     VARCHAR(14) NOT NULL
   ,published_date  VARCHAR(14) NOT NULL
 );
+
+DROP TABLE IF EXISTS stock;
+CREATE TABLE IF NOT EXISTS stock(
+   ID       VARCHAR(4) NOT NULL PRIMARY KEY
+  ,Quantity VARCHAR(3)
+);
+

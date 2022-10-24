@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class Instrument {
 
 	@Column(name = "ID", nullable = false)
-    private long m_id;
+    private String m_id;
     
     
     @Column(name = "Title", nullable = false)
@@ -38,11 +38,11 @@ public class Instrument {
     @Column(name = "published_date", nullable = false)
     private String m_published_date;
 
-    public long getID() {
+    public String getID() {
         return m_id;
     }
 
-    public void setID(long id) {
+    public void setID(String id) {
         m_id = id;
     }
     
