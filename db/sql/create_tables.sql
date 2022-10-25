@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS InstrumentStocks;
+CREATE TABLE IF NOT EXISTS InstrumentStocks(
+   ID       VARCHAR(4) NOT NULL PRIMARY KEY
+  ,Quantity VARCHAR(8)
+);
+
 DROP TABLE IF EXISTS InstrumentsForSale;
 CREATE TABLE IF NOT EXISTS InstrumentsForSale(
    ID              VARCHAR(50) NOT NULL PRIMARY KEY
