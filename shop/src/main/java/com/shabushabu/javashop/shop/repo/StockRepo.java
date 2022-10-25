@@ -46,7 +46,7 @@ public class StockRepo {
     
     @HystrixCommand(fallbackMethod = "stocksNotFound") 
     public Map<String, StockDTO> getInstrumentStockDTOs() {
-        LOGGER.info("getStocksDTOs");
+        LOGGER.info("getStocksInstrumentDTOs");
         ResponseEntity<List<StockDTO>> stockManagerResponse =
                 restTemplate.exchange(stockUri + "/stocks/instruments",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<StockDTO>>() {

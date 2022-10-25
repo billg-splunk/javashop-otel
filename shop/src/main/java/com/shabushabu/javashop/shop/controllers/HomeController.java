@@ -41,10 +41,10 @@ public class HomeController {
 	if (theLocation.equalsIgnoreCase("Colorado")) {
 		model.addAttribute("products", productService.getProductsNew());
 	}else {
-		model.addAttribute("products", productService.getProductsNew());
+		model.addAttribute("products", productService.getProducts());
 	}	
 	
-	model.addAttribute("instruments", instrumentService);
+	model.addAttribute("instruments", instrumentService.getInstruments());
 
       	
 	return "index";

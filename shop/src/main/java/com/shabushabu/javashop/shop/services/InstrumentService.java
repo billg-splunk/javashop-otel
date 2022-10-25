@@ -32,7 +32,7 @@ public class InstrumentService {
 
     public List<Instrument> getInstruments() {
         Map<String, InstrumentDTO> instrumentsDTO = instrumentRepo.getinstrumentDTOs();
-        Map<String, StockDTO> stockDTOMap = stockRepo.getStockDTOs();
+        Map<String, StockDTO> stockDTOMap = stockRepo.getInstrumentStockDTOs();
 
         // Merge instrumentDTOs and stockDTOs to a List of Instruments and "similar sales" 
         return instrumentsDTO.values().stream()

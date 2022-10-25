@@ -33,7 +33,7 @@ public class StockResource {
     @RequestMapping("/insruments")
     public List<Stock> getInstrumentStocks() {
         LOGGER.info("getInstrumentStocks (All Instrument stocks)");
-        return stockService.getStocks();
+        return stockService.getInstrumentStocks();
     }
 
     @RequestMapping("{productId}")
