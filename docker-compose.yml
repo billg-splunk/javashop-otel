@@ -17,6 +17,8 @@ services:
       - "9943:9943" 
   shop:
     image: shabushabu/javashop.shop:latest
+    build: 
+      ./shop    
     ports:
       - "8010:8010"
     links:
@@ -29,8 +31,13 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
     depends_on:
       - splunk-otel-collector
+      - products
+      - instruments
+      - stock
   products:
     image:  shabushabu/javashop.products:latest
+    build:
+      ./products
     ports:
       - "8020:8020"
     links:
@@ -46,6 +53,8 @@ services:
       - splunk-otel-collector
   instruments:
     image:  shabushabu/javashop.instruments:latest
+    build:
+      ./instruments
     ports:
       - "8040:8040"
     links:
@@ -63,17 +72,23 @@ services:
       - postgres
   stock:
     image: shabushabu/javashop.stock:latest
+    build:
+      ./stock
     ports:
       - "8030:8030"
     links:
       - splunk-otel-collector
+      - instruments
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
     depends_on:
       - splunk-otel-collector
+      - instruments
   shoptester:
     image: shabushabu/javashop.tester:latest
+    build:
+      ./test
     links:
       - shop
       - splunk-otel-collector
