@@ -2,7 +2,10 @@ package com.shabushabu.javashop.shop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import com.shabushabu.javashop.shop.model.Product;
+import com.shabushabu.javashop.shop.model.Instrument;
 import com.shabushabu.javashop.shop.repo.StockRepo;
 import com.shabushabu.javashop.shop.repo.InstrumentRepo;
 import com.shabushabu.javashop.shop.repo.ProductRepo;
@@ -16,30 +19,33 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService {
+public class InstrumentService {
 
     @Autowired
     private StockRepo stockRepo;
 
-    @Autowired
-    private ProductRepo productRepo;
+   @Autowired
+   private ProductRepo productRepo;
     
     @Autowired
     private InstrumentRepo instrumentRepo;
 
-    public List<Product> getInstruments() {
+    public List<Instrument> getInstruments() {
         Map<String, InstrumentDTO> instrumentsDTO = instrumentRepo.getinstrumentDTOs();
         Map<String, StockDTO> stockDTOMap = stockRepo.getStockDTOs();
 
-        // Merge productDTOs and stockDTOs to a List of Products
+        // Merge instrumentDTOs and stockDTOs to a List of Instruments and "similar sales" 
         return instrumentsDTO.values().stream()
                 .map(instrumentDTO -> {
                     StockDTO stockDTO = stockDTOMap.get(instrumentDTO.getID());
                     if (stockDTO == null) {
                         stockDTO = StockDTO.DEFAULT_STOCK_DTO;
                     }
-                    return new Product(productDTO.getId(), stockDTO.getSku(), productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), stockDTO.getAmountAvailable());
-                })
+                    return new Instrument(instrumentDTO.getID(),  
+                    		instrumentDTO.getTitle(), instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
+                    		instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate(), 
+                    		String.valueOf(stockDTO.getAmountAvailable()));
+                 })
                 .collect(Collectors.toList());
     }
 
@@ -76,6 +82,6 @@ public class ProductService {
     }
 
     public List<Product> productsNotFound() {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 }

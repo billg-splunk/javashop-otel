@@ -15,6 +15,11 @@ public class StockDTO {
         this.sku = sku;
         this.amountAvailable = amountAvailable;
     }
+    
+    public StockDTO(String productId, int amountAvailable) {
+    	this.productId = productId;
+    	this.amountAvailable = amountAvailable;
+    }
 
     public String getProductId() {
         return productId;

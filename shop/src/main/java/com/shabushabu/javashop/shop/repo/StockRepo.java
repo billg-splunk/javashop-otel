@@ -43,6 +43,19 @@ public class StockRepo {
         return stockDTOs.stream()
                 .collect(Collectors.toMap(StockDTO::getProductId, Function.identity()));
     }
+    
+    @HystrixCommand(fallbackMethod = "stocksNotFound") 
+    public Map<String, StockDTO> getInstrumentStockDTOs() {
+        LOGGER.info("getStocksDTOs");
+        ResponseEntity<List<StockDTO>> stockManagerResponse =
+                restTemplate.exchange(stockUri + "/stocks/instruments",
+                        HttpMethod.GET, null, new ParameterizedTypeReference<List<StockDTO>>() {
+                        });
+        List<StockDTO> stockDTOs = stockManagerResponse.getBody();
+
+        return stockDTOs.stream()
+                .collect(Collectors.toMap(StockDTO::getProductId, Function.identity()));
+    }
 
     public Map<String, StockDTO> stocksNotFound() {
         LOGGER.info("stocksNotFound *** FALLBACK ***");

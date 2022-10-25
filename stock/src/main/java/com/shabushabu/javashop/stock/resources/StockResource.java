@@ -9,7 +9,11 @@ import com.shabushabu.javashop.stock.exceptions.StockNotFoundException;
 import com.shabushabu.javashop.stock.model.Stock;
 import com.shabushabu.javashop.stock.services.StockService;
 
+import java.util.Optional;
+import java.util.Random;
+
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/stocks")
@@ -20,9 +24,15 @@ public class StockResource {
     @Autowired
     private StockService stockService;
 
-    @RequestMapping()
+    @RequestMapping("/legacy")
     public List<Stock> getStocks() {
         LOGGER.info("getStocks (All stocks)");
+        return stockService.getStocks();
+    }
+   
+    @RequestMapping("/insruments")
+    public List<Stock> getInstrumentStocks() {
+        LOGGER.info("getInstrumentStocks (All Instrument stocks)");
         return stockService.getStocks();
     }
 

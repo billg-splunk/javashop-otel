@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Random;
 //import io.opentelemetry.extension.auto.annotations.WithSpan;
 
+import com.shabushabu.javashop.shop.services.InstrumentService;
 import com.shabushabu.javashop.shop.services.ProductService;
 
 @Controller
@@ -20,7 +21,8 @@ public class HomeController {
     @Autowired
     private ProductService productService;
 
-    
+    @Autowired
+    private InstrumentService instrumentService;
     /*
    @RequestMapping(value="/", method = RequestMethod.GET)
    public String usingRequestParam(Model model, @RequestParam(value="name", required=false) String thename, @RequestParam(value="location", required=false) String theLocation) {
@@ -61,12 +63,9 @@ public class HomeController {
 	}
 
 	model.addAttribute("user", new User());
-	//model.addAttribute("products", productService.getProducts());
-//	System.out.println("THIS IS THE LOCATION: " + theLocation);
-	
+
 	if (theLocation.equalsIgnoreCase("Colorado")) {
-		 model.addAttribute("products", productService.getProductsNew());
-	//	myCoolFunction();
+		model.addAttribute("products", productService.getProductsNew());
 	}else {
 		model.addAttribute("products", productService.getProducts());
 	}	
@@ -74,15 +73,34 @@ public class HomeController {
 	return "index";
     } 
     
-    private void myCoolFunction() {
-    	  Random random = new Random();
-        int sleepy = random.nextInt(5000 - 3000) + 3000;
-        try{
-        Thread.sleep(sleepy);
-        } catch (Exception e){}
-    }
-    
    
+    
+    @RequestMapping(value="/instruments")
+    public String viewInstruments(Model model, @RequestParam(value="name", required=false) String theName, @RequestParam(value="location", required=false) String theLocation) {
+
+
+	if (null == theName ) {
+		theName = "Guest";
+	}	
+	
+	if (null == theLocation ) {
+		theLocation="California";
+	}
+
+	model.addAttribute("user", new User());
+
+	if (theLocation.equalsIgnoreCase("Chicago")) {
+		 model.addAttribute("instruments", instrumentService.getInstruments());
+	}else {
+		model.addAttribute("products", productService.getProducts());
+	}	
+      	
+	return "index";
+    } 
+    
+  
+    
+  
    
    @PostMapping("/adduser")
     public String addUser(@ModelAttribute User user, Model model) {
