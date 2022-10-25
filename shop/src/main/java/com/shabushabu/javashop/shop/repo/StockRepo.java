@@ -59,6 +59,6 @@ public class StockRepo {
 
     public Map<String, StockDTO> stocksNotFound() {
         LOGGER.info("stocksNotFound *** FALLBACK ***");
-        return Collections.EMPTY_MAP;
+        return Collections.emptyMap();
     }
 }

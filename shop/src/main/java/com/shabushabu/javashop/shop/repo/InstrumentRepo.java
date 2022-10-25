@@ -46,6 +46,6 @@ public class InstrumentRepo {
 
     public Map<String, InstrumentDTO> instrumentsNotFound() {
         LOGGER.info("Instruments Empty NOT FOUND  *** FALLBACK ***");
-        return Collections.EMPTY_MAP;
+        return Collections.emptyMap();
     }
 }

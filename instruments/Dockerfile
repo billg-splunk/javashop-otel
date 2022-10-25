@@ -1,6 +1,6 @@
 FROM openjdk:8-jre
 ADD target/javashop.instruments-latest.jar app.jar
-EXPOSE 8030
+EXPOSE 8040
 
 
 #COPY splunk-otel-javaagent-all.jar .

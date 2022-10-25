@@ -14,7 +14,7 @@
     <module>test</module>
     <module>shop</module>
     <module>stock</module>
-    <module>products</module>
+    <module>products</module> 
     <module>instruments</module>
     <module>annotator</module>
 </modules>

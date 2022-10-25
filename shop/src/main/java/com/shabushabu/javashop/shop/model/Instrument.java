@@ -5,16 +5,16 @@ import com.shabushabu.javashop.shop.services.dto.InstrumentDTO;
 public class Instrument {
 
 	
-    private String m_id;
-    private String m_quantity;
-    private String m_title;
+    public String id;
+    public String quantity;
+    public String title;
     //private String m_sub_title;
-    private String m_price;
-    private String m_instrument_type;
-    private String m_condition;
+    public String price;
+    public String instrument_type;
+    private String condition;
    // private String m_post_URL;
-    private String m_seller_type;
-    private String m_published_date;
+    public String seller_type;
+    public String published_date;
     
     
 
@@ -24,39 +24,39 @@ public class Instrument {
 
     public Instrument(String id, String title, /*String sub_title,*/ String price, String instument_type, String condition, 
 		String seller_type,  String published_date, String quantity) {
-	 	m_id= id;
-	    m_title = title;
-	    //m_sub_title = sub_title;
-	    m_price = price;
-	    m_condition = condition;
-	    m_seller_type = seller_type;
-	   // m_postURL = post_URL;
-	    m_published_date = published_date;
-	    m_quantity = quantity;
+	 	this.id= id;
+	 	this.title = title;
+	    //sub_title = sub_title;
+	 	this.price = price;
+	 	this.condition = condition;
+	 	this.seller_type = seller_type;
+	   // postURL = post_URL;
+	 	this.published_date = published_date;
+	 	this.quantity = quantity;
     }
     
     public String getID() {
-        return m_id;
+        return id;
     }
 
     public void setID(String id) {
-        m_id = id;
+        this.id = id;
     }
     
     public String getQuantity() {
-        return m_quantity;
+        return quantity;
     }
 
     public void setQuantity(String quantity) {
-        m_quantity = quantity;
+        this.quantity = quantity;
     }
     
     public String getTitle() {
-        return m_title;
+        return this.title;
     }
 
     public void setTitle(String title) {
-        m_title = title;
+        this.title = title;
     }
     
   /*  public String getSubTitle() {
@@ -69,35 +69,35 @@ public class Instrument {
    */
     
     public String getPrice() {
-        return m_price;
+        return price;
     }
 
     public void setPrice(String price) {
-        m_price = price;
+        this.price = price;
     }
     
     public String getInstrumentType() {
-        return m_instrument_type;
+        return instrument_type;
     }
 
     public void setInstrumentType(String type) {
-        m_instrument_type = type;
+        this.instrument_type = type;
     }
     
     public String getCondition() {
-        return m_condition;
+        return this.condition;
     }
 
     public void setCondition(String condition) {
-        m_condition = condition;
+        this.condition = condition;
     }
     
     public String getPublishedDate() {
-        return m_published_date;
+        return this.published_date;
     }
 
     public void setPublishedDate(String published_date) {
-        m_published_date = published_date;
+        this.published_date = published_date;
     }
   /*  
     public String getPostUrl() {
@@ -109,11 +109,11 @@ public class Instrument {
     }
    */ 
     public String getSellerType() {
-        return m_seller_type;
+        return seller_type;
     }
 
     public void setSellerType(String seller_type) {
-        m_seller_type = seller_type;
+        this.seller_type = seller_type;
     }
 }
    

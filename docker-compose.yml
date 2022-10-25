@@ -17,23 +17,22 @@ services:
       - "9943:9943" 
   shop:
     image: shabushabu/javashop.shop:latest
-    build: 
-      ./shop    
+    build:
+      ./shop
     ports:
       - "8010:8010"
     links:
       - splunk-otel-collector
       - products
       - stock
-      - instruments
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
     depends_on:
       - splunk-otel-collector
       - products
-      - instruments
       - stock
+      - instruments
   products:
     image:  shabushabu/javashop.products:latest
     build:
@@ -42,14 +41,39 @@ services:
       - "8020:8020"
     links:
       - splunk-otel-collector
+      - postgres
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/compose-postgres
-      - SPRING_DATASOURCE_USERNAME=compose-postgres
-      - SPRING_DATASOURCE_PASSWORD=compose-postgres
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:    
+      - splunk-otel-collector
+  stock:
+    image: shabushabu/javashop.stock:latest
+    build:
+      ./stock
+    ports:
+      - "8030:8030"
+    links:
+      - splunk-otel-collector
+      - postgres
+    environment:
+      - USERNAME=${USERNAME}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    depends_on:
+      - splunk-otel-collector
+      - postgres
+  shoptester:
+    image: shabushabu/javashop.tester:latest
+    build:
+      ./test
+    links:
+      - shop
+      - splunk-otel-collector
+    environment:
+      - USERNAME=${USERNAME}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    depends_on:
+      - shop
       - splunk-otel-collector
   instruments:
     image:  shabushabu/javashop.instruments:latest
@@ -70,34 +94,6 @@ services:
     depends_on:
       - splunk-otel-collector  
       - postgres
-  stock:
-    image: shabushabu/javashop.stock:latest
-    build:
-      ./stock
-    ports:
-      - "8030:8030"
-    links:
-      - splunk-otel-collector
-      - instruments
-    environment:
-      - USERNAME=${USERNAME}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-    depends_on:
-      - splunk-otel-collector
-      - instruments
-  shoptester:
-    image: shabushabu/javashop.tester:latest
-    build:
-      ./test
-    links:
-      - shop
-      - splunk-otel-collector
-    environment:
-      - USERNAME=${USERNAME}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-    depends_on:
-      - shop
-      - splunk-otel-collector
   postgres:
     image: "postgres:13.1-alpine"
     restart: always
@@ -105,7 +101,12 @@ services:
       - POSTGRES_USER=compose_postgres
       - POSTGRES_PASSWORD=compose_postgres
     ports:
-      - "5432:5432"
+      - "5438:5432"
     volumes:
+      #- ./postgres-data:/var/lib/postgresql/data
+      # copy the sql script to create tables
       - ./db/sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      # copy the sql script to fill tables
       - .db/sql/fill_tables.sql:/docker-entrypoint-initdb.d/fill_tables.sql
+
+
