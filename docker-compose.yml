@@ -15,6 +15,12 @@ services:
       - "9080:9080"
       - "9411:9411"
       - "9943:9943" 
+    healthcheck:
+      test: curl --fail http://localhost:13133 || exit 1
+      interval: 3s
+      retries: 5
+      start_period: 5s
+      timeout: 3s
   shop:
     image: shabushabu/javashop.shop:latest
     build:
@@ -29,30 +35,53 @@ services:
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    healthcheck:
+      test: curl --fail http://localhost:8010 || exit 1
+      interval: 3s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
     depends_on:
-      - splunk-otel-collector
-      - products
-      - stock
-      - instruments
+      splunk-otel-collector:
+        condition: service_started
+      products:
+        condition: service_healthy
+      stock:
+        condition: service_healthy
+      instruments:
+        condition: service_healthy
   products:
     image: shabushabu/javashop.products:latest
     build:
       ./products
     ports:
       - "8020:8020"
+    healthcheck:
+      test: curl --fail http://localhost:8020/products/old || exit 1
+      interval: 3s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
     links:
       - splunk-otel-collector
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-    depends_on:    
-      - splunk-otel-collector
+    depends_on:
+      splunk-otel-collector:
+        condition: service_started
   stock:
     image: shabushabu/javashop.stock:latest
     build:
       ./stock
     ports:
       - "8030:8030"
+    healthcheck:
+      test: curl --fail http://localhost:8030//stocks/legacy|| exit 1
+      interval: 3s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
     links:
       - splunk-otel-collector
       - instruments
@@ -64,27 +93,45 @@ services:
       #- SPRING_DATASOURCE_PASSWORD=compose-postgres
       #- SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
+     # - splunk-otel-collector
+      splunk-otel-collector:
+         condition: service_started
+      #  condition: service_healthy
+      instruments:
+        condition: service_healthy
+  shoptester:
+    image: shabushabu/javashop.tester:latest
+    build:
+      ./test
+    links:
+      - shop
       - splunk-otel-collector
-      - instruments
-  #shoptester:
-   # image: shabushabu/javashop.tester:latest
-   # build:
-   #   ./test
-   # links:
-   #   - shop
-   #   - splunk-otel-collector
-   # environment:
-   #   - USERNAME=${USERNAME}
-   #   - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-   # depends_on:
-   #   - splunk-otel-collector
-   #   - shop
+    environment:
+      - USERNAME=${USERNAME}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    depends_on:
+      splunk-otel-collector:
+        condition: service_started
+      shop: 
+        condition: service_healthy
+      products:
+        condition: service_healthy
+      stock:
+        condition: service_healthy
+      instruments:
+        condition: service_healthy
   instruments:
     image:  shabushabu/javashop.instruments:latest
     build:
       ./instruments
     ports:
       - "8040:8040"
+    healthcheck:
+      test: curl --fail http://localhost:8040/instruments || exit 1
+      interval: 3s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
     links:
       - splunk-otel-collector
       - postgresDB
@@ -96,8 +143,10 @@ services:
       - SPRING_DATASOURCE_PASSWORD=instruments
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
-      - splunk-otel-collector  
-      - postgresDB
+      splunk-otel-collector:
+        condition: service_started
+      postgresDB:
+        condition: service_healthy
   postgresDB:
     image: "postgres:13.1-alpine"
     container_name: postgresDB
@@ -106,6 +155,11 @@ services:
       - POSTGRES_PASSWORD=instruments
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     #volumes:
       #- ./db/sql/instruments.sql:/docker-entrypoint-initdb.d/instruments.sql
       #- ./db/sql/stocks.sql:/docker-entrypoint-initdb.d/stocks.sql
