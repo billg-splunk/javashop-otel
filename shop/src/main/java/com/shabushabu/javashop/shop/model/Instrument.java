@@ -1,20 +1,20 @@
 package com.shabushabu.javashop.shop.model;
 
-import com.shabushabu.javashop.shop.services.dto.InstrumentDTO;
 
 public class Instrument {
 
 	
-    public String id;
-    public String quantity;
+    public long id;
+    //public String quantity;
     public String title;
     //private String m_sub_title;
     public String price;
     public String instrument_type;
-    private String condition;
-   // private String m_post_URL;
+    public String condition;
+    // private String m_post_URL;
     public String seller_type;
-    public String published_date;
+    public String location;
+    //public String published_date;
     
     
 
@@ -22,27 +22,28 @@ public class Instrument {
     public Instrument() {
     }
 
-    public Instrument(String id, String title, /*String sub_title,*/ String price, String instument_type, String condition, 
-		String seller_type,  String published_date, String quantity) {
+    public Instrument(long id, String title, /*String sub_title,*/ String price, String instrument_type, String condition, 
+		String seller_type, String location /* String published_date String quantity */ ) {
 	 	this.id= id;
 	 	this.title = title;
 	    //sub_title = sub_title;
 	 	this.price = price;
 	 	this.condition = condition;
+	 	this.instrument_type = instrument_type;
 	 	this.seller_type = seller_type;
 	   // postURL = post_URL;
-	 	this.published_date = published_date;
-	 	this.quantity = quantity;
+	 	this.location = location;
+	 	//this.quantity = quantity;
     }
     
-    public String getID() {
+    public long getID() {
         return id;
     }
 
-    public void setID(String id) {
+    public void setID(long id) {
         this.id = id;
     }
-    
+    /*
     public String getQuantity() {
         return quantity;
     }
@@ -50,7 +51,7 @@ public class Instrument {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
-    
+    */
     public String getTitle() {
         return this.title;
     }
@@ -92,13 +93,22 @@ public class Instrument {
         this.condition = condition;
     }
     
-    public String getPublishedDate() {
+
+    public String getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+   
+    /*public String getPublishedDate() {
         return this.published_date;
     }
 
     public void setPublishedDate(String published_date) {
         this.published_date = published_date;
-    }
+    }*/
   /*  
     public String getPostUrl() {
         return m_post_URL;

@@ -1,8 +1,6 @@
 package com.shabushabu.javashop.instruments;
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +23,15 @@ public class InstrumentsApplication {
     @EventListener(ApplicationReadyEvent.class)
     public void runAfterStartup() {
         Iterable<Instrument> instruments = this.repository.findAll(); 
+        logger.debug("Number of instruments: " + ((Collection<?>) instruments).size());
         logger.info("Number of instruments: " + ((Collection<?>) instruments).size());
         logger.info("Number of instruments: " + ((Collection<?>) instruments).size());
         logger.info("Number of instruments: " + ((Collection<?>) instruments).size());
         logger.info("Number of instruments: " + ((Collection<?>) instruments).size());
         logger.info("Number of instruments: " + ((Collection<?>) instruments).size());
         logger.info("Number of instruments: " + ((Collection<?>) instruments).size());
+        
+        
     }
 	    
     public static void main(String[] args) {

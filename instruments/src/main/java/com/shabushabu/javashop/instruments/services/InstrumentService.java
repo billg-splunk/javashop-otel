@@ -2,7 +2,6 @@ package com.shabushabu.javashop.instruments.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.shabushabu.javashop.instruments.exceptions.InstrumentNotFoundException;
 import com.shabushabu.javashop.instruments.model.Instrument;
 import com.shabushabu.javashop.instruments.repositories.InstrumentRepository;
 

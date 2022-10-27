@@ -1,10 +1,8 @@
-import java.io.FileOutputStream;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 
 
@@ -31,6 +29,7 @@ public class GenerateTraffic {
 				
 				HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 			
+				@SuppressWarnings("unused")
 				String sResult = response.body().toString();
 			 
 			} catch(Exception e) {
@@ -52,9 +51,10 @@ public class GenerateTraffic {
 			
 				HttpRequest request = HttpRequest.newBuilder().uri(URI.create(theURL)).build();
 				
+				@SuppressWarnings("unused")
 				HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 			
-				String sResult = response.body().toString();
+				//String sResult = response.body().toString();
 			 
 			} catch(Exception e) {
 				e.printStackTrace();

@@ -56,7 +56,7 @@ public class ProductService {
     }
 
     public List<Product> productsNotFound() {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 }
 

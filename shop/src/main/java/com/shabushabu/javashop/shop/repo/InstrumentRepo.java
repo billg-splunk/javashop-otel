@@ -32,7 +32,7 @@ public class InstrumentRepo {
     private RestTemplate restTemplate;
 
     @HystrixCommand(fallbackMethod = "instrumentsNotFound") 
-    public Map<String, InstrumentDTO> getinstrumentDTOs() {
+    public Map<Long, InstrumentDTO> getinstrumentDTOs() {
         LOGGER.info("getInstrument DTOS");
         ResponseEntity<List<InstrumentDTO>> instrumentsResponse =
                 restTemplate.exchange(instrumentsUri + "/instruments",
@@ -41,10 +41,10 @@ public class InstrumentRepo {
         List<InstrumentDTO> instrumentDTOs = instrumentsResponse.getBody();
 
         return instrumentDTOs.stream()
-                .collect(Collectors.toMap(InstrumentDTO::getID, Function.identity()));
+                .collect(Collectors.toMap(InstrumentDTO::getId, Function.identity()));
     }
 
-    public Map<String, InstrumentDTO> instrumentsNotFound() {
+    public Map<Long, InstrumentDTO> instrumentsNotFound() {
         LOGGER.info("Instruments Empty NOT FOUND  *** FALLBACK ***");
         return Collections.emptyMap();
     }

@@ -7,10 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.shabushabu.javashop.stock.exceptions.StockNotFoundException;
 import com.shabushabu.javashop.stock.model.Stock;
+import com.shabushabu.javashop.stock.services.InstrumentStocksService;
 import com.shabushabu.javashop.stock.services.StockService;
 
-import java.util.Optional;
-import java.util.Random;
 
 import java.util.List;
 
@@ -23,6 +22,9 @@ public class StockResource {
 
     @Autowired
     private StockService stockService;
+    
+    @Autowired
+    private InstrumentStocksService instrumentStocksService;
 
     @RequestMapping("/legacy")
     public List<Stock> getStocks() {
@@ -33,7 +35,7 @@ public class StockResource {
     @RequestMapping("/insruments")
     public List<Stock> getInstrumentStocks() {
         LOGGER.info("getInstrumentStocks (All Instrument stocks)");
-        return stockService.getInstrumentStocks();
+        return instrumentStocksService.getStocks();
     }
 
     @RequestMapping("{productId}")

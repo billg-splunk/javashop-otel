@@ -2,11 +2,13 @@ package com.shabushabu.javashop.stock.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.shabushabu.javashop.stock.exceptions.StockNotFoundException;
 import com.shabushabu.javashop.stock.model.Stock;
 import com.shabushabu.javashop.stock.repositories.StockRepository;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -24,12 +26,7 @@ public class StockService {
         return StreamSupport.stream(stockRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
-    
-    public List<Stock> getInstrumentStocks() {
-    	// GET LIST FROM instruments application. 
-    	return null;
-    }
-
+ 
     public Stock getStock(String productId) throws StockNotFoundException {
         return stockRepository.findById(productId)
                 .orElseThrow(() -> new StockNotFoundException("Stock not found with productId: " + productId));

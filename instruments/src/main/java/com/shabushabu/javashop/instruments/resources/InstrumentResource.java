@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.shabushabu.javashop.instruments.exceptions.InstrumentNotFoundException;
 import com.shabushabu.javashop.instruments.model.Instrument;
+import com.shabushabu.javashop.instruments.model.Stock;
 import com.shabushabu.javashop.instruments.services.InstrumentService;
+import com.shabushabu.javashop.instruments.services.InstrumentStocksService;
 
 import java.util.List;
 
@@ -18,6 +20,9 @@ public class InstrumentResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstrumentResource.class);
 
     @Autowired
+    private InstrumentStocksService instrumentStocksService;
+    
+    @Autowired
     private InstrumentService instrumentService;
 
     @RequestMapping()
@@ -25,14 +30,20 @@ public class InstrumentResource {
         LOGGER.info("getInstruments (All)");
         return instrumentService.getInstruments();
     }
-
+    
+    @RequestMapping("/stocks")
+    public List<Stock> getInstrumentStocks() {
+        LOGGER.info("getInstrument Stocks (All)");
+        return instrumentStocksService.getInstrumentStocks();
+    }
+    
     /*
     @RequestMapping("{productId}")
     public Instrument getInstrument(@PathVariable("productId") String productId) throws InstrumentNotFoundException {
         LOGGER.info("getInstrument with productId: {}", productId);
         return instrumentService.getInstrument(productId);
     }
-*/
+    */
     
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)

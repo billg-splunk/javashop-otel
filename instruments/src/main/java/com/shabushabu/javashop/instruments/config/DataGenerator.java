@@ -1,39 +1,63 @@
 package com.shabushabu.javashop.instruments.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import com.shabushabu.javashop.instruments.model.Instrument;
-import com.shabushabu.javashop.instruments.repositories.InstrumentRepository;
 
-import javax.annotation.PostConstruct;
 
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+
+
+import javax.sql.DataSource;
+
+@Component
+public class DataGenerator {
+
+    @Autowired
+    private DataSource dataSource;
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void loadData() {
+    	ResourceDatabasePopulator resourceDatabasePopulator = 
+            		new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("sql/instruments-new.sql"));
+        resourceDatabasePopulator.execute(dataSource);
+        
+        resourceDatabasePopulator = 
+        		new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("sql/stocks-new.sql"));
+        resourceDatabasePopulator.execute(dataSource);
+        
+    }
+}
+
+/*
 @Component
 public class DataGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGenerator.class);
 
-    private InstrumentRepository instrumentRepository;
+    private StockRepository stockRepository;
 
     @Autowired
-    protected DataGenerator(InstrumentRepository instrumentsRepository) {
-        this.instrumentRepository = instrumentsRepository;
+    protected DataGenerator(StockRepository stockRepository) {
+        this.stockRepository = stockRepository;
     }
-/*
+
     @PostConstruct
     @Transactional
     public void init() {
         LOGGER.info("Generating synthetic data for demonstration purposes...");
 
-        instrumentsRepository.save(new Instrument("1", "12345678", 5));
-        instrumentsRepository.save(new Instrument("2", "34567890", 2));
-        instrumentsRepository.save(new Instrument("3", "54326745", 999));
-        instrumentsRepository.save(new Instrument("4", "93847614", 0));
-        instrumentsRepository.save(new Instrument("5", "11856388", 1));
+        stockRepository.save(new Stock("1", "12345678", 5));
+        stockRepository.save(new Stock("2", "34567890", 2));
+        stockRepository.save(new Stock("3", "54326745", 999));
+        stockRepository.save(new Stock("4", "93847614", 0));
+        stockRepository.save(new Stock("5", "11856388", 1));
 
         LOGGER.info("... data generation complete");
     }
- */
-}
+}*/
+
+

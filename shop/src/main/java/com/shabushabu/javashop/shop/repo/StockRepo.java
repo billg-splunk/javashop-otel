@@ -35,7 +35,7 @@ public class StockRepo {
     public Map<String, StockDTO> getStockDTOs() {
         LOGGER.info("getStocksDTOs");
         ResponseEntity<List<StockDTO>> stockManagerResponse =
-                restTemplate.exchange(stockUri + "/stocks",
+                restTemplate.exchange(stockUri + "/stocks/legacy",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<StockDTO>>() {
                         });
         List<StockDTO> stockDTOs = stockManagerResponse.getBody();
@@ -48,7 +48,7 @@ public class StockRepo {
     public Map<String, StockDTO> getInstrumentStockDTOs() {
         LOGGER.info("getStocksInstrumentDTOs");
         ResponseEntity<List<StockDTO>> stockManagerResponse =
-                restTemplate.exchange(stockUri + "/stocks/instruments",
+                restTemplate.exchange(stockUri + "/stocks/instrumemnts",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<StockDTO>>() {
                         });
         List<StockDTO> stockDTOs = stockManagerResponse.getBody();

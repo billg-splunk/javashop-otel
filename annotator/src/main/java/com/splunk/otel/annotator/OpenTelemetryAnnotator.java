@@ -98,6 +98,7 @@ public class OpenTelemetryAnnotator {
 	        
 	        PrintWriter out = new PrintWriter(sFileName);
 	        out.println(sResult);
+	        out.close();
 	}
 	
     public static void main(String[] args) throws Exception {

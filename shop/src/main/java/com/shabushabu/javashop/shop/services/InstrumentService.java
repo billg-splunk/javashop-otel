@@ -31,20 +31,13 @@ public class InstrumentService {
     private InstrumentRepo instrumentRepo;
 
     public List<Instrument> getInstruments() {
-        Map<String, InstrumentDTO> instrumentsDTO = instrumentRepo.getinstrumentDTOs();
-        Map<String, StockDTO> stockDTOMap = stockRepo.getInstrumentStockDTOs();
-
-        // Merge instrumentDTOs and stockDTOs to a List of Instruments and "similar sales" 
+        Map<Long, InstrumentDTO> instrumentsDTO = instrumentRepo.getinstrumentDTOs();
         return instrumentsDTO.values().stream()
                 .map(instrumentDTO -> {
-                    StockDTO stockDTO = stockDTOMap.get(instrumentDTO.getID());
-                    if (stockDTO == null) {
-                        stockDTO = StockDTO.DEFAULT_STOCK_DTO;
-                    }
-                    return new Instrument(instrumentDTO.getID(),  
+                   
+                    return new Instrument(instrumentDTO.getId(),  
                     		instrumentDTO.getTitle(), instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
-                    		instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate(), 
-                    		String.valueOf(stockDTO.getAmountAvailable()));
+                    		instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate());
                  })
                 .collect(Collectors.toList());
     }

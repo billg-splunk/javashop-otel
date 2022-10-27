@@ -25,6 +25,7 @@ services:
       - splunk-otel-collector
       - products
       - stock
+      - instruments
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
@@ -34,14 +35,13 @@ services:
       - stock
       - instruments
   products:
-    image:  shabushabu/javashop.products:latest
+    image: shabushabu/javashop.products:latest
     build:
       ./products
     ports:
       - "8020:8020"
     links:
       - splunk-otel-collector
-      - postgres
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
@@ -55,26 +55,30 @@ services:
       - "8030:8030"
     links:
       - splunk-otel-collector
-      - postgres
+      - instruments
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/compose-postgres
+      #- SPRING_DATASOURCE_USERNAME=compose-postgres
+      #- SPRING_DATASOURCE_PASSWORD=compose-postgres
+      #- SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
       - splunk-otel-collector
-      - postgres
-  shoptester:
-    image: shabushabu/javashop.tester:latest
-    build:
-      ./test
-    links:
-      - shop
-      - splunk-otel-collector
-    environment:
-      - USERNAME=${USERNAME}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-    depends_on:
-      - shop
-      - splunk-otel-collector
+      - instruments
+  #shoptester:
+   # image: shabushabu/javashop.tester:latest
+   # build:
+   #   ./test
+   # links:
+   #   - shop
+   #   - splunk-otel-collector
+   # environment:
+   #   - USERNAME=${USERNAME}
+   #   - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+   # depends_on:
+   #   - splunk-otel-collector
+   #   - shop
   instruments:
     image:  shabushabu/javashop.instruments:latest
     build:
@@ -83,26 +87,26 @@ services:
       - "8040:8040"
     links:
       - splunk-otel-collector
-      - postgres
+      - postgresDB
     environment:
       - USERNAME=${USERNAME}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/compose-postgres
-      - SPRING_DATASOURCE_USERNAME=compose-postgres
-      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresDB:5432/instruments
+      - SPRING_DATASOURCE_USERNAME=instruments
+      - SPRING_DATASOURCE_PASSWORD=instruments
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
       - splunk-otel-collector  
-      - postgres
-  postgres:
+      - postgresDB
+  postgresDB:
     image: "postgres:13.1-alpine"
-    restart: always
+    container_name: postgresDB
     environment:
-      - POSTGRES_USER=compose_postgres
-      - POSTGRES_PASSWORD=compose_postgres
+      - POSTGRES_USER=instruments
+      - POSTGRES_PASSWORD=instruments
     ports:
-      - "5438:5432"
-    volumes:
-      - ./db/sql/instruments.sql:/docker-entrypoint-initdb.d/instruments.sql
-      - ./db/sql/stocks.sql:/docker-entrypoint-initdb.d/stocks.sql
+      - "5432:5432"
+    #volumes:
+      #- ./db/sql/instruments.sql:/docker-entrypoint-initdb.d/instruments.sql
+      #- ./db/sql/stocks.sql:/docker-entrypoint-initdb.d/stocks.sql
 
