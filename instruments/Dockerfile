@@ -3,7 +3,6 @@ ADD target/javashop.instruments-latest.jar app.jar
 EXPOSE 8040
 
 
-#COPY splunk-otel-javaagent-all.jar .
 ADD https://github.com/signalfx/splunk-otel-java/releases/latest/download/splunk-otel-javaagent-all.jar .
 
 

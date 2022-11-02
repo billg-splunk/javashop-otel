@@ -13,6 +13,8 @@ import javax.persistence.Id;
 @Entity
 @Table(name = "InstrumentsForSale")
 public class Instrument {
+	
+	
 
 	@Id
     @GeneratedValue
@@ -50,15 +52,15 @@ public class Instrument {
     		String seller_type, String location,   String post_url, String published_date ) {
     	
     	    super();
-    	 	this.title = title;
-    	    this.sub_title = sub_title;
-    	 	this.price = price;
-    	 	this.condition = condition;
-    	 	this.seller_type = seller_type;
-    	 	this.location =location;
-    	    this.post_url = post_url;
-    	 	this.published_date = published_date;
-        }
+    	    	this.title = title;
+    	    	this.sub_title = sub_title;
+    	    	this.price = price;
+    	    	this.condition = condition;
+    	    	this.seller_type = seller_type;
+    	    	this.location =location;
+    	    	this.post_url = post_url;
+    	    	this.published_date = published_date;
+    }
 
     
     public Instrument() {
@@ -85,7 +87,9 @@ public class Instrument {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title) throws Exception {
+    	
+    	
         this.title = title;
     }
     
