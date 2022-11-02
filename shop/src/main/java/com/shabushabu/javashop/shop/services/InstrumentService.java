@@ -12,6 +12,8 @@ import com.shabushabu.javashop.shop.repo.ProductRepo;
 import com.shabushabu.javashop.shop.services.dto.ProductDTO;
 import com.shabushabu.javashop.shop.services.dto.StockDTO;
 import com.shabushabu.javashop.shop.services.dto.InstrumentDTO;
+import com.shabushabu.javashop.shop.exceptions.InvalidLocaleException;
+
 
 import java.util.Collections;
 import java.util.List;
@@ -34,12 +36,18 @@ public class InstrumentService {
         Map<Long, InstrumentDTO> instrumentsDTO = instrumentRepo.getinstrumentDTOs();
         return instrumentsDTO.values().stream()
                 .map(instrumentDTO -> {
-                   
-                    return new Instrument(instrumentDTO.getId(),  
-                    		instrumentDTO.getTitle(), instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
-                    		instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate());
-                 })
-                .collect(Collectors.toList());
+                	  try {
+  						return new Instrument(instrumentDTO.getId(),  
+  								instrumentDTO.getTitle(), instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
+  								instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate());
+  					} catch (InvalidLocaleException e) {
+  						
+  						e.printStackTrace();
+  						return  new Instrument(instrumentDTO.getId(),   instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
+  								instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate());	
+  					}
+                   })
+                  .collect(Collectors.toList());
     }
 
     public List<Product> getProducts() {

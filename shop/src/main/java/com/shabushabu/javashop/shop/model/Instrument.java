@@ -1,6 +1,8 @@
 package com.shabushabu.javashop.shop.model;
 
 
+import com.shabushabu.javashop.shop.exceptions.InvalidLocaleException;
+
 public class Instrument {
 
 	
@@ -16,15 +18,30 @@ public class Instrument {
     public String location;
     //public String published_date;
     
-    
+    private static final String IS_ENGLISH_REGEX = "^[ \\w \\d \\s \\. \\& \\+ \\- \\, \\! \\@ \\# \\$ \\% \\^ \\* \\( \\) \\; \\\\ \\/ \\| \\< \\> \\\" \\' \\? \\= \\: \\[ \\] ]*$";
 
+	private static boolean isEnglish(String text) {
+			if (text == null) {
+				return false;
+			}
+			return text.matches(IS_ENGLISH_REGEX);
+		}
 
     public Instrument() {
     }
 
     public Instrument(long id, String title, /*String sub_title,*/ String price, String instrument_type, String condition, 
-		String seller_type, String location /* String published_date String quantity */ ) {
+		String seller_type, String location /* String published_date String quantity */ ) throws InvalidLocaleException {
 	 	this.id= id;
+	 	
+
+	    if (!isEnglish(title)) {
+	    	throw new InvalidLocaleException("Non English Characters found in Instrument Data");
+	    } else {
+	    	
+	    	System.out.println("Characters OK ");
+	    }
+
 	 	this.title = title;
 	    //sub_title = sub_title;
 	 	this.price = price;
@@ -35,6 +52,20 @@ public class Instrument {
 	 	this.location = location;
 	 	//this.quantity = quantity;
     }
+    
+    public Instrument(long id, /*String sub_title,*/ String price, String instrument_type, String condition, 
+    		String seller_type, String location /* String published_date String quantity */ )  {
+    	 	this.id= id;
+
+    	    //sub_title = sub_title;
+    	 	this.price = price;
+    	 	this.condition = condition;
+    	 	this.instrument_type = instrument_type;
+    	 	this.seller_type = seller_type;
+    	   // postURL = post_URL;
+    	 	this.location = location;
+    	 	//this.quantity = quantity;
+        }
     
     public long getID() {
         return id;
