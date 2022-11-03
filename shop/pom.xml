@@ -49,7 +49,7 @@
 <dependency>
     <groupId>io.opentelemetry.instrumentation</groupId>
     <artifactId>opentelemetry-instrumentation-annotations</artifactId>
-    <version>1.19.1-alpha</version>
+    <version>1.19.2-alpha</version>
   </dependency>
 
 <!--
