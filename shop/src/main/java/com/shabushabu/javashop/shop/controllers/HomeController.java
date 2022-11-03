@@ -23,7 +23,7 @@ public class HomeController {
    
     
     @RequestMapping(value="/")
-    public String usingRequestParam(Model model, @RequestParam(value="name", required=false) String theName, @RequestParam(value="location", required=false) String theLocation) {
+    public String getProductsAllLocations(Model model, @RequestParam(value="name", required=false) String theName, @RequestParam(value="location", required=false) String theLocation) {
 
 
 	if (null == theName ) {
@@ -36,11 +36,9 @@ public class HomeController {
 
 	model.addAttribute("user", new User());
 
-	if (theLocation.equalsIgnoreCase("Colorado")) {
-		model.addAttribute("products", productService.getProductsNew());
-	}else {
-		model.addAttribute("products", productService.getProducts());
-	}	
+	
+	model.addAttribute("products", productService.getProducts(theLocation));
+
 	
 	model.addAttribute("instruments", instrumentService.getInstruments());
 
@@ -65,14 +63,15 @@ public class HomeController {
 */
 	
   
-   
+ /*  
    @PostMapping("/adduser")
     public String addUser(@ModelAttribute User user, Model model) {
     	 
         // ORIGINAL CODE
-			model.addAttribute("products", productService.getProducts());
+			model.addAttribute("products", productService.getProducts("Chicago"));
+			model.addAttribute("instruments", instrumentService.getInstruments());
 		// END ORIGINAL CODE
 		return "index";
     }
- 
+ */
 }

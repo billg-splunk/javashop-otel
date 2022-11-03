@@ -23,8 +23,8 @@ public class ProductService {
     private ProductRepo productRepo;
 
 
-    public List<Product> getProducts() {
-        Map<String, ProductDTO> productDTOs = productRepo.getProductDTOs();
+    public List<Product> getProducts(String location) {
+        Map<String, ProductDTO> productDTOs = productRepo.getProductDTOs(location);
         Map<String, StockDTO> stockDTOMap = stockRepo.getStockDTOs();
 
         // Merge productDTOs and stockDTOs to a List of Products
@@ -38,7 +38,7 @@ public class ProductService {
                 })
                 .collect(Collectors.toList());
     }
-
+/*
     public List<Product> getProductsNew() {
         Map<String, ProductDTO> productDTOs = productRepo.getProductDTOsNew();
         Map<String, StockDTO> stockDTOMap = stockRepo.getStockDTOs();
@@ -54,7 +54,7 @@ public class ProductService {
                 })
                 .collect(Collectors.toList());
     }
-
+*/
     public List<Product> productsNotFound() {
         return Collections.emptyList();
     }
