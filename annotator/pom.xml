@@ -20,11 +20,18 @@
 
 
 <!-- https://mvnrepository.com/artifact/io.opentelemetry.instrumentation/opentelemetry-instrumentation-annotations-support -->
-  <dependency>
+    <dependency>
     <groupId>io.opentelemetry.instrumentation</groupId>
     <artifactId>opentelemetry-instrumentation-annotations</artifactId>
     <version>1.19.1-alpha</version>
   </dependency>
+<!--
+<dependency>
+    <groupId>io.opentelemetry</groupId>
+    <artifactId>opentelemetry-extension-annotations</artifactId>
+    <version>1.10.0-rc.2</version>
+</dependency>
+-->
 
 </dependencies>
 

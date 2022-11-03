@@ -33,9 +33,7 @@ public class DirExplorer {
     }
     
     public void explore(File root) {
-    	
         explore(0, "", root);
-        
     }
     
     private void explore(int level, String path, File file) {

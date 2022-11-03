@@ -75,9 +75,13 @@ public class OpenTelemetryAnnotator {
 	        otelAnnotationVisitor.visit(cu, null);
 	        
 	        
-	        // Add OpenTelemetry @WithSpan and @SpanAttribute Support via package import to file.
+	        // Add OpenTelemetry @WithSpan and @SpanAttribute Support via package import to file. ( 1.19 )
 	        cu.addImport(new ImportDeclaration("io.opentelemetry.instrumentation.annotations.WithSpan",false, false));
 	        cu.addImport(new ImportDeclaration("io.opentelemetry.instrumentation.annotations.SpanAttribute",false, false));
+	        
+	        // Add OpenTelemetry @WithSpan and @SpanAttribute Support via package import to file. 1.10
+	        //cu.addImport(new ImportDeclaration("io.opentelemetry.extension.annotations.WithSpan",false, false));
+	        //cu.addImport(new ImportDeclaration("io.opentelemetry.extension.annotations.SpanAttribute",false, false));
 	        
 	        System.out.println("  ");
 	        System.out.println("------------------");
@@ -115,11 +119,15 @@ public class OpenTelemetryAnnotator {
         public void visit(  MethodDeclaration  md, Void arg) {
         	super.visit(md, arg);
         	
-        	if ( md.getBody().isPresent() ) {
+        	if ( md.getBody().isPresent() && !md.getName().asString().startsWith("main") && !md.getName().asString().startsWith("get") && !md.getName().asString().startsWith("set")) {
+        		
         		md.addAnnotation("WithSpan");
         		NodeList<Parameter> params = md.getParameters();
         		params.forEach((param) -> {
-                    param.addSingleMemberAnnotation("SpanAttribute", param.getNameAsString());
+        			
+        			String paramName = "`" + param.getNameAsString() + "`"; 
+        			paramName = paramName.replace('`', '"');
+        			param.addSingleMemberAnnotation("SpanAttribute", paramName);
                 });
         		
         	}

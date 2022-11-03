@@ -4,8 +4,13 @@ package com.splunk.otel.annotator;
 
 import java.io.File;
 
-import  io.opentelemetry.instrumentation.annotations.WithSpan;
-import   io.opentelemetry.instrumentation.annotations.SpanAttribute;
+import com.github.javaparser.ast.ImportDeclaration;
+
+//import io.opentelemetry.extension.annotations.WithSpan;
+//import io.opentelemetry.extension.annotations.SpanAttribute;
+
+import io.opentelemetry.instrumentation.annotations.WithSpan;
+import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 
 
 public class DirExplorerInstrumented {
