@@ -1,6 +1,5 @@
 package com.shabushabu.javashop.products.resources;
 
-import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import com.shabushabu.javashop.products.services.ProductService;
 import com.shabushabu.javashop.products.model.Product;
@@ -26,7 +25,6 @@ public class ProductResource {
     }
 
     @GET
-    @Timed
     @Path("old")
     public Response getAllProducts() {
         return Response.status(200)
@@ -35,7 +33,6 @@ public class ProductResource {
     }
 
     @GET
-    @Timed
     @Path("new")
     public Response getAllProductsNew() {
 
@@ -54,7 +51,6 @@ public class ProductResource {
     }
 
     @GET
-    @Timed
     @Path("{id}")
     public Response getProduct(@PathParam("id") String id) {
         Optional<Product> result = productService.getProduct(id);
