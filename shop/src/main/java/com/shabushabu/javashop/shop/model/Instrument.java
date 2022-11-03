@@ -53,10 +53,35 @@ public class Instrument {
 	 	//this.quantity = quantity;
     }
     
-    public Instrument(long id, /*String sub_title,*/ String price, String instrument_type, String condition, 
-    		String seller_type, String location /* String published_date String quantity */ )  {
-    	 	this.id= id;
 
+    public Instrument buildForLocale(
+    	long id, /*String sub_title,*/ String price, String instrument_type, String condition, 
+		String seller_type, String location /* String published_date String quantity */ ) {
+	 	this.id= id;
+	    //sub_title = sub_title;
+	 	this.price = price;
+	 	this.condition = condition;
+	 	this.instrument_type = instrument_type;
+	 	this.seller_type = seller_type;
+	   // postURL = post_URL;
+	 	this.location = location;
+	 	//this.quantity = quantity;
+	 	return this;
+    }
+    
+    public Instrument buildForLocale(
+        	long id, String title, /*String sub_title,*/ String price, String instrument_type, String condition, 
+    		String seller_type, String location /* String published_date String quantity */ ) throws InvalidLocaleException {
+    	 	this.id= id;
+    	 	
+    	    if (!isEnglish(title)) {
+    	    	throw new InvalidLocaleException("Non English Characters found in Instrument Data");
+    	    } else {
+    	    	
+    	    	System.out.println("Characters OK ");
+    	    }
+
+    	 	this.title = title;
     	    //sub_title = sub_title;
     	 	this.price = price;
     	 	this.condition = condition;
@@ -65,6 +90,8 @@ public class Instrument {
     	   // postURL = post_URL;
     	 	this.location = location;
     	 	//this.quantity = quantity;
+    	 	
+    	 	return this;
         }
     
     public long getID() {

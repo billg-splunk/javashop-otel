@@ -37,13 +37,13 @@ public class InstrumentService {
         return instrumentsDTO.values().stream()
                 .map(instrumentDTO -> {
                 	  try {
-  						return new Instrument(instrumentDTO.getId(),  
+  						return new Instrument().buildForLocale(instrumentDTO.getId(),  
   								instrumentDTO.getTitle(), instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
   								instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate());
   					} catch (InvalidLocaleException e) {
   						
   						e.printStackTrace();
-  						return  new Instrument(instrumentDTO.getId(),   instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
+  						return  new Instrument().buildForLocale(instrumentDTO.getId(),   instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
   								instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate());	
   					}
                    })
