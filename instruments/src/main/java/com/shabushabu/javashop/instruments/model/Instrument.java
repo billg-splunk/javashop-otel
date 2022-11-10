@@ -3,6 +3,7 @@ package com.shabushabu.javashop.instruments.model;
 
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
@@ -11,9 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 
 @Entity
-@Table(name = "InstrumentsForSale")
+@Table(name = "instruments_for_sale")
 public class Instrument {
-	
 	
 
 	@Id

@@ -32,8 +32,8 @@ public class InstrumentService {
     @Autowired
     private InstrumentRepo instrumentRepo;
 
-    public List<Instrument> getInstruments() {
-        Map<Long, InstrumentDTO> instrumentsDTO = instrumentRepo.getinstrumentDTOs();
+    public List<Instrument> getInstruments(String location) {
+        Map<Long, InstrumentDTO> instrumentsDTO = instrumentRepo.getinstrumentsByLocation(location);
         return instrumentsDTO.values().stream()
                 .map(instrumentDTO -> {
                 	  try {

@@ -43,6 +43,19 @@ public class InstrumentRepo {
         return instrumentDTOs.stream()
                 .collect(Collectors.toMap(InstrumentDTO::getId, Function.identity()));
     }
+    
+    
+    public Map<Long, InstrumentDTO> getinstrumentsByLocation(String location) {
+        LOGGER.info("getInstrument  by location ");
+        ResponseEntity<List<InstrumentDTO>> instrumentsResponse =
+                restTemplate.exchange(instrumentsUri + "/instruments?" + "location=" + location,
+                        HttpMethod.GET, null, new ParameterizedTypeReference<List<InstrumentDTO>>() {
+                        });
+        List<InstrumentDTO> instrumentDTOs = instrumentsResponse.getBody();
+
+        return instrumentDTOs.stream()
+                .collect(Collectors.toMap(InstrumentDTO::getId, Function.identity()));
+    }
 
     public Map<Long, InstrumentDTO> instrumentsNotFound() {
         LOGGER.info("Instruments Empty NOT FOUND  *** FALLBACK ***");

@@ -8,4 +8,4 @@ ADD https://github.com/signalfx/splunk-otel-java/releases/latest/download/splunk
 
 #ENTRYPOINT java -agentlib:jdwp=transport=dt_socket, server=y, suspend=n, address=*:8001 -javaagent:splunk-otel-javaagent-all.jar  -Dotel.resource.attributes=service.name=shop,deployment.environment=${USERNAME}_Apm_Instrumentation_Shop -jar app.jar
 
-ENTRYPOINT java -javaagent:splunk-otel-javaagent-all.jar  -Dotel.resource.attributes=service.name=shop,deployment.environment=${USERNAME}_Apm_Instrumentation_Shop -jar app.jar
+ENTRYPOINT java -javaagent:splunk-otel-javaagent-all.jar  -Dotel.resource.attributes=service.name=shop,deployment.environment=${USERNAME}2_Apm_Instrumentation_Shop -jar app.jar

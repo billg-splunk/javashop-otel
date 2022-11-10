@@ -99,27 +99,27 @@ services:
       #  condition: service_healthy
       instruments:
         condition: service_healthy
-  shoptester:
-    image: shabushabu/javashop.tester:latest
-    build:
-      ./test
-    links:
-      - shop
-      - splunk-otel-collector
-    environment:
-      - USERNAME=${USERNAME}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-    depends_on:
-      splunk-otel-collector:
-        condition: service_started
-      shop: 
-        condition: service_healthy
-      products:
-        condition: service_healthy
-      stock:
-        condition: service_healthy
-      instruments:
-        condition: service_healthy
+  #shoptester:
+  #  image: shabushabu/javashop.tester:latest
+  #  build:
+  #    ./test
+  #  links:
+   #   - shop
+   #   - splunk-otel-collector
+  #  environment:
+  #    - USERNAME=${USERNAME}
+  #    - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+  #  depends_on:
+  #    splunk-otel-collector:
+  #      condition: service_started
+  #    shop: 
+   #     condition: service_healthy
+   #   products:
+   #     condition: service_healthy
+   #   stock:
+   #     condition: service_healthy
+  #    instruments:
+  #      condition: service_healthy
   instruments:
     image:  shabushabu/javashop.instruments:latest
     build:
@@ -127,7 +127,7 @@ services:
     ports:
       - "8040:8040"
     healthcheck:
-      test: curl --fail http://localhost:8040/instruments || exit 1
+      test: curl --fail http://localhost:8040/instruments?location=California || exit 1
       interval: 3s
       retries: 5
       start_period: 5s
@@ -159,7 +159,7 @@ services:
       test: ["CMD-SHELL", "pg_isready"]
       interval: 5s
       timeout: 3s
-      retries: 5
+      retries: 10
     #volumes:
       #- ./db/sql/instruments.sql:/docker-entrypoint-initdb.d/instruments.sql
       #- ./db/sql/stocks.sql:/docker-entrypoint-initdb.d/stocks.sql

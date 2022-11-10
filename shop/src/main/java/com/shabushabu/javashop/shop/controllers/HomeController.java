@@ -40,7 +40,7 @@ public class HomeController {
 	model.addAttribute("products", productService.getProducts(theLocation));
 
 	
-	model.addAttribute("instruments", instrumentService.getInstruments());
+	model.addAttribute("instruments", instrumentService.getInstruments(theLocation));
 
       	
 	return "index";

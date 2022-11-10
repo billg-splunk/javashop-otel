@@ -10,11 +10,12 @@ import com.shabushabu.javashop.instruments.model.Instrument;
 import com.shabushabu.javashop.instruments.model.Stock;
 import com.shabushabu.javashop.instruments.services.InstrumentService;
 import com.shabushabu.javashop.instruments.services.InstrumentStocksService;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/instruments")
+@RequestMapping()
 public class InstrumentResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InstrumentResource.class);
@@ -24,11 +25,11 @@ public class InstrumentResource {
     
     @Autowired
     private InstrumentService instrumentService;
-
-    @RequestMapping()
-    public List<Instrument> getInstruments() {
-        LOGGER.info("getInstruments (All)");
-        return instrumentService.getInstruments();
+    
+    @RequestMapping("/instruments")
+    public List<Instrument> getInstruments(@DefaultValue("California") @RequestParam("location") String location) {
+    	LOGGER.info("getInstruments (All) at location: " + location);
+        return instrumentService.getInstruments(location);
     }
     
     @RequestMapping("/stocks")

@@ -2,6 +2,8 @@ package com.shabushabu.javashop.instruments.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.shabushabu.javashop.instruments.exceptions.InstrumentNotFoundException;
 import com.shabushabu.javashop.instruments.model.Instrument;
 import com.shabushabu.javashop.instruments.repositories.InstrumentRepository;
 
@@ -19,14 +21,26 @@ public class InstrumentService {
         this.instrumentRepo = instrumentRepo;
     }
 
-    public List<Instrument> getInstruments() {
+  /*  public List<Instrument> getInstruments() {
         return StreamSupport.stream(instrumentRepo.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
-/*
-    public Instrument getInstrument(String productId) throws InstrumentNotFoundException {
-        return instrumentRepo.findById(productId)
-                .orElseThrow(() -> new InstrumentNotFoundException("Instrument not found with productId: " + productId));
-    }
 */
+    @SuppressWarnings("unchecked")
+	public List<Instrument> getInstruments(String location) {
+        
+    	if (location.equalsIgnoreCase("Chicago")) {
+    	
+    		Object obj = instrumentRepo.findInstruments() ;
+			return  obj != null ? (List<Instrument>) obj : StreamSupport.stream(instrumentRepo.findAll().spliterator(), false)
+                 .collect(Collectors.toList());
+    			
+    	}
+    	else {
+    		return  StreamSupport.stream(instrumentRepo.findAll().spliterator(), false)
+                    .collect(Collectors.toList());
+    		
+    	}
+    }
+
 }
