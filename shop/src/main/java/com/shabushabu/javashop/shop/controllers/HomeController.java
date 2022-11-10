@@ -25,21 +25,25 @@ public class HomeController {
     @RequestMapping(value="/")
     public String getProductsAllLocations(Model model, @RequestParam(value="name", required=false) String theName, @RequestParam(value="location", required=false) String theLocation) {
 
-
+     
 	if (null == theName ) {
+	
 		theName = "Guest";
 	}	
 	
 	if (null == theLocation ) {
 		theLocation="California";
 	}
-
-	model.addAttribute("user", new User());
-
+	
+	//if ( !model.containsAttribute("User") ) {
+		User user = new User();
+		user.setLocation(theLocation);
+		user.setName(theName);
+		model.addAttribute("user", user);
+	//}
 	
 	model.addAttribute("products", productService.getProducts(theLocation));
 
-	
 	model.addAttribute("instruments", instrumentService.getInstruments(theLocation));
 
       	

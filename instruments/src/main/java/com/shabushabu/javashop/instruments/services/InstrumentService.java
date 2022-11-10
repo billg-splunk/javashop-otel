@@ -32,9 +32,13 @@ public class InstrumentService {
     	if (location.equalsIgnoreCase("Chicago")) {
     	
     		Object obj = instrumentRepo.findInstruments() ;
-			return  obj != null ? (List<Instrument>) obj : StreamSupport.stream(instrumentRepo.findAll().spliterator(), false)
-                 .collect(Collectors.toList());
-    			
+    		
+    		if ( null == obj || !( obj instanceof List<?>) ) {
+    			return null;
+    		} else {
+    			return  StreamSupport.stream(instrumentRepo.findAll().spliterator(), false)
+    					.collect(Collectors.toList());
+    		}	
     	}
     	else {
     		return  StreamSupport.stream(instrumentRepo.findAll().spliterator(), false)

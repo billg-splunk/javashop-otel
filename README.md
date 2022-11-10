@@ -1,30 +1,74 @@
-# Tested on Ubuntu 18.04 ( k8s 18.8 )
+# Tested on Macos
 
-( Assumes SignalFx Smart Agent is installed as Daemonset according to: 
+# You will  need:
+Git, Maven, Docker 
 
-https://signalfx.github.io/observability-workshop/latest/smartagent/k3s/#2-use-helm-to-deploy-agent
+# Set Environment Variables
 
-# You will also need:
-Git, Java 8 or above, Maven, Docker.
+Environment Variables:
+
+export USERNAME=<Your-UserName>
+export SPLUNK_ACCESS_TOKEN=<Your-Token>
+export SPLUNK_REALM=<Your-Realm>
 
 # Steps
 
-#Git clone
-https://github.com/ddesjardins-splunk/javashop-otel
+# Git clone
+git clone -b workshop https://github.com/shabuhabs/javashop-otel.git
 	
-cd ot-k8s-java
+cd javashop-otel
 
-# If you just want to run the example
+# First we Implement Auto-Instrumentation via Dockerfiles
 
-#Add to k8s
 
-kubectl apply -f shop/shop.yaml
+cd shop
+vi Dockerfile
 
-kubectl apply -f products/products.yaml
+add Otel Java Agent to Java ENTRYPOINT,  ( java -javaagent:splunk-otel-javaagent-all.jar 
+See examples at ../Dockerfiles_Instrumented
 
-kubectl apply -f stock/stock.yaml
+repeat for:
+	instruments / products / stock  
+	
+#Build Application
 
-#Find nodePort for shop service
+cd <javashop-otel> directory
+
+mvn clean install
+
+# Run Application
+
+docker-compose up -d --build
+
+
+# Traces will take a couple minutes 
+
+# View Service Map
+
+If your instrumentation was successful, the service-map will show latency from the shop service to the products service.
+
+# Manual Instrumentation
+
+To take a deeper look at this issue, we will implement manual instrumentation
+
+Normally, you would leverage Annnotations, https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ which automatically 
+create a span for a function. In addition, Annotations can be used to generate span tags, for parameter values for the function in question.
+
+To expedite this implementation, we have provided a program which will annotate the entire "shop" service directory for you. 
+
+# Run the Annotator
+
+cd annotator
+
+mvn exec:java
+
+#Now let's run the test traffic once again and let's see if these annotations help us narrow down the root cause more quickly.
+Additionally, let's also see if these annotations provide us more useable information for the next responder once we find the root cause.
+
+
+
+
+
 
 kubectl get svc
 
