@@ -48,7 +48,7 @@ If your instrumentation was successful, the service-map will show latency from t
 TODO: Service map image
 NOTE: Follow the trace, what do we know ? 
 
-See the Trace, function with the long latency  was ProductResource.ProductResource
+See the Trace, function with the long latency  was ProductResource.getAllProducts
 
 Our next step here would be to send that trace to a developer and they will have to debug the function. 
 Since they do not have full parameter information it can be a long process.
