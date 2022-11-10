@@ -47,7 +47,11 @@ public class ProductResource {
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
@@ -63,7 +67,11 @@ public class ProductResource {
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
@@ -75,27 +83,21 @@ public class ProductResource {
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
-    	myCoolFunction();
-    	myCoolFunction();
-    	myCoolFunction();
-    	myCoolFunction();
-    	myCoolFunction();
-    	myCoolFunction();
-    	myCoolFunction();
-    	
-    	myCoolFunction();
-    	myCoolFunction();
-    	myCoolFunction();
-    	
-    	myCoolFunction();
-    	myCoolFunction();
-    	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
@@ -107,32 +109,106 @@ public class ProductResource {
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
+    	myCoolFunction();
+    	myCoolFunction();
+    	myCoolFunction();
+    	myCoolFunction();
+    	myCoolFunction();
+    	myCoolFunction();
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
+    	myCoolFunction();
+    	myCoolFunction();
+    	myCoolFunction();
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
+    	myCoolFunction();
+    	myCoolFunction();
+    	myCoolFunction();
+    	//something in HAYSTACK
+
+    	myCoolFunction();
+    	//something in HAYSTACK
+    	//needle in HAYSTACK
     	if (location.equals("Colorado"))
     		myCoolFunction_Colorado();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();
-    	
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+    	//something in HAYSTACK
+
     	myCoolFunction();
     	myCoolFunction();
     	myCoolFunction();

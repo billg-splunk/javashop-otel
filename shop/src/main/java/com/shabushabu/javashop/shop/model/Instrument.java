@@ -34,13 +34,11 @@ public class Instrument {
 		String seller_type, String location /* String published_date String quantity */ ) throws InvalidLocaleException {
 	 	this.id= id;
 	 	
-
-	    if (!isEnglish(title)) {
+// We are just going to comment this out for now to see if it fixes our latency also.
+// User comments this out, then rebuild and run. 	 	
+	   if (!isEnglish(title)) {
 	    	throw new InvalidLocaleException("Non English Characters found in Instrument Data");
-	    } else {
-	    	
-	    	System.out.println("Characters OK ");
-	    }
+	    } 
 
 	 	this.title = title;
 	    //sub_title = sub_title;

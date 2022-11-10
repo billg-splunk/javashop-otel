@@ -19,7 +19,7 @@ public class GenerateTraffic {
 		}
 	
 		System.out.println("Utah Location");
-		for (int j=0; j<10; j++) {
+		for (int j=0; j<20; j++) {
 			try {
 		
 				HttpClient client = HttpClient.newHttpClient();
@@ -42,7 +42,7 @@ public class GenerateTraffic {
 		long startTime = System.nanoTime();
 	
 		
-		for (int k=0; k<10; k++) {
+		for (int k=0; k<20; k++) {
 				
 			try {
 			
@@ -74,7 +74,7 @@ public class GenerateTraffic {
 		
 			System.out.println("Colorado Location");
 		
-			for (int l=0; l<10; l++) {
+			for (int l=0; l<20; l++) {
 				try {
 					HttpClient client = HttpClient.newHttpClient();
 					String theURL =  url + "?name=Guest&location=Colorado";
@@ -103,7 +103,7 @@ public class GenerateTraffic {
 			
 			System.out.println("Chicago Location");
 			
-			for (int l=0; l<10; l++) {
+			for (int l=0; l<2; l++) {
 				try {
 			
 					HttpClient client = HttpClient.newHttpClient();
