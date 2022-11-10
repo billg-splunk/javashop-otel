@@ -48,14 +48,12 @@ If your instrumentation was successful, the service-map will show latency from t
 TODO: Service map image
 NOTE: Follow the trace, what do we know ? 
 
-XX was called, so we send that trace to a developer they will have to debug the function. 
-Since they do not have parameter information it can be a long process.
+See the Trace, function with the long latency  was ProductResource.ProductResource
 
-See the Trace, function is ProductResource.ProductResource
+Our next step here would be to send that trace to a developer and they will have to debug the function. 
+Since they do not have full parameter information it can be a long process.
 
 Developer:  must Look through all the CODE in FunctionX to find the problem, AKA Find Needle in Haystack.
-
-
 
 #TODO SCREENSHOT Show the Function in File 
 
