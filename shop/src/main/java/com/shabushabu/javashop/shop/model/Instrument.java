@@ -52,7 +52,7 @@ public class Instrument {
     }
     
 
-    public Instrument buildForLocale(
+    public Instrument buildForLocale2(
     	long id, /*String sub_title,*/ String price, String instrument_type, String condition, 
 		String seller_type, String location /* String published_date String quantity */ ) {
 	 	this.id= id;

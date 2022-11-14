@@ -19,7 +19,7 @@ git clone -b workshop https://github.com/shabuhabs/javashop-otel.git
 	
 cd javashop-otel
 
-# First we Implement Opentelemetry Auto-Instrumentation via Dockerfiles for Java ( this is the same implementation for Kubernetes )
+#Implement Opentelemetry Auto-Instrumentation via Dockerfiles for Java 
 
 cd shop
 
@@ -60,9 +60,9 @@ Sort by Duration
 Select the longest duration trace
 
 
-Now we can see the menthod with long latency  was products:ProductResource.getAllProducts
+Now we can see the method with long latency  was products:ProductResource.getAllProducts
 
-Our next step here would be to send that trace to a developer and they will have to debug the function. 
+Our next step here would be to send that trace to a developer and they will have to debug the method. 
 Since they do not have full parameter information it can be a long process.
 
 Developer: Must debug the function products:ProductResource.getAllProducts to find the problem.
@@ -77,17 +77,19 @@ vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductReso
 
 scroll way .... down 
 
-#Ok enough fun ..let's make this easier
+#Ok enough fun ..let's make this easier for our developer
 
 # Manual Instrumentation
 
 To take a deeper look at this issue, we will implement manual instrumentation
 
-Normally, to speed up manual instrumentation in Java you would leverage OpenTelemetry Annotations, which automatically 
-create a span for a function. In addition, OpenTelemetry Annotations can be used to generate span tags with parameter 
-values for the function in question. 
+Normally, to speed up manual instrumentation in Java you would leverage [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )
+, which automatically create a span around a method without modifying the actual code inside the method. 
 
-Additional information regarding OpenTelemetry Annotations can be found here: [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )
+To add even more information to help our developers find the root cause faster,
+[OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) can be used to generate span tags with parameter values for the method in question. 
+
+Any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ) 
 
 #This tool helps eliminate developer time needed for manual instrumentation 
 
