@@ -99,27 +99,27 @@ services:
       #  condition: service_healthy
       instruments:
         condition: service_healthy
-  #shoptester:
-  #  image: shabushabu/javashop.tester:latest
-  #  build:
-  #    ./test
-  #  links:
-   #   - shop
-   #   - splunk-otel-collector
-  #  environment:
-  #    - USERNAME=${USERNAME}
-  #    - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
-  #  depends_on:
-  #    splunk-otel-collector:
-  #      condition: service_started
-  #    shop: 
-   #     condition: service_healthy
-   #   products:
-   #     condition: service_healthy
-   #   stock:
-   #     condition: service_healthy
-  #    instruments:
-  #      condition: service_healthy
+  shoptester:
+    image: shabushabu/javashop.tester:latest
+    build:
+      ./test
+    links:
+      - shop
+      - splunk-otel-collector
+    environment:
+      - USERNAME=${USERNAME}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://splunk-otel-collector:4317
+    depends_on:
+      splunk-otel-collector:
+        condition: service_started
+      shop: 
+        condition: service_healthy
+      products:
+        condition: service_healthy
+      stock:
+        condition: service_healthy
+      instruments:
+        condition: service_healthy
   instruments:
     image:  shabushabu/javashop.instruments:latest
     build:

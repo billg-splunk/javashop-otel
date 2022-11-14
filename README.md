@@ -8,8 +8,11 @@ Git, Maven, Docker
 Environment Variables:
 
 export USERNAME=<Your-UserName>
+
 export SPLUNK_ACCESS_TOKEN=<Your-Token>
+
 export SPLUNK_REALM=<Your-Realm>
+
 
 #  Installation
 git clone -b workshop https://github.com/shabuhabs/javashop-otel.git
@@ -19,6 +22,7 @@ cd javashop-otel
 # First we Implement Opentelemetry Auto-Instrumentation via Dockerfiles for Java ( this is the same implementation for Kubernetes )
 
 cd shop
+
 vi Dockerfile
 
 add Otel Java Agent to Java ENTRYPOINT,  ( java -javaagent:splunk-otel-javaagent-all.jar )
@@ -36,7 +40,6 @@ mvn clean install
 # Run Application
 
 docker-compose up -d --build 
-if need sudo sudo -E docker-compose up -d --build 
 
 
 # Traces will take a couple minutes ....
@@ -48,12 +51,21 @@ If your instrumentation was successful, the service-map will show latency from t
 TODO: Service map image
 NOTE: Follow the trace, what do we know ? 
 
-See the Trace, function with the long latency  was ProductResource.getAllProducts
+Click on shoptester service
+
+click Traces ( right side ) 
+
+Sort by Duration
+
+Select the longest duration trace
+
+
+Now we can see the menthod with long latency  was products:ProductResource.getAllProducts
 
 Our next step here would be to send that trace to a developer and they will have to debug the function. 
 Since they do not have full parameter information it can be a long process.
 
-Developer:  must Look through all the CODE in FunctionX to find the problem, AKA Find Needle in Haystack.
+Developer: Must debug the function products:ProductResource.getAllProducts to find the problem.
 
 #TODO SCREENSHOT Show the Function in File 
 
@@ -97,7 +109,7 @@ cd ..
 mvn clean install
 
 docker-compose up -d --build 
-if need sudo sudo -E docker-compose up -d --build 
+
 
 #Now that we have rebuilt and deployed our application, traffic is being sent once again.
 
@@ -150,12 +162,12 @@ generates a span around a the function that follows, in this case it is
 Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 
 docker-compose down
-if need sudo sudo -E docker-compose down
+
    
 mvn clean install
 
 docker-compose up -d --build 
-if need sudo sudo -E docker-compose up -d --build 
+
 
 Waiting a few minutes.....
 
@@ -203,7 +215,7 @@ save changes to products/src/main/java/com/shabushabu/javashop/products/resource
 mvn clean install
 
 docker-compose up -d --build 
-if need sudo sudo -E docker-compose up -d --build 
+
 
 #Now that we have rebuilt and deployed our application, traffic is being sent once again.  
 

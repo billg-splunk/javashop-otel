@@ -11,7 +11,7 @@ public class GenerateTraffic {
 	
 	public static void main(String[] args) {
 	
-		String url ="http://localhost:8010";
+		String url ="http://shop:8010";
 		boolean chicago = false;
 		
 		if (null != args && args.length >0 ) {
