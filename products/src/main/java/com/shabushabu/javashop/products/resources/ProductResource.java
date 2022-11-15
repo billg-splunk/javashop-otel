@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import javax.ws.rs.QueryParam;
 
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class ProductResource {
     @GET
     public Response getAllProducts(@DefaultValue("California") @QueryParam("location") String location) {
     	  
-    	// STEP X: All we know right now is somehwere in this function, latency was introduced.
+    	// STEP X: All we know right now is somewhere in this function, latency was introduced.
     	
 
     	myCoolFunction();
@@ -240,7 +241,9 @@ public class ProductResource {
       int sleepy = 0;
       try{
       Thread.sleep(sleepy);
-      } catch (Exception e){}
+      } catch (Exception e){
+    	  
+      }
     }
 
     private void myCoolFunction_Colorado() {
@@ -249,8 +252,16 @@ public class ProductResource {
       int sleepy = random.nextInt(5000 - 3000) + 3000;
       try{
     	  Thread.sleep(sleepy);
-      } catch (Exception e){}
+      } catch (Exception e){
+    	  
+      }
     }
+    
+    @GET
+    @Path("/healthcheck")
+    public String healthCheck() {	
+      return "HTTP Status OK (CODE 200)\n"; 
+    }  
 
     @GET
     @Path("{id}")

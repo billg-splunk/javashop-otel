@@ -26,6 +26,12 @@ public class InstrumentResource {
     @Autowired
     private InstrumentService instrumentService;
     
+    @RequestMapping("/healthcheck")
+    @ResponseStatus(code = HttpStatus.OK, reason = "OK")
+    public String healthCheck() {
+        return "HTTP Status OK (CODE 200)\n";
+    }    
+    
     @RequestMapping("/instruments")
     public List<Instrument> getInstruments(@DefaultValue("California") @RequestParam("location") String location) {
     	LOGGER.info("getInstruments (All) at location: " + location);

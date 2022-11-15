@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/stocks")
+@RequestMapping()
 public class StockResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StockResource.class);
@@ -37,13 +37,21 @@ public class StockResource {
         LOGGER.info("getInstrumentStocks (All Instrument stocks)");
         return instrumentStocksService.getStocks();
     }
+    
+    @RequestMapping("/healthcheck")
+    @ResponseStatus(code = HttpStatus.OK, reason = "OK")
+    public String healthCheck() {
+        return "HTTP Status OK (CODE 200)\n";
+    }    
+    
 
-    @RequestMapping("{productId}")
+   /* @RequestMapping("{productId}")
     public Stock getStock(@PathVariable("productId") String productId) throws StockNotFoundException {
         LOGGER.info("getStock with productId: {}", productId);
         return stockService.getStock(productId);
     }
-
+	*/
+    
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleStockNotFound(StockNotFoundException snfe) {
