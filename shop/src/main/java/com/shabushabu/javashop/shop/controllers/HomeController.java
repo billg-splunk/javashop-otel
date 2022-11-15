@@ -37,12 +37,11 @@ public class HomeController {
 		theLocation="California";
 	}
 	
-	//if ( !model.containsAttribute("User") ) {
-		User user = new User();
-		user.setLocation(theLocation);
-		user.setName(theName);
-		model.addAttribute("user", user);
-	//}
+	User user = new User();
+	user.setLocation(theLocation);
+	user.setName(theName);
+	model.addAttribute("user", user);
+	
 	
 	model.addAttribute("products", productService.getProducts(theLocation));
 
@@ -59,34 +58,4 @@ public class HomeController {
         return "HTTP Status OK (CODE 200)\n";
     }  
     
-   
-    
-   
-    /* @RequestMapping(value="/instruments")
-    public String viewInstruments(Model model, @RequestParam(value="name", required=false) String theName, @RequestParam(value="location", required=false) String theLocation) {
-
-
-	if (null == theName ) {
-		theName = "Guest";
-	}	
-	
-	if (null == theLocation ) {
-		theLocation="California";
-	}
-
-	model.addAttribute("user", new User());
-*/
-	
-  
- /*  
-   @PostMapping("/adduser")
-    public String addUser(@ModelAttribute User user, Model model) {
-    	 
-        // ORIGINAL CODE
-			model.addAttribute("products", productService.getProducts("Chicago"));
-			model.addAttribute("instruments", instrumentService.getInstruments());
-		// END ORIGINAL CODE
-		return "index";
-    }
- */
 }
