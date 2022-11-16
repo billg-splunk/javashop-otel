@@ -11,8 +11,8 @@ target/maven-archiver/pom.properties
 *.prefs
 *.class
 .idea
-**.iml
-
+**.niml
+bin/
 # Package Files #
 
 *.war
