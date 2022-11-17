@@ -114,66 +114,105 @@ To expedite manual instrumentation implementation for this exercise, we have pro
 
 cd annotator
 
+Run the annotator application
+
 mvn exec:java
 
 #Rebuild and Deploy Application
 
+
 cd ..
 
 mvn clean install
+
+docker-compose down
 
 docker-compose up -d --build 
 
 
 #Now that we have rebuilt and deployed our application, traffic is being sent once again.
 
-We are waiting a bit for traces to return to UI...
+Go back to the Splunk Observability UI and let's see if these annotations help us narrow down the root cause more quickly.
 
-Go to UI and let's see if these annotations help us narrow down the root cause more quickly.
+Click back on the trace window
+
+Select the Shop Service under "Services"
+
+TODO: shop Traces Image
+
+Give the traces a couple minutes to generate . . .  
+
 
 # Woah!!!! We have a New Problem, we are getting a new Exception ! 
 
+TODO: Traces with New Exception Screenshot
+
 Note: we haven't changed the code at all by adding annotations.
 
-GO To UI, Look at Exception in Trace
+Select "Errors Only" 
 
-InvalidLocaleException !
+TODO: Errors Only Screenshot 
 
-The real problem must be related to the new data associated with SRI LANKA as the Exception is BadCharacters. 
+Click on a trace with an error present 
 
-The exception had not surfaced in previous traces because the function where it was thrown 
-was NOT covered with Auto Instrumentation, the Annotations we added, 
-however did cover this function and we can see a span in UI with this name:
+TODO: Invalid Locale Exception Screen !!
 
-TODO: SCREEN OF Span in UI !!
+We can see our Exception is InvalidLocaleException !
 
-Let's Fix it
+The real problem must be related to the new data associated with SRI LANKA as the Exception says
+"Non English Characters found in Instrument Data. 
 
-TODO: Redo this  WORKFLOW with screenshots
-Find where in Code InvalidLocaleException is Captured.
+This exception had not surfaced in previous traces because the method where it was thrown 
+was NOT covered with Auto Instrumentation.
 
-Optional: search code for InvalidLocaleException
+Once we completed the Manual Instrumentation via the Annotations we added, 
+this method was instrumented cover this function and we can now see we had a buried Exception being thrown.
 
-#Edit the file	
+
+#Let's play Developer once again and fix our issue !
+
+We already know exactly what file to look in and what method to look at as it is called out in the trace.
+
+TODO: Add code.function and code.namespace screenshot
+
+Edit the file	
 vi shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 
-Look at Code, notice @WithSpan?
+Search for the method buildForLocale
 
-TODO: Add screen of @WithSpan Over 
+/buildForLocale
 
-@WithSpan is an Opentelemetry Annotation for Java that automatically
-generates a span around a the function that follows, in this case it is 
+Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
 
-# We have to find what is calling this method
-#  TODO Get exact function name XXXXXXXXXXXXX
+TODO: Add screen of @WithSpan  
 
-// For now, we are going to comment this out to see if it fixes our latency problem..
-// User comments this out, then rebuild and run. 	 	
-	//   if (!isEnglish(title)) {
-	//    	throw new InvalidLocaleException("Non English Characters found in Instrument Data");
-	//    } 
-	
+Now let's fix this code. We are going to simply comment this out for now and see if it fixes our latency issue.
+
+type i for insert
+
+Change this : 
+
+if (!isEnglish(title)) {
+  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
+ } else {
+	System.out.println("Characters OK ");
+}
+
+To this:
+
+//if (!isEnglish(title)) {
+//  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
+// } else {
+//	System.out.println("Characters OK ");
+//}
+
 Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
+
+Save Changes in vi
+
+:wq
+
+#Rebuild and Deploy Application
 
 docker-compose down
 
@@ -187,20 +226,25 @@ Waiting a few minutes.....
 
 # Latency Root Cause
 
-#TODO:Show map, should see execption gone and latency is still there.
+TODO: Show map, latency is still there.
 
-Open Service Map
+Open Service Map in Splunk Observability UI
 
-We can see we still have our original Latency issue, however our exception for Invalid Locale is gone. 
+We can see we still have our original Latency issue, however our exception for Invalid Locale should be gone.
 
-It seems removing the Exception did not fix the latency...
+Let's check to see our InvalidLocale Exception is gone.
+
+Click Shop Service
+
+Click Traces on the right
 
 
-Lets Look at the high latency traces causing this spike.
+We did remove the exception however it seems removing the Exception did not fix the latency...
 
-Click on line from SHop to Products ( follow the red numbers ) - 
 
-# Additionally, let's also see if these annotations provide us more relevant information for the next responder once we find the root cause.
+Lets Look at the high latency traces causing this spike once again.
+
+Also, lets see if these annotations provide us more relevant information for the next responder once we find the root cause.
 
 NOTE: add additional information Parameter Values at Time of Latency.
 

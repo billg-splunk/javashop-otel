@@ -33,12 +33,6 @@ public class Instrument {
     public Instrument(long id, String title, /*String sub_title,*/ String price, String instrument_type, String condition, 
 		String seller_type, String location /* String published_date String quantity */ ) throws InvalidLocaleException {
 	 	this.id= id;
-	 	
-// We are just going to comment this out for now to see if it fixes our latency also.
-// User comments this out, then rebuild and run. 	 	
-	   if (!isEnglish(title)) {
-	    	throw new InvalidLocaleException("Non English Characters found in Instrument Data");
-	    } 
 
 	 	this.title = title;
 	    //sub_title = sub_title;
@@ -52,7 +46,7 @@ public class Instrument {
     }
     
 
-    public Instrument buildForLocale2(
+    public Instrument buildIt(
     	long id, /*String sub_title,*/ String price, String instrument_type, String condition, 
 		String seller_type, String location /* String published_date String quantity */ ) {
 	 	this.id= id;

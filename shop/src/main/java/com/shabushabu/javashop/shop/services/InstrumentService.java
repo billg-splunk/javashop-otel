@@ -43,7 +43,7 @@ public class InstrumentService {
   					} catch (InvalidLocaleException e) {
   						
   						e.printStackTrace();
-  						return  new Instrument().buildForLocale2(instrumentDTO.getId(),   instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
+  						return  new Instrument().buildIt(instrumentDTO.getId(),   instrumentDTO.getPrice(), instrumentDTO.getInstrumentType(),
   								instrumentDTO.getCondition(), instrumentDTO.getSellerType(), instrumentDTO.getPublishedDate());	
   					}
                    })
