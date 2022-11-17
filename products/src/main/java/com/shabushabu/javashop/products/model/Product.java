@@ -11,7 +11,7 @@ public class Product {
     private BigDecimal price;
 
     public Product() {
-        // Needed for Jackson deserialization
+       
     }
 
     public Product(String id, String name, String description, BigDecimal price) {

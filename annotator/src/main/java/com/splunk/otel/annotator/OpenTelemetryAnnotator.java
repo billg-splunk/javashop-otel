@@ -124,7 +124,9 @@ public class OpenTelemetryAnnotator {
         public void visit(  MethodDeclaration  md, Void arg) {
         	super.visit(md, arg);
         	
-        	if ( md.getBody().isPresent() && !md.getName().asString().startsWith("main") && !md.getName().asString().startsWith("get") && !md.getName().asString().startsWith("set")) {
+        	if ( md.getBody().isPresent() && !md.getName().asString().startsWith("main") && 
+        	    !md.getName().asString().startsWith("get") && !md.getName().asString().startsWith("set")
+        	    !md.getName().asString().startsWith("health")) {
         		
         		md.addAnnotation("WithSpan");
         		NodeList<Parameter> params = md.getParameters();

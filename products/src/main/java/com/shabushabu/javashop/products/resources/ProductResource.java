@@ -158,8 +158,7 @@ public class ProductResource {
     	myCoolFunction();
     	//something in HAYSTACK
     	//needle in HAYSTACK
-    	if (location.equals("Colorado"))
-    		myCoolFunction_Colorado();
+    	myCoolFunction_withLocation(location);
     	myCoolFunction();
     	//something in HAYSTACK
     	//something in HAYSTACK
@@ -236,6 +235,7 @@ public class ProductResource {
                 .build();
     }
   
+    
     private void myCoolFunction() {
       // Generate a FAST sleep of 0 time !
       int sleepy = 0;
@@ -246,14 +246,18 @@ public class ProductResource {
       }
     }
 
-    private void myCoolFunction_Colorado() {
-      // Generate a SLOW sleep of Random time !
-      Random random = new Random();
-      int sleepy = random.nextInt(5000 - 3000) + 3000;
-      try{
-    	  Thread.sleep(sleepy);
-      } catch (Exception e){
+
+    private void myCoolFunction_withLocation(String location) {
+    		
+      if (location.equalsIgnoreCase("Colorado")) {
+    	  // Generate a SLOW sleep of Random time !
+    	  Random random = new Random();
+    	  int sleepy = random.nextInt(5000 - 3000) + 3000;
+    	  try{
+    		  Thread.sleep(sleepy);
+    	  } catch (Exception e){
     	  
+    	  }
       }
     }
     
@@ -278,3 +282,4 @@ public class ProductResource {
         }
     }
 }
+
