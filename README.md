@@ -49,7 +49,6 @@ docker-compose up -d --build
 If your instrumentation was successful, the service-map will show latency from the shop service to the products service.
 
 TODO: Service map image
-NOTE: Follow the trace, what do we know ? 
 
 Click on shoptester service
 
@@ -59,15 +58,27 @@ Sort by Duration
 
 Select the longest duration trace
 
+TODO: Long Trace Image
 
-Now we can see the method with long latency  was products:ProductResource.getAllProducts
+Now we can see the long latency occurred in the products service and if we click on products: /products
+we can see the offending method was products:ProductResource.getAllProducts
 
-Our next step here would be to send that trace to a developer and they will have to debug the method. 
-Since they do not have full parameter information it can be a long process.
+TODO: Show Tags method
 
-Developer: Must debug the function products:ProductResource.getAllProducts to find the problem.
+Our next step here would be to send that trace to a developer by cliking download trace and
+they will have to debug the method. 
 
-#TODO SCREENSHOT Show the Function in File 
+Before we do that please take note of the Tags available for the developer to leverage to find root cause.
+
+Note: Since they do not have full parameter information it can be a long process.
+
+TODO: Download Trace Button Image
+
+#Now let's play the role of the developer
+
+As a developer we must debug the function products:ProductResource.getAllProducts to find the problem.
+
+TODO SCREENSHOT Show the Function in File 
 
 Now find the needle in Haystack !
 
@@ -76,6 +87,11 @@ vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductReso
 /getAllProducts
 
 scroll way .... down 
+
+TODO SCREENSHOT Show the Function in File 
+
+Exit vi
+:q!
 
 #Ok enough fun ..let's make this easier for our developer
 
@@ -89,12 +105,11 @@ Normally, to speed up manual instrumentation in Java you would leverage [OpenTel
 To add even more information to help our developers find the root cause faster,
 [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) can be used to generate span tags with parameter values for the method in question. 
 
-Any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ) 
+It is important to remember that any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ). 
 
-To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entire "shop" service with OpenTelemetry 
-standard annotations for every method call without having to write any code. 
+To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entire "shop" service with OpenTelemetry standard annotations for every method call without having to write any code. 
 
-#This Full-fidelity, Every-method approach is the monolith Use Case with Splunk APM for Java.  
+#This Full-fidelity, Every-method approach is the Monolith Use Case with Splunk APM for Java.  
 
 
 cd annotator
