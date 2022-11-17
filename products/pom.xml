@@ -25,6 +25,12 @@
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
         </dependency>
+        
+        <dependency>
+    		<groupId>io.opentelemetry.instrumentation</groupId>
+    		<artifactId>opentelemetry-instrumentation-annotations</artifactId>
+   			<version>1.19.2-alpha</version>
+  			</dependency>
     </dependencies>
 
 

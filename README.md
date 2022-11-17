@@ -193,17 +193,25 @@ type i for insert
 Change this : 
 
 if (!isEnglish(title)) {
+
   throw new InvalidLocaleException("Non English Characters found in Instrument Data");
+  
  } else {
-	System.out.println("Characters OK ");
+ 
+ System.out.println("Characters OK ");
+ 
 }
 
 To this:
 
 //if (!isEnglish(title)) {
+
 //  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
+
 // } else {
+
 //	System.out.println("Characters OK ");
+
 //}
 
 Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
@@ -254,19 +262,45 @@ Developer can debug very quickly.
 
 vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 
+search for Colorado
 /Colorado
 
-Find Needle In Haystack more quickly.
+We found and fixed the Needle In Haystack more quickly !!! 
 
-	if (location.equals("Colorado"))
-    		myCoolFunction_Colorado();
+
+if (location.equalsIgnoreCase("Colorado")) {
+
+   // Generate a SLOW sleep of Random time !
+   Random random = new Random();
+    	  int sleepy = random.nextInt(5000 - 3000) + 3000;
+    	  
+   try{
+    		  Thread.sleep(sleepy);
+    		} catch (Exception e){
+    		
+   }
+}
     		
 comment out 
 
-	//if (location.equals("Colorado"))
-    //		myCoolFunction_Colorado();
+/* if (location.equalsIgnoreCase("Colorado")) {
+
+   // Generate a SLOW sleep of Random time !
+   Random random = new Random();
+    	  int sleepy = random.nextInt(5000 - 3000) + 3000;
+    	  
+   try{
+    		  Thread.sleep(sleepy);
+    		} catch (Exception e){
+    		
+   }
+} */
     
 save changes to products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+
+save changes in vi]
+
+:wq
     
 #Rebuild and Deploy Application
 
