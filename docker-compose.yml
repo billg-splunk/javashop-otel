@@ -16,7 +16,7 @@ services:
       - "9411:9411"
       - "9943:9943" 
     healthcheck:
-      test: curl --fail http://localhost:13133 || exit 1
+      #test: curl --fail http://localhost:13133 || exit 1
       test: curl -sS http://localhost:13133 | grep -c "status":"Server available" > /dev/null
       interval: 3s
       retries: 5
@@ -162,7 +162,8 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
-    #volumes:
-      #- ./db/sql/instruments.sql:/docker-entrypoint-initdb.d/instruments.sql
-      #- ./db/sql/stocks.sql:/docker-entrypoint-initdb.d/stocks.sql
+    volumes:
+      - ./db/sql/instruments-latest.sql:/docker-entrypoint-initdb.d/instruments-latest.sql
+      - ./db/sql/instruments_chicago.sql:/docker-entrypoint-initdb.d/instruments_chicago.sql
+
 

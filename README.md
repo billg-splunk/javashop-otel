@@ -91,14 +91,11 @@ To add even more information to help our developers find the root cause faster,
 
 Any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ) 
 
-#This tool helps eliminate developer time needed for manual instrumentation 
-
 To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entire "shop" service with OpenTelemetry 
 standard annotations for every method call without having to write any code. 
 
 #This Full-fidelity, Every-method approach is the monolith Use Case with Splunk APM for Java.  
 
-# Run the Annotator to Auto Implement the Annotations. 
 
 cd annotator
 

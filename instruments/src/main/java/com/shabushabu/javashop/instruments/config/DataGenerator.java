@@ -21,13 +21,13 @@ public class DataGenerator {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadData() {
-    	ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("sql/instruments-latest.sql"));
+    	/*ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("sql/instruments-latest.sql"));
         resourceDatabasePopulator.execute(dataSource);
         
         resourceDatabasePopulator = 
         		new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("sql/instruments_chicago.sql"));
 	    resourceDatabasePopulator.execute(dataSource);
-
+*/
 	 /*   resourceDatabasePopulator = 
 	    		new ResourceDatabasePopulator(false, false, "UTF-8", new ClassPathResource("sql/instruments-utah.sql"));
 	    resourceDatabasePopulator.execute(dataSource);
