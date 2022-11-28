@@ -171,10 +171,7 @@ was NOT covered with Auto Instrumentation.
 Once we completed the Manual Instrumentation via the Annotations we added, 
 this method was instrumented  and we can now see we had a buried Exception being thrown.
 
-That said, it is still not clear if this is the source of the 
-latency we are seeing in our application.
-
-#Let's play Developer once again and fix our issue !
+# Let's play Developer once again and fix our issue !
 
 We already know exactly what file to look in and what method to look at as it is called out in the trace.
 
