@@ -169,7 +169,7 @@ This exception had not surfaced in previous traces because the method where it w
 was NOT covered with Auto Instrumentation. 
 
 Once we completed the Manual Instrumentation via the Annotations we added, 
-this method was instrumented cover this function and we can now see we had a buried Exception being thrown.
+this method was instrumented  and we can now see we had a buried Exception being thrown.
 
 That said, it is still not clear if this is the source of the 
 latency we are seeing in our application.
