@@ -65,12 +65,14 @@ Sort by Duration
 
 Select the longest duration trace
 
-TODO: Long Trace Image
+ Image![LongTrace](https://user-images.githubusercontent.com/32849847/204347798-4f232b7f-7a7a-483f-9d61-f0b535e9ecf0.png)
+
 
 Now we can see the long latency occurred in the products service and if we click on products: /products
 we can see the offending method was products:ProductResource.getAllProducts
 
-TODO: Show Tags method
+![long-trace-detail-GetAllProducts](https://user-images.githubusercontent.com/32849847/204347855-724545bf-c3df-478a-a27d-e4f85f708e15.png)
+
 
 Our next step here would be to send that trace to a developer by cliking download trace and
 they will have to debug the method. 
@@ -79,13 +81,11 @@ Before we do that please take note of the Tags available for the developer to le
 
 Note: Since they do not have full parameter information it can be a long process.
 
-TODO: Download Trace Button Image
-
-#Now let's play the role of the developer
+# Now let's play the role of the developer
 
 As a developer we must debug the function products:ProductResource.getAllProducts to find the problem.
 
-TODO SCREENSHOT Show the Function in File 
+
 
 Now find the needle in Haystack !
 
@@ -95,7 +95,7 @@ vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductReso
 
 scroll way .... down 
 
-TODO SCREENSHOT Show the Function in File 
+![getAllProducts-Haystack](https://user-images.githubusercontent.com/32849847/204348020-eab66183-f3a2-488b-bfba-48a660e9acaa.png)
 
 Exit vi
 :q!
@@ -142,28 +142,26 @@ docker-compose up -d --build
 Go back to the Splunk Observability UI and let's see if these annotations help us narrow down the root cause more quickly.
 
 Click back on the trace window
+	
+	
+![Screen Shot 2022-11-28 at 7 29 43 AM](https://user-images.githubusercontent.com/32849847/204348366-38b8c82a-02ca-472b-b1aa-feeb746ec1d7.png)
 
-TODO: Back Button on Trace Window
-
-
-TODO: shop Traces Image
 
 Give the traces a couple minutes to generate . . .  
 
 
 # Woah!!!! We have a New Problem, we are getting a new Exception ! 
 
-TODO: Traces with New Exception Screenshot
+Once traces populate, Select "Errors Only" 
+	
+![Screen Shot 2022-11-28 at 7 36 50 AM](https://user-images.githubusercontent.com/32849847/204348492-84a4ad45-e11c-4e75-a6a9-d6e52e0eb13e.png)
 
 Note: we haven't changed the code at all by adding annotations.
 
-Select "Errors Only" 
-
-TODO: Errors Only Screenshot 
-
 Click on a trace with an error present 
 
-TODO: Invalid Locale Exception Screen !!
+![Screen Shot 2022-11-28 at 7 38 33 AM](https://user-images.githubusercontent.com/32849847/204348687-12241153-b297-4bd7-9ea8-4b410369e82c.png)
+
 
 We can see our Exception is InvalidLocaleException !
 
@@ -183,7 +181,8 @@ latency we are seeing in our application.
 
 We already know exactly what file to look in and what method to look at as it is called out in the trace.
 
-TODO: Add code.function and code.namespace screenshot
+![Screen Shot 2022-11-28 at 7 43 58 AM](https://user-images.githubusercontent.com/32849847/204349038-3b43a5ba-18e3-4d58-8985-29ee1f7da40a.png)
+
 
 Edit the file	
 vi shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
@@ -192,9 +191,11 @@ Search for the method buildForLocale
 
 /buildForLocale
 
-Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
+Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation]
+(https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
 
-TODO: Add screen of @WithSpan  
+ ![Screen Shot 2022-11-28 at 7 45 13 AM](https://user-images.githubusercontent.com/32849847/204349143-1e35b6e4-4059-4c56-8718-76c14d41727c.png)
+
 
 Now let's fix this code. We are going to simply comment this out for now and see if it fixes our latency issue.
 
@@ -226,7 +227,7 @@ To this:
 
 Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 
-Save Changes in vi
+To save changes in vi
 
 :wq
 
@@ -234,7 +235,6 @@ Save Changes in vi
 
 docker-compose down
 
-   
 mvn clean install
 
 docker-compose up -d --build 
@@ -243,10 +243,11 @@ docker-compose up -d --build
 Waiting a few minutes.....
 
 # Latency Root Cause
+	
+Open Service Map in Splunk Observability UI	
 
-TODO: Show map, latency is still there.
+![latency 2](https://user-images.githubusercontent.com/32849847/204349287-1f942776-05cf-443e-8b65-cc0f1b921416.png)
 
-Open Service Map in Splunk Observability UI
 
 We can see we still have our original Latency issue, however our exception for Invalid Locale should be gone.
 
@@ -262,7 +263,7 @@ Lets Look at the high latency traces causing this spike once again.
 
 Also, lets see if these annotations provide us more relevant information for the next responder once we find the root cause.
 
-NOTE: add additional information Parameter Values at Time of Latency.
+NOTE: We added additional information Parameter Values at Time of Latency.
 
 Developer can debug very quickly. 
 
@@ -349,8 +350,9 @@ Select the Instruments Service
 Click on Traces on the right
 
 Select "Errors Only" 
+	
+ ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
 
-TODO: Exception Screenshot 
 
 We can see the exception was thrown by Hibernate, however it was thrown in our method 
 "instruments: InstrumentRepository.findInstruments"
@@ -361,7 +363,11 @@ Edit the file "instruments: InstrumentRepository.findInstruments"
 
 vi instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
 
-TODO: Code screenshot of bad Query 
+ ![Screen Shot 2022-11-28 at 8 14 50 AM](https://user-images.githubusercontent.com/32849847/204349696-dc19d62f-ed82-4533-ad27-138237821b8e.png)
+	
+	
+![Screen Shot 2022-11-28 at 8 20 24 AM](https://user-images.githubusercontent.com/32849847/204349802-06135d9d-d70b-4cf1-aaea-3ba737e5c2b9.png)
+
 
 We can see the developer accidently added the Instruments database with the Chicago Instruments database !
 
@@ -407,7 +413,7 @@ We now see the 500 error is gone !
 
 Let's confirm a clean Service Map 
 
-TODO: Screenshot of clean service map
+![Screen Shot 2022-11-28 at 8 35 11 AM](https://user-images.githubusercontent.com/32849847/204350088-fca43e3c-42ea-4933-8a61-01eb2083fd23.png)
 
 
 # If you see a clean service map, free of errors and Latency you have successfully completed the Java Instrumentation Workshop !
