@@ -225,7 +225,7 @@ To save changes in vi
 
 :wq
 
-#Rebuild and Deploy Application
+# Build and Deploy Application
 
 docker-compose down
 
