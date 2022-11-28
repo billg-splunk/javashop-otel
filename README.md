@@ -103,7 +103,7 @@ OK, enough fun ..let's make this easier for our developer
 
 To take a deeper look at this issue, we will implement manual instrumentation
 
-Normally, to speed up manual instrumentation in Java you would leverage [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )
+To speed up manual instrumentation in Java you would leverage [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )
 , which automatically create a span around a method without modifying the actual code inside the method. 
 
 To add even more information to help our developers find the root cause faster,
