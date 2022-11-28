@@ -251,17 +251,18 @@ Click Shop Service
 
 Click Traces on the right
 
+
 We did remove the exception however it seems removing the Exception did not fix the latency...
 
-Lets Look at the high latency traces causing this spike once again.
+Lets see if these annotations provide us more relevant information for the next responder once we find the root cause.
 
-Also, lets see if these annotations provide us more relevant information for the next responder once we find the root cause.
+NOTE: We added additional information Parameter Values at Time of Latency in this case "Location"
 
-NOTE: We added additional information Parameter Values at Time of Latency.
+![Screen Shot 2022-11-28 at 7 54 20 AM](https://user-images.githubusercontent.com/32849847/204351309-ca9c1baf-d4c4-40c2-8248-5d82c0d16477.png)
 
-Developer can debug very quickly. 
+With this information a Developer can debug very quickly. 
 
-Now we have the parameter tagged as part of our span metadata "location" Colorado must be the culprit ! 
+Since we now have the parameter tagged as part of our span metadata "location" Colorado must be the culprit ! 
 We can also see that the actual method that has the latency was not ProductResource.getAllProducts but 
 the method "products: ProductResource.myCoolFunction_withLocation"
 
@@ -313,12 +314,11 @@ save changes in vi
 
 :wq
     
-# Rebuild and Deploy Application
+# Build and Deploy Application
 
 mvn clean install
 
 docker-compose up -d --build 
-
 
 #Now that we have rebuilt and deployed our application, traffic is being sent once again.  
 
