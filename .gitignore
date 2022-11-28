@@ -1,7 +1,5 @@
 ### Maven template
 postgres-data
-test/.classpath
-.classpath
 target/
 build/
 release.properties
@@ -30,6 +28,4 @@ bin/
 *.log
 
 #vscode
-.vscode/
-*.project
-.settings
+
