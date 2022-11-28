@@ -1,3 +1,9 @@
+
+# OUR SCENARIO
+
+Here at Buttercup Instruments, our business is expanding !  We have recently added 3 new locations, two locations in the USA Colorado and Chicago and one international location in SRI Lanka ! Our technical staff has already on-boarded the data from these new locations and incorporated them into our inventory application and it is our job
+to review these improvements and send any issues back to our developers for repairs.
+
 # Tested on Macos
 
 # You will  need:
@@ -50,7 +56,7 @@ If your instrumentation was successful, the service-map will show latency from t
 
 TODO: Service map image
 
-Click on shoptester service
+Click on shop service
 
 click Traces ( right side ) 
 
@@ -93,7 +99,7 @@ TODO SCREENSHOT Show the Function in File
 Exit vi
 :q!
 
-#Ok enough fun ..let's make this easier for our developer
+OK, enough fun ..let's make this easier for our developer
 
 # Manual Instrumentation
 
@@ -107,9 +113,9 @@ To add even more information to help our developers find the root cause faster,
 
 It is important to remember that any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ). 
 
-To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entire "shop" service with OpenTelemetry standard annotations for every method call without having to write any code. 
+To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. 
 
-#This Full-fidelity, Every-method approach is the Monolith Use Case with Splunk APM for Java.  
+# This Full-fidelity, Every-method approach is the Monolith Use Case with Splunk APM for Java.  
 
 
 cd annotator
@@ -136,7 +142,8 @@ Go back to the Splunk Observability UI and let's see if these annotations help u
 
 Click back on the trace window
 
-Select the Shop Service under "Services"
+TODO: Back Button on Trace Window
+
 
 TODO: shop Traces Image
 
@@ -163,11 +170,13 @@ The real problem must be related to the new data associated with SRI LANKA as th
 "Non English Characters found in Instrument Data. 
 
 This exception had not surfaced in previous traces because the method where it was thrown 
-was NOT covered with Auto Instrumentation.
+was NOT covered with Auto Instrumentation. 
 
 Once we completed the Manual Instrumentation via the Annotations we added, 
 this method was instrumented cover this function and we can now see we had a buried Exception being thrown.
 
+That said, it is still not clear if this is the source of the 
+latency we are seeing in our application.
 
 #Let's play Developer once again and fix our issue !
 
@@ -246,9 +255,7 @@ Click Shop Service
 
 Click Traces on the right
 
-
 We did remove the exception however it seems removing the Exception did not fix the latency...
-
 
 Lets Look at the high latency traces causing this spike once again.
 
@@ -258,7 +265,9 @@ NOTE: add additional information Parameter Values at Time of Latency.
 
 Developer can debug very quickly. 
 
-#Now we have the parameter "location=colorado" must be the culprit
+Now we have the parameter tagged as part of our span metadata "location" Colorado must be the culprit ! 
+We can also see that the actual method that has the latency was not ProductResource.getAllProducts but 
+the method "products: ProductResource.myCoolFunction_withLocation"
 
 vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 
@@ -267,6 +276,12 @@ search for Colorado
 
 We found and fixed the Needle In Haystack more quickly !!! 
 
+
+Let's fix our code.
+
+Enter i for insert
+
+Change this:
 
 if (location.equalsIgnoreCase("Colorado")) {
 
@@ -281,7 +296,7 @@ if (location.equalsIgnoreCase("Colorado")) {
    }
 }
     		
-comment out 
+To this:
 
 /* if (location.equalsIgnoreCase("Colorado")) {
 
@@ -298,11 +313,11 @@ comment out
     
 save changes to products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 
-save changes in vi]
+save changes in vi
 
 :wq
     
-#Rebuild and Deploy Application
+# Rebuild and Deploy Application
 
 mvn clean install
 
@@ -315,7 +330,86 @@ We are waiting a few minutes . . .
 
 Wait for it ... 
 
-#If you do not see Red in your service map, you have successfully completed the Splunk Apm Instrumentation Shop !!
+# If you do not see Red in your service map, you have successfully completed our Inventory application review for Shri Lanka and Colorado locations  !!
+
+Now let's ensure Chicago was on-boarded correctly as well.
+
+Open a browser and navigate to http://localhost:8010
+
+Select the Chicago Location and Login
+
+We received a 500 error, something is wrong there as well.  Return to the Splunk Observability UI and lets look 
+once again at our Service Map
+
+We see there was an unhandled exception thrown in Instruments service and some latency from our database.
+
+Select the Instruments Service
+
+Click on Traces on the right
+
+Select "Errors Only" 
+
+TODO: Exception Screenshot 
+
+We can see the exception was thrown by Hibernate, however it was thrown in our method 
+"instruments: InstrumentRepository.findInstruments"
+
+# Let's play developer again
+
+Edit the file "instruments: InstrumentRepository.findInstruments"
+
+vi instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
+
+TODO: Code screenshot of bad Query 
+
+We can see the developer accidently added the Instruments database with the Chicago Instruments database !
+
+Let's change the query and fix this, remove "instruments_for_sale" from our Query
+
+Change this:
+
+public Object findInstruments() {
+   LOGGER.info("findInstruments Called (All)");
+    	
+   Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale, instruments_for_sale_chicago").getResultList(); 
+	 
+   return obj;
+}
+
+To This:
+
+public Object findInstruments() {
+    	LOGGER.info("findInstruments Called (All)");
+   // Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale, instruments_for_sale_chicago").getResultList(); 
+   	
+   Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale_chicago").getResultList(); 
+	 
+  return obj;
+}
+    
+
+# Rebuild and Deploy Application
+
+docker-compose down 
+
+mvn clean install
+   
+docker-compose up -d --build 
+
+Now let's test the Chicago location once again 
+
+Open a browser and navigate to http://localhost:8010
+
+Select the Chicago Location and Login
+
+We now see the 500 error is gone !
+
+Let's confirm a clean Service Map 
+
+TODO: Screenshot of clean service map
+
+
+# If you see a clean service map, free of errors and Latency you have successfully completed the Java Instrumentation Workshop !
 
 # Have a lovely day.
 
