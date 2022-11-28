@@ -352,6 +352,9 @@ Select "Errors Only"
 
 We can see the exception was thrown by Hibernate, however it was thrown in our method 
 "instruments: InstrumentRepository.findInstruments"
+	
+![Screen Shot 2022-11-28 at 8 14 37 AM](https://user-images.githubusercontent.com/32849847/204351905-03fe632b-b21c-4e8d-8044-dc582fed2253.png)
+
 
 # Let's play developer again
 
@@ -389,7 +392,7 @@ public Object findInstruments() {
 }
     
 
-# Rebuild and Deploy Application
+# Build and Deploy Application
 
 docker-compose down 
 
@@ -409,10 +412,8 @@ Let's confirm a clean Service Map
 
 ![Screen Shot 2022-11-28 at 8 35 11 AM](https://user-images.githubusercontent.com/32849847/204350088-fca43e3c-42ea-4933-8a61-01eb2083fd23.png)
 
-
 # If you see a clean service map, free of errors and Latency you have successfully completed the Java Instrumentation Workshop !
 
 # Have a lovely day.
 
-# End Workshop
 
