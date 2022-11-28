@@ -54,7 +54,8 @@ docker-compose up -d --build
 
 If your instrumentation was successful, the service-map will show latency from the shop service to the products service.
 
-TODO: Service map image
+![latency](https://user-images.githubusercontent.com/32849847/204347529-3bb439a7-3d7a-45c4-8fe2-3163f3a3fb8a.png)
+
 
 Click on shop service
 
