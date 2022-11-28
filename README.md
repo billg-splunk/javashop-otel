@@ -337,6 +337,8 @@ Select the Chicago Location and Login
 We received a 500 error, something is wrong there as well.  Return to the Splunk Observability UI and lets look 
 once again at our Service Map
 
+![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
+	
 We see there was an unhandled exception thrown in Instruments service and some latency from our database.
 
 Select the Instruments Service
@@ -345,7 +347,7 @@ Click on Traces on the right
 
 Select "Errors Only" 
 	
- ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
+![Screen Shot 2022-11-28 at 8 14 50 AM](https://user-images.githubusercontent.com/32849847/204349696-dc19d62f-ed82-4533-ad27-138237821b8e.png)
 
 
 We can see the exception was thrown by Hibernate, however it was thrown in our method 
@@ -357,8 +359,6 @@ Edit the file "instruments: InstrumentRepository.findInstruments"
 
 vi instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
 
- ![Screen Shot 2022-11-28 at 8 14 50 AM](https://user-images.githubusercontent.com/32849847/204349696-dc19d62f-ed82-4533-ad27-138237821b8e.png)
-	
 	
 ![Screen Shot 2022-11-28 at 8 20 24 AM](https://user-images.githubusercontent.com/32849847/204349802-06135d9d-d70b-4cf1-aaea-3ba737e5c2b9.png)
 
