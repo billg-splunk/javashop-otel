@@ -37,16 +37,13 @@ See examples at ../Dockerfiles_Instrumented
 repeat for:
 	instruments / products / stock  
 	
-#Build Application
+# Build and Deploy Application
 
 cd "javashop-otel directory"
 
 mvn clean install
 
-# Run Application
-
 docker-compose up -d --build 
-
 
 # Traces will take a couple minutes ....
 
