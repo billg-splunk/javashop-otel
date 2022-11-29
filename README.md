@@ -1,5 +1,5 @@
 
-# OUR SCENARIO
+# SCENARIO
 
 Here at Buttercup Instruments, our business is expanding !  We have recently added 3 new locations, two locations in the USA Colorado and Chicago and one international location in SRI Lanka ! 
 
