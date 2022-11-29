@@ -43,7 +43,7 @@ git clone -b workshop https://github.com/shabuhabs/javashop-otel.git
 	
 cd javashop-otel
 
-#Implement Opentelemetry Auto-Instrumentation via Dockerfiles for Java 
+# Ignore this section for now ( skip to build and deploy ): Implement Opentelemetry Auto-Instrumentation via Dockerfiles for Java 
 
 cd shop
 
