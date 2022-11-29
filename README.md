@@ -67,7 +67,7 @@ docker-compose up -d --build
 	
 As we go through this workshop we will be swtiching roles from SRE to Developer.  First we will start with first responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will solve a problem using trace data identified by our SRE.
 	
-Of course, we are not requiing 2 people for this workshop and each participant will play both roles.
+Of course, we are not requiring 2 people for this workshop as each participant will play both roles.
 
 # View Service Map
 
