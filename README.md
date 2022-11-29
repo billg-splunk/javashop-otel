@@ -6,6 +6,7 @@ Here at Buttercup Instruments, our business is expanding !  We have recently add
 Our technical staff has already on-boarded the data from these new locations and incorporated them into our inventory application and it is our job
 to review these improvements and send any issues back to our developers for repairs.
 
+# Expected Duration ~ 35 minutes
 
 # Environment Setup
 
