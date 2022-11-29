@@ -4,10 +4,24 @@
 Here at Buttercup Instruments, our business is expanding !  We have recently added 3 new locations, two locations in the USA Colorado and Chicago and one international location in SRI Lanka ! Our technical staff has already on-boarded the data from these new locations and incorporated them into our inventory application and it is our job
 to review these improvements and send any issues back to our developers for repairs.
 
-# Tested on Macos
 
-# You will  need:
-Git, Maven, Docker 
+# Installation and Environemnt
+
+Option 1: Multipass - follow instructions here https://github.com/signalfx/observability-workshop/tree/main/multipass
+
+Option 2: 
+ - Tested on Macos ( M1 )
+ 
+ Download docker desktop
+ https://www.docker.com/products/docker-desktop
+ 
+ Install Homebrew
+ https://docs.brew.sh/Installation
+ 
+ brew install git
+ 
+ brew install maven
+ 
 
 # Set Environment Variables
 
