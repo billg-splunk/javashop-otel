@@ -7,7 +7,9 @@ to review these improvements and send any issues back to our developers for repa
 
 # Environment Setup
 
-Option 1: Multipass - follow instructions here https://github.com/signalfx/observability-workshop/tree/main/multipass
+Option 1: 
+
+- Multipass - follow instructions here https://github.com/signalfx/observability-workshop/tree/main/multipass
 
 Option 2: 
  - Tested on Macos ( M1 )
