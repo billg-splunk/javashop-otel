@@ -5,7 +5,7 @@ Here at Buttercup Instruments, our business is expanding !  We have recently add
 to review these improvements and send any issues back to our developers for repairs.
 
 
-# Installation and Environemnt
+# Installation and Environment
 
 Option 1: Multipass - follow instructions here https://github.com/signalfx/observability-workshop/tree/main/multipass
 
