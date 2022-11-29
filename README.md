@@ -84,7 +84,7 @@ Sort by Duration
 
 Select the longest duration trace
 
- Image![LongTrace](https://user-images.githubusercontent.com/32849847/204347798-4f232b7f-7a7a-483f-9d61-f0b535e9ecf0.png)
+![LongTrace](https://user-images.githubusercontent.com/32849847/204347798-4f232b7f-7a7a-483f-9d61-f0b535e9ecf0.png)
 
 
 Now we can see the long latency occurred in the products service and if we click on products: /products
