@@ -263,7 +263,7 @@ Waiting a few minutes.....
 	
 Open Service Map in Splunk Observability UI	
 
-![latency 2](https://user-images.githubusercontent.com/32849847/204349287-1f942776-05cf-443e-8b65-cc0f1b921416.png)
+![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206542093-f97b37ce-7e58-45bc-a281-5a388d60617e.png)
 
 
 We can see we still have our original Latency issue, however our exception for Invalid Locale should be gone.
