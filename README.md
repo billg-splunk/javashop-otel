@@ -74,7 +74,7 @@ Of course, we are not requiring 2 people for this workshop as each participant w
 
 If your instrumentation was successful, the service-map will show latency from the shop service to the products service.
 
-![latency](https://user-images.githubusercontent.com/32849847/204347529-3bb439a7-3d7a-45c4-8fe2-3163f3a3fb8a.png)
+![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206541846-7f0e6462-7659-44bc-bc48-3621c2872fc4.png)
 
 
 Click on shop service
