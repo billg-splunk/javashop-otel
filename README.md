@@ -7,8 +7,6 @@ Our technical staff has already on-boarded the data from these new locations and
 
 We now have a total of 6 locations !
 
-# Expected Duration ~ 35 minutes
-
 
 # Set Environment Variables
 
