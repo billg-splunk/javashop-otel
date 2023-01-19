@@ -118,6 +118,7 @@ To expedite manual instrumentation implementation for this exercise, we have pro
 # Run Manual Instrumentation Tool
 
 cd javashop-otel directory
+	
 ./AutomateManualInstrumentation.sh
 
 #Rebuild and Deploy Application
