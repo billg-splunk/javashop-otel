@@ -179,7 +179,7 @@ Search for the method buildForLocale
 
 Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
 
-@SpanAttribute is another [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )that automatically adds a tag to a span with the corresponding parameter it annotates and its value. Using this technique we can tell developers exactly what the values of every parameter of a function the wrote or must repair at the time the problem occurred.
+@SpanAttribute is another [OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )that automatically adds a tag to a span with the corresponding parameter it annotates and its value. Using this technique we can tell developers exactly what the values of every parameter of a function the wrote or must repair at the time the problem occurred.
 
  ![Screen Shot 2022-11-28 at 7 45 13 AM](https://user-images.githubusercontent.com/32849847/204349143-1e35b6e4-4059-4c56-8718-76c14d41727c.png)
 
@@ -244,20 +244,25 @@ We did remove the exception however it seems removing the Exception did not fix 
 
 Lets see if the newly added annotations provide us more relevant information for the next responder once we find the cause.
 
-NOTE: We added additional information Parameter Values at Time of Latency. In this case the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations] for us.
+NOTE: We added additional information Parameter Values at Time of Latency. In this case the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
 
-![Screen Shot 2022-11-28 at 7 54 20 AM](https://user-images.githubusercontent.com/32849847/204351309-ca9c1baf-d4c4-40c2-8248-5d82c0d16477.png)
+![image](https://user-images.githubusercontent.com/32849847/213582624-66466a19-00fa-4dda-acd0-f6970d594ba1.png)
+	
+We can see that the actual function call that has the latency was not ProductResource.getAllProducts but 
+the function call "ProductResource.myCoolFunction234234234" !
 
-With this information a Developer can debug very quickly. Consider the case of debugging code, that you may not have written yourself without Parameter Values at the time of the issue ? You would have no choice but to go line .... by line ..... by line..... which can take a very long time. 
+With this information a Developer can debug very quickly. 
+	
+Consider the case of debugging code, that you may not have written yourself without Parameter Values at the time of the issue ? You would have no choice but to go line .... by line ..... by line..... which can take a very long time. 
 
-Since we now have the parameter tagged as part of our span metadata "location" Colorado must be the culprit ! 
-We can also see that the actual method that has the latency was not ProductResource.getAllProducts but 
-the method "products: ProductResource.myCoolFunction_withLocation"
+Since we now have the parameter tagged as part of our span metadata the actual root cause is seemingly related to the  "location" Colorado ! And it appears the one custom attribute that was tagged for function "ProductResource.myCoolFunction234234234" was "myInt" with a value of 999.
+
+
 
 vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 
-search for Colorado
-/Colorado
+search for 999
+/999
 
 We found and fixed the Needle In Haystack more quickly !!! 
 
@@ -268,36 +273,40 @@ Enter i for insert
 
 Change this:
 
-if (location.equalsIgnoreCase("Colorado")) {
-
-   // Generate a SLOW sleep of Random time !
-   Random random = new Random();
-    	  int sleepy = random.nextInt(5000 - 3000) + 3000;
-    	  
-   try{
-    		  Thread.sleep(sleepy);
-    		} catch (Exception e){
+private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
+// Generate a FAST sleep of 0 time !
+    	Random sleepy = new Random();
+    	try{
+        if (999==myInt) 
+        Thread.sleep(
+        sleepy.nextInt(5000 - 3000)
+        + 3000);
+        } catch (Exception e){
+       
+        }
     		
-   }
-}
+        }
+	
+	
     		
 To this:
 
-/* if (location.equalsIgnoreCase("Colorado")) {
-
-   // Generate a SLOW sleep of Random time !
-   Random random = new Random();
-    	  int sleepy = random.nextInt(5000 - 3000) + 3000;
-    	  
-   try{
-    		  Thread.sleep(sleepy);
-    		} catch (Exception e){
+private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
+// Generate a FAST sleep of 0 time !
+    	Random sleepy = new Random();
+   	try{
+        if (999==myInt) 
+      //  Thread.sleep(
+      //  sleepy.nextInt(5000 - 3000)
+      //  + 3000);
+        } catch (Exception e){
+       
+        }
     		
-   }
-} */
+        }
     
 
-save changes in vi type
+Save changes in vi type
 
 :wq
 
