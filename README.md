@@ -1,32 +1,14 @@
 
 # Scenario
 
-Here at Buttercup Instruments, our business is expanding !  We have recently added 3 new locations, two locations in the USA Colorado and Chicago and one international location in SRI Lanka ! 
+Here at Buttercup Instruments, our business is expanding !  We have recently added 3 new locations, two locations in the USA, Colorado and Chicago and one international location in SRI Lanka ! 
 
-Our technical staff has already on-boarded the data from these new locations and incorporated them into our inventory application and it is our job
-to review these improvements and send any issues back to our developers for repairs.
+Our technical staff has already on-boarded the data from these new locations and incorporated them into our inventory application and it is our job to review these improvements and send any issues back to our developers for repairs.
+
+We now have a total of 6 locations !
 
 # Expected Duration ~ 35 minutes
 
-# Environment Setup
-
-Option 1: 
-
-- Multipass - follow instructions here https://github.com/signalfx/observability-workshop/tree/main/multipass
-
-Option 2: 
- - Tested on Macos ( M1 )
- 
- Download docker desktop
- https://www.docker.com/products/docker-desktop
- 
- Install Homebrew
- https://docs.brew.sh/Installation
- 
- brew install git
- 
- brew install maven
- 
 
 # Set Environment Variables
 
@@ -39,19 +21,17 @@ export SPLUNK_ACCESS_TOKEN=<Your-Token>
 export SPLUNK_REALM=<Your-Realm>
 
 
-#  Installation
-git clone -b workshop https://github.com/shabuhabs/javashop-otel.git
-	
-cd javashop-otel
-
-# Ignore this section for now ( skip to build and deploy ): Implement Opentelemetry Auto-Instrumentation via Dockerfiles for Java 
+# Implement Opentelemetry Auto-Instrumentation via Dockerfiles for Java 
 
 cd shop
 
 vi Dockerfile
 
 add Otel Java Agent to Java ENTRYPOINT,  ( java -javaagent:splunk-otel-javaagent-all.jar )
-See examples at ../Dockerfiles_Instrumented
+
+See examples at:
+ 
+vi ../Dockerfiles_Instrumented
 
 repeat for:
 	instruments / products / stock  
@@ -60,13 +40,11 @@ repeat for:
 
 cd "javashop-otel directory"
 
-mvn clean install
+./BuildAndDeploy.sh
 
-docker-compose up -d --build 
-
-# Users and workflows
+# Users and Workflows
 	
-As we go through this workshop we will be swtiching roles from SRE to Developer.  First we will start with first responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will solve a problem using trace data identified by our SRE.
+As we go through this workshop we will be switching roles from SRE to Developer.  First we will start with first responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will solve a problem using trace data identified by our SRE.
 	
 Of course, we are not requiring 2 people for this workshop as each participant will play both roles.
 
@@ -94,7 +72,7 @@ we can see the offending method was products:ProductResource.getAllProducts
 ![long-trace-detail-GetAllProducts](https://user-images.githubusercontent.com/32849847/204347855-724545bf-c3df-478a-a27d-e4f85f708e15.png)
 
 
-Our next step here would be to send that trace to a developer by cliking download trace and
+Our next step here would be to send that trace to a developer by clicking download trace and
 they will have to debug the method. 
 
 Before we do that please take note of the Tags available for the developer to leverage to find root cause.
@@ -104,7 +82,6 @@ Note: Since they do not have full parameter information it can be a long process
 # Now let's play the role of the developer
 
 As a developer we must debug the function products:ProductResource.getAllProducts to find the problem.
-
 
 
 Now find the needle in Haystack !
@@ -134,27 +111,17 @@ To add even more information to help our developers find the root cause faster,
 
 It is important to remember that any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ). 
 
-To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. 
+To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. This "annotator" tool will also tag every parameter in every function, which adds a span tag with Parameter=Value.
 
 # This Full-fidelity, Every-method approach is the Monolith Use Case with Splunk APM for Java.  
 
-
-cd annotator
-
-Run the annotator application
-
-mvn exec:java
+cd javashop-otel directory
+./AutomateManualInstrumentation.sh
 
 #Rebuild and Deploy Application
 
 
-cd ..
-
-mvn clean install
-
-docker-compose down
-
-docker-compose up -d --build 
+./BuildAndDeploy.sh
 
 
 #Now that we have rebuilt and deployed our application, traffic is being sent once again.
@@ -211,6 +178,8 @@ Search for the method buildForLocale
 Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation]
 (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
 
+@SpanAttribute is another [OpenTelemetry Annotation] that automatically adds a tag to a span with the corresponding parameter it annotates and its value. Using this technique we can tell developers exactly what the values of every parameter of a function the wrote or must repair at the time the problem occurred.
+
  ![Screen Shot 2022-11-28 at 7 45 13 AM](https://user-images.githubusercontent.com/32849847/204349143-1e35b6e4-4059-4c56-8718-76c14d41727c.png)
 
 
@@ -242,20 +211,16 @@ To this:
 
 //}
 
-Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
-
-To save changes in vi
+To save changes in vi type
 
 :wq
 
+Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
+
+
 # Build and Deploy Application
 
-docker-compose down
-
-mvn clean install
-
-docker-compose up -d --build 
-
+./BuildAndDeploy.sh
 
 Waiting a few minutes.....
 
@@ -274,16 +239,15 @@ Click Shop Service
 
 Click Traces on the right
 
-
 We did remove the exception however it seems removing the Exception did not fix the latency...
 
-Lets see if these annotations provide us more relevant information for the next responder once we find the root cause.
+Lets see if the newly added annotations provide us more relevant information for the next responder once we find the cause.
 
-NOTE: We added additional information Parameter Values at Time of Latency in this case "Location"
+NOTE: We added additional information Parameter Values at Time of Latency. In this case the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations] for us.
 
 ![Screen Shot 2022-11-28 at 7 54 20 AM](https://user-images.githubusercontent.com/32849847/204351309-ca9c1baf-d4c4-40c2-8248-5d82c0d16477.png)
 
-With this information a Developer can debug very quickly. 
+With this information a Developer can debug very quickly. Consider the case of debugging code, that you may not have written yourself without Parameter Values at the time of the issue ? You would have no choice but to go line .... by line ..... by line..... which can take a very long time. 
 
 Since we now have the parameter tagged as part of our span metadata "location" Colorado must be the culprit ! 
 We can also see that the actual method that has the latency was not ProductResource.getAllProducts but 
@@ -331,38 +295,39 @@ To this:
    }
 } */
     
-save changes to products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 
-save changes in vi
+save changes in vi type
 
 :wq
+
+Make sure you saved your changes to:  products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+
     
 # Build and Deploy Application
 
-mvn clean install
-
-docker-compose up -d --build 
+./BuildAndDeploy.sh
 
 #Now that we have rebuilt and deployed our application, traffic is being sent once again.  
 
 We are waiting a few minutes . . .
 
-Wait for it ... 
 
 # If you do not see Red in your service map, you have successfully completed our Inventory application review for Shri Lanka and Colorado locations  !!
 
-Now let's ensure Chicago was on-boarded correctly as well.
+Now let's ensure Chicago was on-boarded correctly. However, since we have been having so many issues related to "location" and we have added that custom attribute via Opentelemetry Manual Instrumentation, lets go to the Splunk Observability UI and create an APM metric set around that tag. 
+
+NOTE: We can do this without concern for Cardinality as we know this tag only has 6 possible values.
+
 
 Open a browser and navigate to http://localhost:8010
 
 Select the Chicago Location and Login
 
-We received a 500 error, something is wrong there as well.  Return to the Splunk Observability UI and lets look 
-once again at our Service Map
+We received a 500 error, something is wrong there as well.  Return to the Splunk Observability UI and lets look once again at our Service Map
 
 ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
 	
-We see there was an unhandled exception thrown in Instruments service and some latency from our database.
+We see there was an un-handled exception thrown in Instruments service and some latency from our database.
 
 Select the Instruments Service
 
@@ -417,11 +382,9 @@ public Object findInstruments() {
 
 # Build and Deploy Application
 
-docker-compose down 
+cd javashop-otel directory
 
-mvn clean install
-   
-docker-compose up -d --build 
+./BuildAndDeploy.sh
 
 Now let's test the Chicago location once again 
 
