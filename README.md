@@ -318,8 +318,20 @@ Now let's ensure Chicago was on-boarded correctly. However, since we have been h
 
 NOTE: We can do this without concern for Cardinality as we know this tag only has 6 possible values.
 
+Index the location Tag.
+	
+![Screen Shot 2023-01-19 at 12 20 42 AM](https://user-images.githubusercontent.com/32849847/213386255-72fb31cb-f22e-4024-b4a0-8cfb1c959d98.png)
+
+
+![image](https://user-images.githubusercontent.com/32849847/213386328-1f0a85b6-41f8-4001-b81d-0d8ac30ded04.png)
+
+# Build and Deploy Application to run traffic again
+	
+./BuildAndDeploy.sh 
 
 Open a browser and navigate to http://localhost:8010
+
+![image](https://user-images.githubusercontent.com/32849847/213386446-3f534039-2497-4c79-a93e-fda6517523c4.png)
 
 Select the Chicago Location and Login
 
@@ -397,14 +409,6 @@ We now see the 500 error is gone !
 Let's confirm a clean Service Map 
 
 ![Screen Shot 2022-11-28 at 8 35 11 AM](https://user-images.githubusercontent.com/32849847/204350088-fca43e3c-42ea-4933-8a61-01eb2083fd23.png)
-
-Since we have had so many problems related to locations, we should Index the location tag we created in manual instrumentation above so we have an easy visual way to see if we have a problem with any of them,
-
-Index the location Tag.
-
-LAST SCRIPT TO RUN !
-
-Break down traffic by location. 
 
 # If you see a clean service map, free of errors and Latency you have successfully completed the Java Instrumentation Workshop !
 
