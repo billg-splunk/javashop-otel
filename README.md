@@ -398,7 +398,18 @@ Let's confirm a clean Service Map
 
 ![Screen Shot 2022-11-28 at 8 35 11 AM](https://user-images.githubusercontent.com/32849847/204350088-fca43e3c-42ea-4933-8a61-01eb2083fd23.png)
 
+Since we have had so many problems related to locations, we should Index the location tag we created in manual instrumentation above so we have an easy visual way to see if we have a problem with any of them,
+
+Index the location Tag.
+
+LAST SCRIPT TO RUN !
+
+Break down traffic by location. 
+
 # If you see a clean service map, free of errors and Latency you have successfully completed the Java Instrumentation Workshop !
+
+
+
 
 # Have a lovely day.
 
