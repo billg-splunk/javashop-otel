@@ -331,7 +331,8 @@ Index the location Tag.
 
 Open a browser and navigate to http://localhost:8010
 
-![image](https://user-images.githubusercontent.com/32849847/213386446-3f534039-2497-4c79-a93e-fda6517523c4.png)
+![image](https://user-images.githubusercontent.com/32849847/213541843-30266285-787f-493b-bc90-ffb4ac6e4c77.png)
+
 	
 Select a few locagtions and hit the login button, remember to select the Chicago Location and Login
 
