@@ -25,7 +25,17 @@ cd shop
 
 vi Dockerfile
 
-add Otel Java Agent to Java ENTRYPOINT,  ( java -javaagent:splunk-otel-javaagent-all.jar )
+add Otel Java Agent to Java ENTRYPOINT:
+	
+Change This:
+
+ 	ENTRYPOINT java  -Dotel.resource.attributes=service.name=shop,deployment.environment=${USERNAME}_Apm_Instrumentation_Shop -jar app.jar
+
+To This
+
+	ENTRYPOINT java -javaagent:splunk-otel-javaagent-all.jar 
+	-Dotel.resource.attributes=service.name=shop,deployment.environment=${USERNAME}_Apm_Instrumentation_Shop
+	-jar app.jar
 
 See examples at:
  
@@ -111,7 +121,7 @@ It is important to remember that any developer should be able to debug a method 
 
 To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. This "annotator" tool will also tag every parameter in every function, which adds a span tag with Parameter=Value.
 
-# This Full-fidelity, Every-method approach is the Monolith Use Case with Splunk APM for Java.  
+# This Full-fidelity Every-method approach is the Monolith Use Case with Splunk APM for Java.  
 
 # Run Manual Instrumentation Tool
 
@@ -119,7 +129,7 @@ cd javashop-otel directory
 	
 ./AutomateManualInstrumentation.sh
 
-#Rebuild and Deploy Application
+# Rebuild and Deploy Application
 
 ./BuildAndDeploy.sh
 
