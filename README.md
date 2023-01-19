@@ -115,11 +115,12 @@ To expedite manual instrumentation implementation for this exercise, we have pro
 
 # This Full-fidelity, Every-method approach is the Monolith Use Case with Splunk APM for Java.  
 
+# Run Manual Instrumentation Tool
+
 cd javashop-otel directory
 ./AutomateManualInstrumentation.sh
 
 #Rebuild and Deploy Application
-
 
 ./BuildAndDeploy.sh
 
