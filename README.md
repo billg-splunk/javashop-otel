@@ -321,10 +321,9 @@ NOTE: We can do this without concern for Cardinality as we know this tag only ha
 
 Index the location Tag.
 	
-![Screen Shot 2023-01-19 at 12 20 42 AM](https://user-images.githubusercontent.com/32849847/213386255-72fb31cb-f22e-4024-b4a0-8cfb1c959d98.png)
 
+![image](https://user-images.githubusercontent.com/32849847/213540265-5b0567ab-c9f3-412f-bec0-07277c7e8650.png)
 
-![image](https://user-images.githubusercontent.com/32849847/213386328-1f0a85b6-41f8-4001-b81d-0d8ac30ded04.png)
 
 # Build and Deploy Application to run traffic again
 	
@@ -333,10 +332,10 @@ Index the location Tag.
 Open a browser and navigate to http://localhost:8010
 
 ![image](https://user-images.githubusercontent.com/32849847/213386446-3f534039-2497-4c79-a93e-fda6517523c4.png)
+	
+Select a few locagtions and hit the login button, remember to select the Chicago Location and Login
 
-Select the Chicago Location and Login
-
-We received a 500 error, something is wrong there as well.  Return to the Splunk Observability UI and lets look once again at our Service Map
+Uhh ohh ! We received a 500 error, something is wrong there as well.  Return to the Splunk Observability UI and lets look once again at our Service Map
 
 ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
 	
