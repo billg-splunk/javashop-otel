@@ -176,10 +176,9 @@ Search for the method buildForLocale
 
 /buildForLocale
 
-Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation]
-(https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
+Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
 
-@SpanAttribute is another [OpenTelemetry Annotation] that automatically adds a tag to a span with the corresponding parameter it annotates and its value. Using this technique we can tell developers exactly what the values of every parameter of a function the wrote or must repair at the time the problem occurred.
+@SpanAttribute is another [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )that automatically adds a tag to a span with the corresponding parameter it annotates and its value. Using this technique we can tell developers exactly what the values of every parameter of a function the wrote or must repair at the time the problem occurred.
 
  ![Screen Shot 2022-11-28 at 7 45 13 AM](https://user-images.githubusercontent.com/32849847/204349143-1e35b6e4-4059-4c56-8718-76c14d41727c.png)
 
