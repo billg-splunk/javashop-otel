@@ -99,12 +99,12 @@ Exit vi
 
 OK, enough fun ..let's make this easier for our developer
 
-# Manual Instrumentation
+# Custom Attribution
 
-To take a deeper look at this issue, we will implement manual instrumentation
+To take a deeper look at this issue, we will implement Custom Attributes via Opentelemetry Manual Instrumentation
 
-To speed up manual instrumentation in Java you would leverage [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )
-, which automatically create a span around a method without modifying the actual code inside the method. 
+To speed up manual instrumentation in Java you can leverage [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )
+, which automatically create a span around a method without modifying the actual code inside the method. This can be very valueable if you are working with an SRE that may have limited accesss to source code changes.
 
 To add even more information to help our developers find the root cause faster,
 [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) can be used to generate span tags with parameter values for the method in question. 
