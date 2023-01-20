@@ -36,3 +36,15 @@
 
 mv shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.javaOLD shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 
+mv instruments/src/main/java/com/shabushabu/javashop/instruments/InstrumentsApplication.javaOLD instruments/src/main/java/com/shabushabu/javashop/instruments/InstrumentsApplication.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/config/DataGenerator.javaOLD instruments/src/main/java/com/shabushabu/javashop/instruments/config/DataGenerator.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/exceptions/InstrumentNotFoundException.javaOLD instruments/src/main/java/com/shabushabu/javashop/instruments/exceptions/InstrumentNotFoundException.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/model/Instrument.javaOLD instruments/src/main/java/com/shabushabu/javashop/instruments/model/Instrument.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/model/Stock.javaOLD instruments/src/main/java/com/shabushabu/javashop/instruments/model/Stock.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepository.javaOLD instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepository.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.javaOLD     instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/InstrumentRepository.javaOLD     instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/InstrumentRepository.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/InstrumentStocksRepository.javaOLD         instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/InstrumentStocksRepository.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/resources/InstrumentResource.javaOLD         instruments/src/main/java/com/shabushabu/javashop/instruments/resources/InstrumentResource.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/services/InstrumentService.javaOLD            instruments/src/main/java/com/shabushabu/javashop/instruments/services/InstrumentService.java
+mv    instruments/src/main/java/com/shabushabu/javashop/instruments/services/InstrumentStocksService.javaOLD      instruments/src/main/java/com/shabushabu/javashop/instruments/services/InstrumentStocksService.java

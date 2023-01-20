@@ -34,6 +34,8 @@ public class OpenTelemetryAnnotator {
 	private static final String FILE_PATH = "../shop/";
 	private static final String FILE_PATH2 = 
 			"../products/src/main/java/com/shabushabu/javashop/products/resources";
+	private static final String FILE_PATH3 = 
+			"../instruments/";
 	
 	  // list all files from this path
     public static ArrayList<Path> listFiles(URI path) throws IOException {
@@ -113,6 +115,9 @@ public class OpenTelemetryAnnotator {
 	     annotateCodebase(projectDir);
 	     
 	     projectDir = new File(FILE_PATH2);
+	     annotateCodebase(projectDir);
+	     
+	     projectDir = new File(FILE_PATH3);
 	     annotateCodebase(projectDir);
        
     }
