@@ -131,9 +131,13 @@ public class OpenTelemetryAnnotator {
         	
         	if ( md.getBody().isPresent() && 
         		!md.getName().asString().startsWith("main") && 
-        	    !md.getName().asString().startsWith("get") &&
         	    !md.getName().asString().startsWith("set") &&
         	    !md.getName().asString().startsWith("health")) {
+        		
+        		
+        		if (md.getName().asString().startsWith("get") && md.getName().asString().compareToIgnoreCase("getInstruments")!=0) {
+        			return;
+        		}
         		
         		md.addAnnotation("WithSpan");
         		NodeList<Parameter> params = md.getParameters();
