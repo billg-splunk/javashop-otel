@@ -370,8 +370,6 @@ Now, since we have Indexed our location tag, let's break down the traffic by loc
 	
 We see there was an un-handled exception thrown in Instruments service and some latency from our database that is related to the Chicago location !
 
-Select the Instruments Service
-
 Click on Traces on the right
 
 Select "Errors Only" 
