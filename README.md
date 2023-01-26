@@ -282,36 +282,42 @@ Enter i for insert
 Change this:
 
 private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
+
 // Generate a FAST sleep of 0 time !
-    	Random sleepy = new Random();
-    	try{
-        if (999==myInt) 
-        Thread.sleep(
-        sleepy.nextInt(5000 - 3000)
-        + 3000);
-        } catch (Exception e){
-       
-        }
-    		
-        }
+Random sleepy = new Random();
+try{
 	
+if (999==myInt)
+	
+Thread.sleep(
+	
+sleepy.nextInt(5000 - 3000)
+	
++ 3000);
+	
+} catch (Exception e){
+
+
 	
     		
 To this:
 
 private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
+
 // Generate a FAST sleep of 0 time !
-    	Random sleepy = new Random();
-   	try{
-        if (999==myInt) 
-      //  Thread.sleep(
-      //  sleepy.nextInt(5000 - 3000)
-      //  + 3000);
-        } catch (Exception e){
-       
-        }
-    		
-        }
+Random sleepy = new Random();
+try{
+	
+// if (999==myInt)
+	
+//  Thread.sleep(
+	
+//  sleepy.nextInt(5000 - 3000)
+	
+//  + 3000);
+	
+} catch (Exception e){
+
     
 
 Save changes in vi type
@@ -356,10 +362,13 @@ Select a few locagtions and hit the login button, remember to select the Chicago
 Uhh ohh ! We received a 500 error, something is wrong there as well.  Return to the Splunk Observability UI and lets look once again at our Service Map
 
 ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
-	
-We see there was an un-handled exception thrown in Instruments service and some latency from our database.
 
-Select the Instruments Service
+Now, since we have Indexed our location tag, let's break down the traffic by location so we can see how that may have affected this 500 error.
+
+![image](https://user-images.githubusercontent.com/32849847/214941419-2eaae297-e246-460b-a913-28c2a28fcd6a.png)
+
+	
+We see there was an un-handled exception thrown in Instruments service and some latency from our database that is related to the Chicago location !
 
 Click on Traces on the right
 
