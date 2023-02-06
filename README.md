@@ -12,7 +12,7 @@ We now have a total of 6 locations !
 
 Environment Variables:
 
-export USERNAME=<Your-UserName>
+export SHOP_USER=<Your-UserName>
 
 export SPLUNK_ACCESS_TOKEN=<Your-Token>
 
