@@ -53,9 +53,9 @@ Of course, we are not requiring 2 people for this workshop as each participant w
 
 # Today we will learn 
 
-Today we will learn the type of data ( In the form of a trace ) that an SRE or alert responder would send to a developer to then repair/fix software. We will do this with both Auto-Instrumentation data and Custom attributes, via Manual Instrumentation.
+Today we will learn the type of data ( In the form of a trace ) that an SRE or alert responder would send to a developer to then repair/fix software. We will do this with both Auto-Instrumentation data and Custom attributes, via Manual Instrumentation data.
 
-While we will be spending time Debugging code, .... Don't worry, ...there is no programming experience necessary, as our goal here is for everyone in the audience to understand how using Custom Attributes in Splunk APM @ Full Fidelity can accelerate Mean Time to Repair Software problems for our customers.
+While we will be spending time Debugging code, .... Don't worry, ...there is no programming experience necessary, as our goal here is for everyone in the audience to understand how using Custom Attributes in Splunk APM @ Full Fidelity can accelerate Mean Time to Repair Software problems for our customers. 
 
 Translated, Developers are High Cost resources, with high opportunity cost. Less time on fixing problems = more time for features.
 
@@ -76,7 +76,7 @@ It is recommended to use a -5m look back during this lab. Start there, use 15 if
 
 <img width="731" alt="Screen Shot 2023-02-14 at 8 25 19 PM" src="https://user-images.githubusercontent.com/32849847/218923108-6c6a7efb-588e-4f7b-b788-768037eae4bb.png">
 
-NOTE: Typically, to identify root cause and route an issue, an SRE or alert responder would check metrics and logs to determine if it is a software or hardware related issue, and thus route to the correct party. In this excercise we are ONLY handling software issues, so we are skipping that part of normal triage. 
+NOTE: Typically, to identify root cause and route an issue, an SRE or alert responder would check metrics and logs to determine if it is a software or hardware related issue, and thus route to the correct party. In this excercise we are ONLY handling software issues, so we are skipping the metrics and logs parts of normal triage. 
 
 If your instrumentation was successful, the service-map will show latency from the shop service to the products service. 
 
@@ -102,7 +102,7 @@ we can see the offending method was products:ProductResource.getAllProducts
 
 
 Our next step here would be to send that trace to a developer by clicking download trace and
-they will have to debug the method. Since we will be the developer, no need to download the trace. Just remember that is normal workflow for alert responders.
+they will have to debug the method. Since we will be the developer, there is no need to download the trace. Just remember that is normal workflow for alert responders to route an issue to the "Repairers" while providing trace data. 
 
 Before we do that please take note of the Tags available for the developer to leverage to find root cause. We see standard out of the box Otel tags on the span, environmental information, but no indcations of data specific to something inside custom code ( which is where the problem always is. )
 
@@ -111,12 +111,11 @@ Before we do that please take note of the Tags available for the developer to le
 As a developer we must debug the function products:ProductResource.getAllProducts to find the problem.
 
 
-# We will call this Debugging 101, the Line by Line method aka the "NoT FuN method..."
+# Debugging 101, the Line by Line method aka the "NoT FuN AT aLL method..."
 
-Without anything to go on other than "BAD FUNCTION" a Developer must then look at code visually line by line and in possible run it in a debugger and execute line by line.
+Without anything to go on other than "BAD FUNCTION",  a Developer must then look at code visually line by line to find and fix the problem.
 
 We will do the visual inspection mehtod next.
-
 
 If your using Nano:
 ```
@@ -209,6 +208,8 @@ Search in vi
 
 I think you get the picture by now, you have no choice but to inspect every line of code and every function called and visually inspect them for problems. This can be a VERY long process and kills our customers Mean time to Repair. This happens quite often to our customers with our competition beacsue they can't provide all the traces 100% of the time and most can't scale to add more data, via Custom Attributes on top of that !
 
+Remember, without Full Fidelty, you have to either reproduce errors / latency in another environment or inspect code line by line.
+
 So they are stuck where we are, quite often.
 
 OK, enough fun ..let's make this easier for our developer... and show off some Splunk APM Scale !
@@ -226,45 +227,31 @@ To take a deeper look at this issue and make this much easier to debug we will i
 To speed up manual instrumentation in Java you can leverage [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ), which automatically create a span around a method without modifying the actual code inside the method. This can be very valuable if you are working with an SRE that may have limited access to source code changes.
 
 To add even more information to help our developers find the root cause faster,
-[OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) can be used to generate span tags with parameter values for the method in question. This is incredibly important to mean time to Repair, because as a Developer, if I know the parameter values of a function at the time of latency or error, I can debug this without having to reproduce an issue in another environment. 
+[OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) can be used to generate span tags with parameter values for the method in question. This is incredibly important to mean time to Repair, because as a Developer, if I know the parameter values of a function at the time of latency or error, I can debug this without having to reproduce an issue in another environment if I have Full Fidelity Tracing.
 
-Splunk Full Fidelity APM allows our customers development teams to debug their code as it ran in production, 100% of the time . Add in Custom Attribution, and you are providing repeatable Mean Time to Repair acceleration... again 100% of the time.
+Splunk Full Fidelity APM allows our customers development teams to debug their code as it ran in production, 100% of the time . Add with Custom Attribution, you are providing repeatable Mean Time to Repair reduction...  100% of the time, only with Full Fidelity tracing.
  
-It is important to remember this, that any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ). 
-
 To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. This "annotator" tool will also tag every parameter in every function, which adds a span tag with Parameter=Value. 
-
-NOTE: if you have a Java  APM opportunity, please contact Derek directly as we can potentially enable this during a pilot to block out competition and prove MTTR reduction as our competition couldn't possibly bring in this data at full fidelity at scale.
-
-# This Full-fidelity Every-method approach is the Monolith Use Case with Splunk APM for Java.  
 
 # Run Manual Instrumentation Tool
 
+```
 cd javashop-otel directory
 	
 ./AutomateManualInstrumentation.sh
+```
 
 # Rebuild and Deploy Application
 
+```
 ./BuildAndDeploy.sh
+```
 
-#Now that we have rebuilt and deployed our application, traffic is being sent once again.
+# Now that we have rebuilt and deployed our application, traffic is being sent once again.
 
 Go back to the Splunk Observability UI and let's see if these annotations help us narrow down the root cause more quickly.
 
-Click back on the service map and let's try to find our latency root cause again, this time with every function and every parameter spanned and tagged respectively.... You will see exactly what this means and how it benefits developers in a moment...
-
-
-# Latency Root Cause
-	
-Open Service Map in Splunk Observability UI	
-
-![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206542093-f97b37ce-7e58-45bc-a281-5a388d60617e.png)
-
-
-Lets see if the newly added annotations allow us to provide the "fixer" or developer more complete information that will accelerate their repair time. 
-
-Go back to the service map, once the map returns with the latency present as we started with:
+Let's try to find our latency root cause again, this time with every function and every parameter spanned and tagged respectively.... You will see exactly what this means and how it benefits developers in a moment...
 
 ![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206541846-7f0e6462-7659-44bc-bc48-3621c2872fc4.png)
 
