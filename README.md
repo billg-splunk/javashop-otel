@@ -59,7 +59,7 @@ While we will be spending time Debugging code, .... Don't worry, ...there is no 
 
 Translated, Developers are High Cost resources, with high opportunity cost. Less time on fixing problems = more time for features.
 
-Let's define a few terms for those new to APM / Software Development or Java
+# Let's define a few terms for those new to APM / Software Development or Java
 
 1. What's a Function in Java ?
 	A Function  in most languages includeing Java, is a logical chunk of code when executed solves a repeatable task. This is basically what our 		customers Dev teams spend thier time building and where software issues will most commonly be.
