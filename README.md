@@ -37,6 +37,8 @@ CTRL-X
 	
 # Build and Deploy Application
 
+Let's get started by building and deploying our Application, the Buttercup Instrument Shop. Run the commands below to begin and start reading ahead as your traces are coming up !
+
 ```
 cd javashop-otel
 
@@ -45,18 +47,9 @@ cd javashop-otel
 
 # Users and Workflows
 	
-As we go through this workshop we will be switching roles from SRE to Developer.  First we will start with alert responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will repair/fix a software problem using trace data provided by our SRE.
+As we go through this workshop we will be switching roles from SRE to Developer.  First we will start with alert responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will debug and repair/fix a software problem using trace data provided by our SRE.
 	
 Of course, we are not requiring 2 people for this workshop as each participant will play both roles.
-
-Let's define a few terms for those new to APM / Software Development or Java
-
-1. What's a Function in Java ?
-	A Function  in most languages includeing Java, is a logical chunk of code, when executed solves a repeatable task. This is basically what our 		customers Dev teams spend thier time building and where software issues will most commonly be.
-3. What's a  Method in Java ?
- 	See What's a function -> Function and method are synonomous.
-5. What's an Exception in Java ?
-	An Exceptional error condition that indicates abonormal and unhandled conditions, that interrupts program execution abnormally.
 
 # Today we will learn 
 
@@ -66,15 +59,24 @@ While we will be spending time Debugging code, .... Don't worry, ...there is no 
 
 Translated, Developers are High Cost resources, with high opportunity cost. Less time on fixing problems = more time for features.
 
+Let's define a few terms for those new to APM / Software Development or Java
+
+1. What's a Function in Java ?
+	A Function  in most languages includeing Java, is a logical chunk of code when executed solves a repeatable task. This is basically what our 		customers Dev teams spend thier time building and where software issues will most commonly be.
+3. What's a  Method in Java ?
+ 	See What's a function -> Function and method are synonomous.
+5. What's an Exception in Java ?
+	An Exceptional error condition that indicates abonormal or unhandled condition, that interrupts program execution abnormally.
+
 # View Service Map
 
- Please note it may take 3-4 minutes for traces to show up, and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times each time we Build and Deploy. 
+Please note it may take 3-4 minutes for traces to show up, and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times each time we Build and Deploy. 
  
  It is recommended to use a -5m look back during this lab. Start there, use 15 if you feel you have to.
 
 <img width="731" alt="Screen Shot 2023-02-14 at 8 25 19 PM" src="https://user-images.githubusercontent.com/32849847/218923108-6c6a7efb-588e-4f7b-b788-768037eae4bb.png">
 
-NOTE: Typically, to identify root cause and route an issue, an SRE or alert responder would check metrics and logs to determine if it is a software or hardware related issue, and thus route to the correct party. In this excercise we are ONLY handling software issues, so we are skipping that part of normal triage.
+NOTE: Typically, to identify root cause and route an issue, an SRE or alert responder would check metrics and logs to determine if it is a software or hardware related issue, and thus route to the correct party. In this excercise we are ONLY handling software issues, so we are skipping that part of normal triage. 
 
 If your instrumentation was successful, the service-map will show latency from the shop service to the products service. 
 
@@ -100,11 +102,9 @@ we can see the offending method was products:ProductResource.getAllProducts
 
 
 Our next step here would be to send that trace to a developer by clicking download trace and
-they will have to debug the method. 
+they will have to debug the method. Since we will be the developer, no need to download the trace. Just remember that is normal workflow for alert responders.
 
-Before we do that please take note of the Tags available for the developer to leverage to find root cause.
-
-Note: Since they do not have full parameter information it can be a long process.
+Before we do that please take note of the Tags available for the developer to leverage to find root cause. We see standard out of the box Otel tags on the span, environmental information, but no indcations of data specific to something inside custom code ( which is where the problem always is. )
 
 # Now let's play the role of the developer
 
@@ -112,6 +112,10 @@ As a developer we must debug the function products:ProductResource.getAllProduct
 
 
 # We will call this Debugging 101, the Line by Line method aka the "NoT FuN method..."
+
+Without anything to go on other than "BAD FUNCTION" a Developer must then look at code visually line by line and in possible run it in a debugger and execute line by line.
+
+We will do the visual inspection mehtod next.
 
 
 If your using Nano:
