@@ -12,7 +12,7 @@ We now have a total of 6 locations !
 
 Environment Variables:
 
-If you are using nano 
+Using nano 
 
 ```
 nano .env
