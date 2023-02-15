@@ -281,25 +281,26 @@ NOTE: How did we get here....We added additional span information, which we call
 
 If you are using nano:
 
+```
 nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+```
 
 Search in Nano
 CTRL-W 
 
 Enter in: 999
 
-
-
+If you are using vi 
+``
 vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
-
+``
 search for 999
 /999
 
 
-We can see here, someone and he's actually in this room, his name is Tim... 
+We can see here, someone and he's actually in this room wrote some very bad code in the form of a long Sleep !
 
-Wrote some very bad code in the form of a long Sleep !
-
+```
 if (999==myInt)
 	
 Thread.sleep(
@@ -307,7 +308,7 @@ Thread.sleep(
 sleepy.nextInt(5000 - 3000) + 3000);
 	
 )
-
+```
 
 How did we get here ? How did the 999 end up in the trace as a Custom Attribute ?
 
@@ -315,11 +316,13 @@ Take a look at the function signature
 
 private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) 
 
+@SpanAttribute("myint") is an Opentelemetry Java Annotation, that was added by our Java Otel Annotator tool.
 
 Let's fix our code.
 
 Change this:
 
+```
 private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
 
 // Generate a FAST sleep of 0 time !
@@ -335,9 +338,11 @@ sleepy.nextInt(5000 - 3000)
 + 3000);
 	
 } catch (Exception e){
-	
+```
+
 To this:
 
+```
 private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
 
 // Generate a FAST sleep of 0 time !
@@ -365,6 +370,7 @@ place comments before every line in myCoolFunction234234234
 //  sleepy.nextInt(5000 - 3000)
 	
 //  + 3000);
+```
 
 write out changes in nano
 
@@ -382,6 +388,7 @@ move cursor to each location and add commments to each line as follows:
 
 place comments before every line in myCoolFunction234234234
 
+```
 // if (999==myInt)
 	
 //  Thread.sleep(
@@ -389,11 +396,12 @@ place comments before every line in myCoolFunction234234234
 //  sleepy.nextInt(5000 - 3000)
 	
 //  + 3000);
+```
 
 :wq
 
-Make sure you saved your changes to:  products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 
+Make sure you saved your changes to:  products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
     
 # Let's go see if our manual instrumentation uncovered any other issues we did not see before
 
@@ -424,11 +432,11 @@ We can see our Exception is InvalidLocaleException !
 
 The real problem must be related to the new data associated with SRI LANKA as the Exception says "Non English Characters found in Instrument Data. 
 
-This exception had not surfaced in previous traces because the method where it was thrown 
-was NOT covered with Auto Instrumentation. 
+This exception had not surfaced in previous traces based on ONLY Auto-Instrumentation because the method where it was thrown 
+was NOT covered with Auto-Instrumentation. This is common as code developers write is not directly covered by Auto-Instrumentation with Distributed Tracing. 
 
-Once we completed the Manual Instrumentation via the Annotations we added, 
-this method was instrumented  and we can now see we had a buried Exception being thrown.
+Once we completed the Manual Instrumentation via the Otel Annotator, 
+this method was instrumented  and we can now see we had a buried Exception being thrown. 
 
 # Let's play Developer once again and fix our issue !
 
@@ -441,14 +449,20 @@ Edit the file
 
 If you are using nano
 
+```
 nano shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
+```
 
 Search in Nano
 CTRL-W 
 
 Enter in: buildForLocale
 
+If you are using vi
+
+```
 vi shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
+```
 
 Search for the method buildForLocale
 
@@ -458,13 +472,13 @@ Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry An
 
  ![Screen Shot 2022-11-28 at 7 45 13 AM](https://user-images.githubusercontent.com/32849847/204349143-1e35b6e4-4059-4c56-8718-76c14d41727c.png)
 
-
 Now let's fix this code. We are going to simply comment this out for now and see if it fixes our latency issue.
 
 If you are using nano
 
 Place comments in front of the entire if statement as follows:
 
+```
 if (!isEnglish(title)) {
 
   throw new InvalidLocaleException("Non English Characters found in Instrument Data");
@@ -474,7 +488,7 @@ if (!isEnglish(title)) {
  System.out.println("Characters OK ");
  
 }
-
+```
 To this:
 
 ```
@@ -583,7 +597,7 @@ Uhh ohh ! We received a 500 error, something is wrong there as well.
 
 ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
 
- Return to the Splunk Observability UI and lets look once again at our Service Map, you should see the breakdowns present aroundn the instruments service as follows:
+Return to the Splunk Observability UI and lets look once again at our Service Map, you should see the breakdowns present aroundn the instruments service as follows:
 
 Now, since we have Indexed our location tag, let's break down the traffic by location so we can see how that may have affected this 500 error.
 
@@ -630,6 +644,7 @@ Let's change the query and fix this, remove "instruments_for_sale" from our Quer
 
 Change this:
 
+```
 public Object findInstruments() {
    LOGGER.info("findInstruments Called (All)");
     	
@@ -637,9 +652,11 @@ public Object findInstruments() {
 	 
    return obj;
 }
+```
 
 To This:
 
+```
 public Object findInstruments() {
     	LOGGER.info("findInstruments Called (All)");
    // Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale, instruments_for_sale_chicago").getResultList(); 
@@ -648,13 +665,14 @@ public Object findInstruments() {
 	 
   return obj;
 }
-    
+```    
 
 # Build and Deploy Application
-
+```
 cd javashop-otel directory
 
 ./BuildAndDeploy.sh
+```
 
 Now let's test the Chicago location once again 
 
