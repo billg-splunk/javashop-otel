@@ -12,37 +12,35 @@ We now have a total of 6 locations !
 
 Environment Variables:
 
-export SHOP_USER=<Your-UserName>
+If you are using nano 
 
-export SPLUNK_ACCESS_TOKEN=<Your-Token>
+nano .env
 
-export SPLUNK_REALM=<Your-Realm>
+SHOP_USER=<your_name>
+SPLUNK_ACCESS_TOKEN=<your_token>
+SPLUNK_REALM=<your_realm>
 
+save in nano
 
-# Implement Opentelemetry Auto-Instrumentation via Dockerfiles for Java 
+CTRL-O ENTER
 
-cd shop
+exit nano
 
-vi Dockerfile
+CTRL-X 
 
-add Otel Java Agent to Java ENTRYPOINT:
-	
-Change This:
+If you are using vi 
 
- 	ENTRYPOINT java  -Dotel.resource.attributes=service.name=shop,deployment.environment=${USERNAME}_Apm_Instrumentation_Shop -jar app.jar
+vi .env
 
-To This
+insert in vi 
+i
 
-	ENTRYPOINT java -javaagent:splunk-otel-javaagent-all.jar 
-	-Dotel.resource.attributes=service.name=shop,deployment.environment=${USERNAME}_Apm_Instrumentation_Shop
-	-jar app.jar
+cursor to each line and enter as above.
 
-See examples at:
- 
-vi ../Dockerfiles_Instrumented
+save in vi
 
-repeat for:
-	instruments / products / stock  
+:wq
+
 	
 # Build and Deploy Application
 
@@ -52,13 +50,21 @@ cd "javashop-otel directory"
 
 # Users and Workflows
 	
-As we go through this workshop we will be switching roles from SRE to Developer.  First we will start with first responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will solve a problem using trace data identified by our SRE.
+As we go through this workshop we will be switching roles from SRE to Developer.  First we will start with first responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will repair/fix a problem using trace data identified by our SRE.
 	
 Of course, we are not requiring 2 people for this workshop as each participant will play both roles.
 
+Let's define a few terms for those new to APM / Software Development or Java
+
+1. What's a Function ?
+2. What's a  Method ?
+3. What's an Exception ?
+
 # View Service Map
 
-If your instrumentation was successful, the service-map will show latency from the shop service to the products service.
+If your instrumentation was successful, the service-map will show latency from the shop service to the products service. Please note it may take 3-4 minutes for traces to show up, and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times and set the look back time to -5m:
+
+# 5m SCREEN and we are at 5 minutes.
 
 ![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206541846-7f0e6462-7659-44bc-bc48-3621c2872fc4.png)
 
@@ -69,7 +75,7 @@ click Traces ( right side )
 
 Sort by Duration
 
-Select the longest duration trace
+Select the longest duration trace ( or one of the obvious much longer ones ) 
 
 ![LongTrace](https://user-images.githubusercontent.com/32849847/204347798-4f232b7f-7a7a-483f-9d61-f0b535e9ecf0.png)
 
@@ -92,34 +98,107 @@ Note: Since they do not have full parameter information it can be a long process
 As a developer we must debug the function products:ProductResource.getAllProducts to find the problem.
 
 
-Now find the needle in Haystack !
+# We will call this Debugging 101, the Line by Line method aka the "NoT FuN method..."
+
+
+If your using Nano:
+
+nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+
+Search in Nano
+CTRL-W 
+
+Enter in: getAllProducts
+
+We can see here in getAllProducts, the first call is to myCoolFunction1(), so as may have guessed our next step is to go look at myCoolFunction1()
+
+Search in Nano
+CTRL-W 
+
+Enter in: myCoolFunction1
+
+CTRL-W
+
+Enter in: ENTER  
+
+Keep doing that until you get to the actual function definition, it looks like this:
+
+private void myCoolFunction1(String location) {
+      // Generate a FAST sleep of 0 time !
+      int sleepy = lookupLocation1(location);
+      try{
+      Thread.sleep(sleepy);
+
+      } catch (Exception e){
+
+      }
+    }
+    
+Now, myCoolFunction1 calls lookupLocation1(location) 
+
+Search in Nano
+CTRL-W 
+
+Enter in: lookupLocation1
+
+
+If you are using vi your steps are here:
 
 vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 
-/getAllProducts
+/getAllProducts 
 
-scroll way .... down 
+We can see here in getAllProducts, the first call is to myCoolFunction1(), so as may have guessed our next step is to go look at myCoolFunction1()
 
-![getAllProducts-Haystack](https://user-images.githubusercontent.com/32849847/204348020-eab66183-f3a2-488b-bfba-48a660e9acaa.png)
+Search in vi
 
-Exit vi
-:q!
+/myCoolFunction1
 
-OK, enough fun ..let's make this easier for our developer
+keep searching until you find the definition it looks like this ...
+
+private void myCoolFunction1(String location) {
+      // Generate a FAST sleep of 0 time !
+      int sleepy = lookupLocation1(location);
+      try{
+      Thread.sleep(sleepy);
+
+      } catch (Exception e){
+
+      }
+    }
+Now, myCoolFunction1 calls lookupLocation1(location) 
+
+Search in vi
+/lookupLocation1
+
+I think you get the picture by now, you have no choice but to inspect every line of code and every function called and visually inspect them for problems. This can be a VERY long process and kills our customers Mean time to Repair. This happens quite often to our customers with our competition.
+
+
+OK, enough fun ..let's make this easier for our developer... Wasn't that fun ? 
+
+Ok exit your editors:
+
+edit nano CTRL-X ( DO NOT SAVE IF MODIFIED )
+
+vi q! ( DO NOT SAVE )
+
 
 # Custom Attribution
 
-To take a deeper look at this issue, we will implement Custom Attributes via Opentelemetry Manual Instrumentation
+To take a deeper look at this issue and make this much easier to debug we will implement Custom Attributes via Opentelemetry Manual Instrumentation.
 
-To speed up manual instrumentation in Java you can leverage [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )
-, which automatically create a span around a method without modifying the actual code inside the method. This can be very valueable if you are working with an SRE that may have limited accesss to source code changes.
+To speed up manual instrumentation in Java you can leverage [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ), which automatically create a span around a method without modifying the actual code inside the method. This can be very valuable if you are working with an SRE that may have limited access to source code changes.
 
 To add even more information to help our developers find the root cause faster,
-[OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) can be used to generate span tags with parameter values for the method in question. 
+[OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) can be used to generate span tags with parameter values for the method in question. This is incredibly important to mean time to Repair, because as a Developer, if I know the parameter values of a function at the time of latency or error, I can debug this without having to reproduce an issue in another environment. 
 
-It is important to remember that any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ). 
+Splunk Full Fidelity APM allows our customers development teams to debug their code as it ran in production, 100% of the time . Add in Custom Attribution, and you are providing repeatable Mean Time to Repair acceleration... again 100% of the time.
+ 
+It is important to remember this, that any developer should be able to debug a method with knowledge of parameter values at the time of an issue ( exception or latency ). 
 
-To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. This "annotator" tool will also tag every parameter in every function, which adds a span tag with Parameter=Value.
+To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. This "annotator" tool will also tag every parameter in every function, which adds a span tag with Parameter=Value. 
+
+NOTE: if you have a Java  APM opportunity, please contact Derek directly as we can potentially enable this during a pilot to block out competition and prove MTTR reduction as our competition couldn't possibly bring in this data at full fidelity at scale.
 
 # This Full-fidelity Every-method approach is the Monolith Use Case with Splunk APM for Java.  
 
@@ -133,23 +212,181 @@ cd javashop-otel directory
 
 ./BuildAndDeploy.sh
 
-
 #Now that we have rebuilt and deployed our application, traffic is being sent once again.
 
 Go back to the Splunk Observability UI and let's see if these annotations help us narrow down the root cause more quickly.
 
-Click back on the trace window
+Click back on the service map and let's try to find our latency root cause again, this time with every function and every parameter spanned and tagged respectively.... You will see exactly what this means and how it benefits developers in a moment...
+
+
+# Latency Root Cause
 	
+Open Service Map in Splunk Observability UI	
+
+![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206542093-f97b37ce-7e58-45bc-a281-5a388d60617e.png)
+
+
+Lets see if the newly added annotations allow us to provide the "fixer" or developer more complete information that will accelerate their repair time. 
+
+Go back to the service map, once the map returns with the latency present as we started with:
+
+![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206541846-7f0e6462-7659-44bc-bc48-3621c2872fc4.png)
+
+
+Click on shop service
+
+click Traces ( right side ) 
+
+Sort by Duration
+
+Select the longest duration trace ( or one of the obvious much longer ones ) 
+
+
+![image](https://user-images.githubusercontent.com/32849847/213582624-66466a19-00fa-4dda-acd0-f6970d594ba1.png)
+
+# NEED SCREEN OF LOCATION TAG  "ProductResource.myCoolFunction234234234" was "myInt" with a value of 999.
 	
-![Screen Shot 2022-11-28 at 7 29 43 AM](https://user-images.githubusercontent.com/32849847/204348366-38b8c82a-02ca-472b-b1aa-feeb746ec1d7.png)
+We can see that the actual function call that has the latency was not ProductResource.getAllProducts but 
+the function call "ProductResource.myCoolFunction234234234" !
+
+Since we now have the parameter tagged as part of our span metadata the actual root cause is seemingly related to the  "location" Colorado ! And it appears the one custom attribute that was tagged for function "ProductResource.myCoolFunction234234234" was "myInt" with a value of 999. With this information a Developer can debug very quickly. 
+	
+Consider the case of debugging code which each of you have just experienced. Imagine that you may have not written the code yourself and the code is a mess, which I can tell you from a former developer, everyone else's code sucks.... So without Parameter Values at the time of the issue .. You would have no choice but to go line .... by line ..... by line..... which I am sorry I forced you to do earlier... this can take a very long time. 
 
 
-Give the traces a couple minutes to generate . . .  
+NOTE: How did we get here....We added additional span information, which we call "Custom Attributes here at Splunk, in this case "Parameter Values at Time of Latency". In our exmaple  the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
+
+If you are using nano:
+
+nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+
+Search in Nano
+CTRL-W 
+
+Enter in: 999
 
 
-# Woah!!!! We have a New Problem, we are getting a new Exception ! 
 
-Once traces populate, Select "Errors Only" 
+vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+
+search for 999
+/999
+
+
+We can see here, someone and he's actually in this room, his name is Tim... 
+
+Wrote some very bad code in the form of a long Sleep !
+
+if (999==myInt)
+	
+Thread.sleep(
+	
+sleepy.nextInt(5000 - 3000) + 3000);
+	
+)
+
+
+How did we get here ? How did the 999 end up in the trace as a Custom Attribute ?
+
+Take a look at the function signature
+
+private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) 
+
+
+Let's fix our code.
+
+Change this:
+
+private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
+
+// Generate a FAST sleep of 0 time !
+Random sleepy = new Random();
+try{
+	
+if (999==myInt)
+	
+Thread.sleep(
+	
+sleepy.nextInt(5000 - 3000)
+	
++ 3000);
+	
+} catch (Exception e){
+	
+To this:
+
+private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
+
+// Generate a FAST sleep of 0 time !
+Random sleepy = new Random();
+try{
+	
+// if (999==myInt)
+	
+//  Thread.sleep(
+	
+//  sleepy.nextInt(5000 - 3000)
+	
+//  + 3000);
+	
+} catch (Exception e){
+
+If you are using nano
+
+place comments before every line in myCoolFunction234234234
+
+// if (999==myInt)
+	
+//  Thread.sleep(
+	
+//  sleepy.nextInt(5000 - 3000)
+	
+//  + 3000);
+
+write out changes in nano
+
+CTRL-O
+
+CTRL-X to exit.
+
+If you are using vi
+
+insert in vi 
+
+i
+
+move cursor to each location and add commments to each line as follows:
+
+place comments before every line in myCoolFunction234234234
+
+// if (999==myInt)
+	
+//  Thread.sleep(
+	
+//  sleepy.nextInt(5000 - 3000)
+	
+//  + 3000);
+
+:wq
+
+Make sure you saved your changes to:  products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+
+    
+# Let's go see if our manual instrumentation uncovered any other issues we did not see before
+
+So you may be asking yourself, "How does manual instrumentation alone show us "more problems" than before latency is latency is it ? The answer is, with auto-instrumentation you are in most situations NOT covering functions our customers development teams wrote, which is of course the bulk of what developers do, write functions and the bulk of where problems will need to be repaired.
+
+
+You may have noticed a new exception in our trace that was not present with Auto-Instrumentation during our latency fix use-case. If not, let's walk you through it.
+
+
+Return to the service map
+
+Click on shop service
+
+click Traces ( right side ) 
+
+Select "Errors Only" 
 	
 ![Screen Shot 2022-11-28 at 7 36 50 AM](https://user-images.githubusercontent.com/32849847/204348492-84a4ad45-e11c-4e75-a6a9-d6e52e0eb13e.png)
 
@@ -162,8 +399,7 @@ Click on a trace with an error present
 
 We can see our Exception is InvalidLocaleException !
 
-The real problem must be related to the new data associated with SRI LANKA as the Exception says
-"Non English Characters found in Instrument Data. 
+The real problem must be related to the new data associated with SRI LANKA as the Exception says "Non English Characters found in Instrument Data. 
 
 This exception had not surfaced in previous traces because the method where it was thrown 
 was NOT covered with Auto Instrumentation. 
@@ -179,6 +415,16 @@ We already know exactly what file to look in and what method to look at as it is
 
 
 Edit the file	
+
+If you are using nano
+
+nano shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
+
+Search in Nano
+CTRL-W 
+
+Enter in: buildForLocale
+
 vi shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 
 Search for the method buildForLocale
@@ -187,12 +433,47 @@ Search for the method buildForLocale
 
 Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
 
-@SpanAttribute is another [OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ )that automatically adds a tag to a span with the corresponding parameter it annotates and its value. Using this technique we can tell developers exactly what the values of every parameter of a function the wrote or must repair at the time the problem occurred.
-
  ![Screen Shot 2022-11-28 at 7 45 13 AM](https://user-images.githubusercontent.com/32849847/204349143-1e35b6e4-4059-4c56-8718-76c14d41727c.png)
 
 
 Now let's fix this code. We are going to simply comment this out for now and see if it fixes our latency issue.
+
+If you are using nano
+
+Place comments in front of the entire if statement as follows:
+
+if (!isEnglish(title)) {
+
+  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
+  
+ } else {
+ 
+ System.out.println("Characters OK ");
+ 
+}
+
+To this:
+
+//if (!isEnglish(title)) {
+
+//  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
+
+// } else {
+
+//	System.out.println("Characters OK ");
+
+//}
+
+Save Changes in nano
+
+CTRL-O
+
+Exit nano 
+
+CTRL-X
+
+
+If you are using vi 
 
 type i for insert
 
@@ -226,148 +507,61 @@ To save changes in vi type
 
 Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 
-
-# Build and Deploy Application
-
-./BuildAndDeploy.sh
-
-Waiting a few minutes.....
-
-# Latency Root Cause
-	
-Open Service Map in Splunk Observability UI	
-
-![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206542093-f97b37ce-7e58-45bc-a281-5a388d60617e.png)
-
-
-We can see we still have our original Latency issue, however our exception for Invalid Locale should be gone.
-
-Let's check to see our InvalidLocale Exception is gone.
-
-Click Shop Service
-
-Click Traces on the right
-
-We did remove the exception however it seems removing the Exception did not fix the latency...
-
-Lets see if the newly added annotations provide us more relevant information for the next responder once we find the cause.
-
-NOTE: We added additional information Parameter Values at Time of Latency. In this case the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
-
-![image](https://user-images.githubusercontent.com/32849847/213582624-66466a19-00fa-4dda-acd0-f6970d594ba1.png)
-	
-We can see that the actual function call that has the latency was not ProductResource.getAllProducts but 
-the function call "ProductResource.myCoolFunction234234234" !
-
-With this information a Developer can debug very quickly. 
-	
-Consider the case of debugging code, that you may not have written yourself without Parameter Values at the time of the issue ? You would have no choice but to go line .... by line ..... by line..... which can take a very long time. 
-
-Since we now have the parameter tagged as part of our span metadata the actual root cause is seemingly related to the  "location" Colorado ! And it appears the one custom attribute that was tagged for function "ProductResource.myCoolFunction234234234" was "myInt" with a value of 999.
-
-
-
-vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
-
-search for 999
-/999
-
-We found and fixed the Needle In Haystack more quickly !!! 
-
-
-Let's fix our code.
-
-Enter i for insert
-
-Change this:
-
-private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
-
-// Generate a FAST sleep of 0 time !
-Random sleepy = new Random();
-try{
-	
-if (999==myInt)
-	
-Thread.sleep(
-	
-sleepy.nextInt(5000 - 3000)
-	
-+ 3000);
-	
-} catch (Exception e){
-
-
-	
-    		
-To this:
-
-private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
-
-// Generate a FAST sleep of 0 time !
-Random sleepy = new Random();
-try{
-	
-// if (999==myInt)
-	
-//  Thread.sleep(
-	
-//  sleepy.nextInt(5000 - 3000)
-	
-//  + 3000);
-	
-} catch (Exception e){
-
-    
-
-Save changes in vi type
-
-:wq
-
-Make sure you saved your changes to:  products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
-
-    
-# Build and Deploy Application
+# Rebuild and Deploy Application
 
 ./BuildAndDeploy.sh
-
-#Now that we have rebuilt and deployed our application, traffic is being sent once again.  
 
 We are waiting a few minutes . . .
 
+Return to the service map
 
-# If you do not see Red in your service map, you have successfully completed our Inventory application review for Shri Lanka and Colorado locations  !!
+If you do NOT see RED in your service map, you have completed the Latency Repair for the Colorado Location !
 
-Now let's ensure Chicago was on-boarded correctly. However, since we have been having so many issues related to "location" and we have added that custom attribute via Opentelemetry Manual Instrumentation, lets go to the Splunk Observability UI and create an APM metric set around that tag. 
+Now let's check for our exception in the traces.
+
+Click on shop service
+
+click Traces ( right side ) 
+
+Select "Errors Only" 
+
+If you do not have red in your service map and you do not see Errors in traces, you have successfully completed our Inventory application review for Shri Lanka and Colorado locations  !!
+
+# We are nearly done, one more location to go... Chicago
+
+Last but not least, let's ensure Chicago was on-boarded correctly. However, since we have been having so many issues related to "location" and we have added that custom attribute via Opentelemetry Manual Instrumentation, lets go to the Splunk Observability UI and look at an APM metric set around that tag that I created for us. 
 
 NOTE: We can do this without concern for Cardinality as we know this tag only has 6 possible values.
 
-Index the location Tag.
 	
 
 ![image](https://user-images.githubusercontent.com/32849847/213540265-5b0567ab-c9f3-412f-bec0-07277c7e8650.png)
 
+# BREAKDOWN SCREEN SHOT
 
-# Build and Deploy Application to run traffic again
-	
-./BuildAndDeploy.sh 
+Select the Instruments service
+Apply breakdown to the location tag
+
 
 Open a browser and navigate to http://localhost:8010
 
 ![image](https://user-images.githubusercontent.com/32849847/213541843-30266285-787f-493b-bc90-ffb4ac6e4c77.png)
 
 	
-Select a few locagtions and hit the login button, remember to select the Chicago Location and Login
+Select a few locations and hit the login button, remember to select the Chicago Location and Login
 
-Uhh ohh ! We received a 500 error, something is wrong there as well.  Return to the Splunk Observability UI and lets look once again at our Service Map
+Uhh ohh ! We received a 500 error, something is wrong there as well. 
+
 
 ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
+
+ Return to the Splunk Observability UI and lets look once again at our Service Map, you should see the breakdowns present aroundn the instruments service as follows:
 
 Now, since we have Indexed our location tag, let's break down the traffic by location so we can see how that may have affected this 500 error.
 
 ![image](https://user-images.githubusercontent.com/32849847/214941419-2eaae297-e246-460b-a913-28c2a28fcd6a.png)
 
-	
+
 We see there was an un-handled exception thrown in Instruments service and some latency from our database that is related to the Chicago location !
 
 Click on Traces on the right
