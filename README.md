@@ -111,7 +111,7 @@ Before we do that please take note of the Tags available for the developer to le
 As a developer we must debug the function products:ProductResource.getAllProducts to find the problem.
 
 
-# Debugging 101, the Line by Line method aka the "NoT FuN AT aLL method..."
+# Debugging 101, the Line by Line method
 
 Without anything to go on other than "BAD FUNCTION",  a Developer must then look at code visually line by line to find and fix the problem.
 
