@@ -477,6 +477,7 @@ if (!isEnglish(title)) {
 
 To this:
 
+```
 //if (!isEnglish(title)) {
 
 //  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
@@ -486,6 +487,7 @@ To this:
 //	System.out.println("Characters OK ");
 
 //}
+```
 
 Save Changes in nano
 
@@ -502,6 +504,7 @@ type i for insert
 
 Change this : 
 
+```
 if (!isEnglish(title)) {
 
   throw new InvalidLocaleException("Non English Characters found in Instrument Data");
@@ -511,9 +514,9 @@ if (!isEnglish(title)) {
  System.out.println("Characters OK ");
  
 }
-
+```
 To this:
-
+```
 //if (!isEnglish(title)) {
 
 //  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
@@ -523,6 +526,7 @@ To this:
 //	System.out.println("Characters OK ");
 
 //}
+```
 
 To save changes in vi type
 
@@ -532,7 +536,9 @@ Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/s
 
 # Rebuild and Deploy Application
 
+```
 ./BuildAndDeploy.sh
+```
 
 We are waiting a few minutes . . .
 
@@ -554,9 +560,8 @@ If you do not have red in your service map and you do not see Errors in traces, 
 
 Last but not least, let's ensure Chicago was on-boarded correctly. However, since we have been having so many issues related to "location" and we have added that custom attribute via Opentelemetry Manual Instrumentation, lets go to the Splunk Observability UI and look at an APM metric set around that tag that I created for us. 
 
-NOTE: We can do this without concern for Cardinality as we know this tag only has 6 possible values.
+# SCREENSHOTS OF METRIC SET.
 
-	
 
 ![image](https://user-images.githubusercontent.com/32849847/213540265-5b0567ab-c9f3-412f-bec0-07277c7e8650.png)
 
@@ -604,8 +609,17 @@ We can see the exception was thrown by Hibernate, however it was thrown in our m
 
 Edit the file "instruments: InstrumentRepository.findInstruments"
 
-vi instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
+If you are using nano
 
+```
+nano instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
+```
+
+if you are using vi 
+
+```
+vi instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
+```
 	
 ![Screen Shot 2022-11-28 at 8 20 24 AM](https://user-images.githubusercontent.com/32849847/204349802-06135d9d-d70b-4cf1-aaea-3ba737e5c2b9.png)
 
