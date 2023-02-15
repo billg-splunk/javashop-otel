@@ -1,5 +1,5 @@
-docker-compose down 
+sudo docker-compose down 
 
 mvn clean install
 
-docker-compose up -d --build
+sudo docker-compose up -d --build

@@ -17,7 +17,7 @@ services:
       - "9943:9943" 
     healthcheck:
       #test: curl --fail http://localhost:13133 || exit 1
-      test: curl -sS http://localhost:13133 | grep -c "status":"Server available" > /dev/null
+      test: curl -sS http://localhost:13133 | grep -c "status":"Server available"
       interval: 3s
       retries: 5
       start_period: 5s
