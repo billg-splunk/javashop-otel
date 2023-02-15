@@ -385,7 +385,7 @@ We already know exactly what file to look in and what method to look at as it is
 
 Edit the file	
 
-If you are using nano
+Using nano
 
 ```
 nano shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
@@ -395,12 +395,6 @@ Search in Nano
 CTRL-W 
 
 Enter in: buildForLocale
-
-If you are using vi
-
-```
-vi shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
-```
 
 Search for the method buildForLocale
 
@@ -526,7 +520,7 @@ We can see the exception was thrown by Hibernate, however it was thrown in our m
 
 Edit the file "instruments: InstrumentRepository.findInstruments"
 
-If you are using nano
+Using nano
 
 ```
 nano instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
@@ -560,7 +554,15 @@ public Object findInstruments() {
 	 
   return obj;
 }
-```    
+```   
+
+Save Changes in nano
+
+CTRL-O
+
+Exit nano 
+
+CTRL-X
 
 # Build and Deploy Application
 ```
