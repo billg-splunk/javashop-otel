@@ -243,7 +243,9 @@ Since we now have the parameter tagged as part of our span metadata the actual r
 Consider the case of debugging code which each of you have just experienced. Imagine that you may have not written the code yourself and the code is a mess, which I can tell you from a former developer, everyone else's code sucks.... So without Parameter Values at the time of the issue .. You would have no choice but to go line .... by line ..... by line..... which I am sorry I forced you to do earlier... this can take a very long time. 
 
 
-NOTE: How did we get here....We added additional span information, which we call "Custom Attributes here at Splunk, in this case "Parameter Values at Time of Latency". In our exmaple  the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
+NOTE: We added additional span information, which we call "Custom Attributes" here at Splunk, in this case our "Custom Attributes" are "Parameter Values at Time of Latency". 
+
+In our exmaple  the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
 
 Using nano:
 
@@ -256,7 +258,7 @@ CTRL-W
 
 Enter in: 999
 
-We can see here, someone and he's actually in this room, someone wrote some very bad code in the form of a long Sleep !
+We can see here,  someone wrote some very bad code in the form of a long Sleep !
 
 ```
 if (999==myInt)
