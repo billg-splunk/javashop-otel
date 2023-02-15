@@ -72,7 +72,7 @@ Let's define a few terms for those new to APM / Software Development or Java
 
 Please note it may take 3-4 minutes for traces to show up, and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times each time we Build and Deploy. 
  
- It is recommended to use a -5m look back during this lab. Start there, use 15 if you feel you have to.
+It is recommended to use a -5m look back during this lab. Start there, use 15 if you feel you have to.
 
 <img width="731" alt="Screen Shot 2023-02-14 at 8 25 19 PM" src="https://user-images.githubusercontent.com/32849847/218923108-6c6a7efb-588e-4f7b-b788-768037eae4bb.png">
 
@@ -119,13 +119,30 @@ We will do the visual inspection mehtod next.
 
 
 If your using Nano:
-
+```
 nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+```
 
 Search in Nano
 CTRL-W 
 
 Enter in: getAllProducts
+
+
+```
+  @GET
+    public Response getAllProducts(@DefaultValue("California") @QueryParam("location") String location) {
+    	  
+    	// STEP X: All we know right now is somewhere in this function, latency was introduced.
+  
+    	myCoolFunction1(location);
+    	myCoolFunction2(location);
+    	myCoolFunction10(location);
+    	myCoolFunction13(location);
+    	myCoolFunction5(location);
+    	myCoolFunction6(location);
+ ```
+
 
 We can see here in getAllProducts, the first call is to myCoolFunction1(), so as may have guessed our next step is to go look at myCoolFunction1()
 
@@ -140,6 +157,7 @@ Enter in: ENTER
 
 Keep doing that until you get to the actual function definition, it looks like this:
 
+```
 private void myCoolFunction1(String location) {
       // Generate a FAST sleep of 0 time !
       int sleepy = lookupLocation1(location);
@@ -150,7 +168,7 @@ private void myCoolFunction1(String location) {
 
       }
     }
-    
+```    
 Now, myCoolFunction1 calls lookupLocation1(location) 
 
 Search in Nano
@@ -158,21 +176,20 @@ CTRL-W
 
 Enter in: lookupLocation1
 
-
 If you are using vi your steps are here:
-
+```
 vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
-
 /getAllProducts 
+```
 
 We can see here in getAllProducts, the first call is to myCoolFunction1(), so as may have guessed our next step is to go look at myCoolFunction1()
 
 Search in vi
-
+```
 /myCoolFunction1
-
+```
 keep searching until you find the definition it looks like this ...
-
+```
 private void myCoolFunction1(String location) {
       // Generate a FAST sleep of 0 time !
       int sleepy = lookupLocation1(location);
@@ -183,22 +200,24 @@ private void myCoolFunction1(String location) {
 
       }
     }
+```
+
 Now, myCoolFunction1 calls lookupLocation1(location) 
 
 Search in vi
 /lookupLocation1
 
-I think you get the picture by now, you have no choice but to inspect every line of code and every function called and visually inspect them for problems. This can be a VERY long process and kills our customers Mean time to Repair. This happens quite often to our customers with our competition.
+I think you get the picture by now, you have no choice but to inspect every line of code and every function called and visually inspect them for problems. This can be a VERY long process and kills our customers Mean time to Repair. This happens quite often to our customers with our competition beacsue they can't provide all the traces 100% of the time and most can't scale to add more data, via Custom Attributes on top of that !
 
+So they are stuck where we are, quite often.
 
-OK, enough fun ..let's make this easier for our developer... Wasn't that fun ? 
+OK, enough fun ..let's make this easier for our developer... and show off some Splunk APM Scale !
 
 Ok exit your editors:
 
 edit nano CTRL-X ( DO NOT SAVE IF MODIFIED )
 
 vi q! ( DO NOT SAVE )
-
 
 # Custom Attribution
 
