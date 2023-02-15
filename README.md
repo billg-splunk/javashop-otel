@@ -37,25 +37,34 @@ CTRL-X
 	
 # Build and Deploy Application
 
-cd "javashop-otel directory"
+```
+cd javashop-otel
 
 ./BuildAndDeploy.sh
+```
 
 # Users and Workflows
 	
-As we go through this workshop we will be switching roles from SRE to Developer.  First we will start with first responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will repair/fix a problem using trace data identified by our SRE.
+As we go through this workshop we will be switching roles from SRE to Developer.  First we will start with alert responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will repair/fix a software problem using trace data provided by our SRE.
 	
 Of course, we are not requiring 2 people for this workshop as each participant will play both roles.
 
 Let's define a few terms for those new to APM / Software Development or Java
 
 1. What's a Function in Java ?
-	A Function  in most languages includeing Java, is a logical chunk of code, when executed solves a repeatable task.
+	A Function  in most languages includeing Java, is a logical chunk of code, when executed solves a repeatable task. This is basically what our 		customers Dev teams spend thier time building and where software issues will most commonly be.
 3. What's a  Method in Java ?
  	See What's a function -> Function and method are synonomous.
 5. What's an Exception in Java ?
 	An Exceptional error condition that indicates abonormal and unhandled conditions, that interrupts program execution abnormally.
-	
+
+# Today we will learn 
+
+Today we will learn the type of data ( In the form of a trace ) that an SRE or alert responder would send to a developer to then repair/fix software. We will do this with both Auto-Instrumentation data and Custom attributes, via Manual Instrumentation.
+
+While we will be spending time Debugging code, .... Don't worry, ...there is no programming experience necessary, as our goal here is for everyone in the audience to understand how using Custom Attributes in Splunk APM @ Full Fidelity can accelerate Mean Time to Repair Software problems for our customers.
+
+Translated, Developers are High Cost resources, with high opportunity cost. Less time on fixing problems = more time for features.
 
 # View Service Map
 
