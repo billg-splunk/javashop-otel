@@ -117,7 +117,7 @@ Without anything to go on other than "BAD FUNCTION",  a Developer must then look
 
 We will do the visual inspection mehtod next.
 
-If your using Nano:
+Using Nano:
 ```
 nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 ```
@@ -175,37 +175,6 @@ CTRL-W
 
 Enter in: lookupLocation1
 
-If you are using vi your steps are here:
-```
-vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
-/getAllProducts 
-```
-
-We can see here in getAllProducts, the first call is to myCoolFunction1(), so as may have guessed our next step is to go look at myCoolFunction1()
-
-Search in vi
-```
-/myCoolFunction1
-```
-keep searching until you find the definition it looks like this ...
-```
-private void myCoolFunction1(String location) {
-      // Generate a FAST sleep of 0 time !
-      int sleepy = lookupLocation1(location);
-      try{
-      Thread.sleep(sleepy);
-
-      } catch (Exception e){
-
-      }
-    }
-```
-
-Now, myCoolFunction1 calls lookupLocation1(location) 
-
-Search in vi
-/lookupLocation1
-
 I think you get the picture by now, you have no choice but to inspect every line of code and every function called and visually inspect them for problems. This can be a VERY long process and kills our customers Mean time to Repair. This happens quite often to our customers with our competition beacsue they can't provide all the traces 100% of the time and most can't scale to add more data, via Custom Attributes on top of that !
 
 Remember, without Full Fidelty, you have to either reproduce errors / latency in another environment or inspect code line by line.
@@ -214,11 +183,9 @@ So they are stuck where we are, quite often.
 
 OK, enough fun ..let's make this easier for our developer... and show off some Splunk APM Scale !
 
-Ok exit your editors:
+Ok exit your editor:
 
 edit nano CTRL-X ( DO NOT SAVE IF MODIFIED )
-
-vi q! ( DO NOT SAVE )
 
 # Custom Attribution
 
@@ -264,7 +231,6 @@ Sort by Duration
 
 Select the longest duration trace ( or one of the obvious much longer ones ) 
 
-
 ![image](https://user-images.githubusercontent.com/32849847/213582624-66466a19-00fa-4dda-acd0-f6970d594ba1.png)
 
 # NEED SCREEN OF LOCATION TAG  "ProductResource.myCoolFunction234234234" was "myInt" with a value of 999.
@@ -279,7 +245,7 @@ Consider the case of debugging code which each of you have just experienced. Ima
 
 NOTE: How did we get here....We added additional span information, which we call "Custom Attributes here at Splunk, in this case "Parameter Values at Time of Latency". In our exmaple  the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
 
-If you are using nano:
+Using nano:
 
 ```
 nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
@@ -290,15 +256,7 @@ CTRL-W
 
 Enter in: 999
 
-If you are using vi 
-``
-vi products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
-``
-search for 999
-/999
-
-
-We can see here, someone and he's actually in this room wrote some very bad code in the form of a long Sleep !
+We can see here, someone and he's actually in this room, someone wrote some very bad code in the form of a long Sleep !
 
 ```
 if (999==myInt)
@@ -310,7 +268,7 @@ sleepy.nextInt(5000 - 3000) + 3000);
 )
 ```
 
-How did we get here ? How did the 999 end up in the trace as a Custom Attribute ?
+# How did we get here ? How did the 999 end up in the trace as a Custom Attribute ?
 
 Take a look at the function signature
 
@@ -359,10 +317,12 @@ try{
 	
 } catch (Exception e){
 
-If you are using nano
+```
+Using nano
 
 place comments before every line in myCoolFunction234234234
 
+```
 // if (999==myInt)
 	
 //  Thread.sleep(
@@ -378,37 +338,15 @@ CTRL-O
 
 CTRL-X to exit.
 
-If you are using vi
-
-insert in vi 
-
-i
-
-move cursor to each location and add commments to each line as follows:
-
-place comments before every line in myCoolFunction234234234
-
-```
-// if (999==myInt)
-	
-//  Thread.sleep(
-	
-//  sleepy.nextInt(5000 - 3000)
-	
-//  + 3000);
-```
-
-:wq
-
-
 Make sure you saved your changes to:  products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
     
 # Let's go see if our manual instrumentation uncovered any other issues we did not see before
 
-So you may be asking yourself, "How does manual instrumentation alone show us "more problems" than before latency is latency is it ? The answer is, with auto-instrumentation you are in most situations NOT covering functions our customers development teams wrote, which is of course the bulk of what developers do, write functions and the bulk of where problems will need to be repaired.
+So you may be asking yourself, "How does manual instrumentation alone show us "more problems" than before latency is latency is it ? 
 
+The answer is, with auto-instrumentation you are in most situations NOT covering functions our customers development teams wrote, which is of course the bulk of what developers do, they write functions.... and of course this is where the  bulk of  software probnlems occur. 
 
-You may have noticed a new exception in our trace that was not present with Auto-Instrumentation during our latency fix use-case. If not, let's walk you through it.
+You may have noticed a new exception in our trace that was not present with Auto-Instrumentation during our latency fix use-case. Since we skipped over this,  let's walk you through it.
 
 
 Return to the service map
@@ -433,7 +371,7 @@ We can see our Exception is InvalidLocaleException !
 The real problem must be related to the new data associated with SRI LANKA as the Exception says "Non English Characters found in Instrument Data. 
 
 This exception had not surfaced in previous traces based on ONLY Auto-Instrumentation because the method where it was thrown 
-was NOT covered with Auto-Instrumentation. This is common as code developers write is not directly covered by Auto-Instrumentation with Distributed Tracing. 
+was NOT covered with Auto-Instrumentation.
 
 Once we completed the Manual Instrumentation via the Otel Annotator, 
 this method was instrumented  and we can now see we had a buried Exception being thrown. 
@@ -468,13 +406,13 @@ Search for the method buildForLocale
 
 /buildForLocale
 
-Look at Code, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
+Look just above the buildForLocale function, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
 
  ![Screen Shot 2022-11-28 at 7 45 13 AM](https://user-images.githubusercontent.com/32849847/204349143-1e35b6e4-4059-4c56-8718-76c14d41727c.png)
 
 Now let's fix this code. We are going to simply comment this out for now and see if it fixes our latency issue.
 
-If you are using nano
+Using nano
 
 Place comments in front of the entire if statement as follows:
 
@@ -510,41 +448,6 @@ CTRL-O
 Exit nano 
 
 CTRL-X
-
-
-If you are using vi 
-
-type i for insert
-
-Change this : 
-
-```
-if (!isEnglish(title)) {
-
-  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
-  
- } else {
- 
- System.out.println("Characters OK ");
- 
-}
-```
-To this:
-```
-//if (!isEnglish(title)) {
-
-//  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
-
-// } else {
-
-//	System.out.println("Characters OK ");
-
-//}
-```
-
-To save changes in vi type
-
-:wq
 
 Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 
@@ -628,15 +531,8 @@ If you are using nano
 ```
 nano instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
 ```
-
-if you are using vi 
-
-```
-vi instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
-```
 	
 ![Screen Shot 2022-11-28 at 8 20 24 AM](https://user-images.githubusercontent.com/32849847/204349802-06135d9d-d70b-4cf1-aaea-3ba737e5c2b9.png)
-
 
 We can see the developer accidently added the Instruments database with the Chicago Instruments database !
 
@@ -659,7 +555,6 @@ To This:
 ```
 public Object findInstruments() {
     	LOGGER.info("findInstruments Called (All)");
-   // Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale, instruments_for_sale_chicago").getResultList(); 
    	
    Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale_chicago").getResultList(); 
 	 
@@ -687,8 +582,6 @@ Let's confirm a clean Service Map
 ![Screen Shot 2022-11-28 at 8 35 11 AM](https://user-images.githubusercontent.com/32849847/204350088-fca43e3c-42ea-4933-8a61-01eb2083fd23.png)
 
 # If you see a clean service map, free of errors and Latency you have successfully completed the Java Instrumentation Workshop !
-
-
 
 
 # Have a lovely day.
