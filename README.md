@@ -14,11 +14,17 @@ Environment Variables:
 
 If you are using nano 
 
+```
 nano .env
+```
 
+```
 SHOP_USER=<your_name>
+
 SPLUNK_ACCESS_TOKEN=<your_token>
+
 SPLUNK_REALM=<your_realm>
+```
 
 save in nano
 
@@ -27,19 +33,6 @@ CTRL-O ENTER
 exit nano
 
 CTRL-X 
-
-If you are using vi 
-
-vi .env
-
-insert in vi 
-i
-
-cursor to each line and enter as above.
-
-save in vi
-
-:wq
 
 	
 # Build and Deploy Application
@@ -56,18 +49,29 @@ Of course, we are not requiring 2 people for this workshop as each participant w
 
 Let's define a few terms for those new to APM / Software Development or Java
 
-1. What's a Function ?
-2. What's a  Method ?
-3. What's an Exception ?
+1. What's a Function in Java ?
+	A Function  in most languages includeing Java, is a logical chunk of code, when executed solves a repeatable task.
+3. What's a  Method in Java ?
+ 	See What's a function -> Function and method are synonomous.
+5. What's an Exception in Java ?
+	An Exceptional error condition that indicates abonormal and unhandled conditions, that interrupts program execution abnormally.
+	
 
 # View Service Map
 
-If your instrumentation was successful, the service-map will show latency from the shop service to the products service. Please note it may take 3-4 minutes for traces to show up, and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times and set the look back time to -5m:
+ Please note it may take 3-4 minutes for traces to show up, and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times each time we Build and Deploy. 
+ 
+ It is recommended to use a -5m look back during this lab. Start there, use 15 if you feel you have to.
 
-# 5m SCREEN and we are at 5 minutes.
+<img width="731" alt="Screen Shot 2023-02-14 at 8 25 19 PM" src="https://user-images.githubusercontent.com/32849847/218923108-6c6a7efb-588e-4f7b-b788-768037eae4bb.png">
+
+NOTE: Typically, to identify root cause and route an issue, an SRE or alert responder would check metrics and logs to determine if it is a software or hardware related issue, and thus route to the correct party. In this excercise we are ONLY handling software issues, so we are skipping that part of normal triage.
+
+If your instrumentation was successful, the service-map will show latency from the shop service to the products service. 
 
 ![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206541846-7f0e6462-7659-44bc-bc48-3621c2872fc4.png)
 
+Ok let's triage this SOFTWARE ISSUE and skip directly to the traces.
 
 Click on shop service
 
