@@ -12,7 +12,7 @@ We now have a total of 6 locations !
 
 Environment Variables:
 
-Using nano 
+Using nano edit .env in javashop-otel directory
 
 ```
 nano .env
