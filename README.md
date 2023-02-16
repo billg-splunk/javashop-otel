@@ -70,7 +70,7 @@ Translated, Developers are High Cost resources, with high opportunity cost. Less
 
 # View Service Map
 
-Please note it may take 3-4 minutes for traces to show up, and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times each time we Build and Deploy. 
+Please note it may take 3-4 minutes for traces to show up and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times each time we Build and Deploy. 
  
 It is recommended to use a -5m look back during this lab. Start there, use 15 if you feel you have to.
 
@@ -94,15 +94,13 @@ Select the longest duration trace ( or one of the obvious much longer ones )
 
 ![LongTrace](https://user-images.githubusercontent.com/32849847/204347798-4f232b7f-7a7a-483f-9d61-f0b535e9ecf0.png)
 
-
 Now we can see the long latency occurred in the products service and if we click on products: /products
 we can see the offending method was products:ProductResource.getAllProducts
-
+÷≥«
 ![long-trace-detail-GetAllProducts](https://user-images.githubusercontent.com/32849847/204347855-724545bf-c3df-478a-a27d-e4f85f708e15.png)
 
-
 Our next step here would be to send that trace to a developer by clicking download trace and
-they will have to debug the method. Since we will be the developer, there is no need to download the trace. Just remember that is normal workflow for alert responders to route an issue to the "Repairers" while providing trace data. 
+they will have to debug the function. Since we will be the developer there is no need to download the trace. Just remember that is normal workflow for alert responders to route an issue to the "Repairers" while providing trace data. 
 
 Before we do that please take note of the Tags available for the developer to leverage to find root cause. We see standard out of the box Otel tags on the span, environmental information, but no indcations of data specific to something inside custom code ( which is where the problem always is. )
 
