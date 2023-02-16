@@ -113,7 +113,7 @@ As a developer we must debug the function products:ProductResource.getAllProduct
 
 # Debugging 101, the Line by Line method
 
-Without anything to go on other than "BAD FUNCTION",  a Developer must then look at code visually line by line to find and fix the problem.
+Without anything to go on other than "BAD FUNCTION", a Developer must then look at code visually line by line to find and fix the problem. To make this worse, Functions, call Functions and it can get very messy in bad code scenarios.
 
 We will do the visual inspection mehtod next.
 
