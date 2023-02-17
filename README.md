@@ -467,11 +467,7 @@ If you do not have red in your service map and you do not see Errors in traces, 
 
 Last but not least, let's ensure Chicago was on-boarded correctly. However, since we have been having so many issues related to "location" and we have added that custom attribute via Opentelemetry Manual Instrumentation, lets go to the Splunk Observability UI and look at an APM metric set around that tag that I created for us. 
 
-# SCREENSHOTS OF METRIC SET.
-
-
 ![image](https://user-images.githubusercontent.com/32849847/213540265-5b0567ab-c9f3-412f-bec0-07277c7e8650.png)
-
 
 Open a browser and navigate to http://localhost:8010
 
@@ -480,7 +476,6 @@ Select a few locations and hit the login button, remember to select the Chicago 
 ![image](https://user-images.githubusercontent.com/32849847/213541843-30266285-787f-493b-bc90-ffb4ac6e4c77.png)
 
 Uhh ohh ! We received a 500 error, something is wrong there as well. 
-
 
 ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
 
@@ -535,13 +530,13 @@ public Object findInstruments() {
 To This:
 
 ```
-public Object findInstruments() {
-    	LOGGER.info("findInstruments Called (All)");
+// public Object findInstruments() {
+//    	LOGGER.info("findInstruments Called (All)");
    	
-   Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale_chicago").getResultList(); 
+//   Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale_chicago").getResultList(); 
 	 
-  return obj;
-}
+//  return obj;
+//}
 ```   
 
 Save Changes in nano
