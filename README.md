@@ -472,27 +472,19 @@ Last but not least, let's ensure Chicago was on-boarded correctly. However, sinc
 
 ![image](https://user-images.githubusercontent.com/32849847/213540265-5b0567ab-c9f3-412f-bec0-07277c7e8650.png)
 
-# BREAKDOWN SCREEN SHOT
-
-Select the Instruments service
-Apply breakdown to the location tag
-
 
 Open a browser and navigate to http://localhost:8010
 
-![image](https://user-images.githubusercontent.com/32849847/213541843-30266285-787f-493b-bc90-ffb4ac6e4c77.png)
-
-	
 Select a few locations and hit the login button, remember to select the Chicago Location and Login
+
+![image](https://user-images.githubusercontent.com/32849847/213541843-30266285-787f-493b-bc90-ffb4ac6e4c77.png)
 
 Uhh ohh ! We received a 500 error, something is wrong there as well. 
 
 
 ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
 
-Return to the Splunk Observability UI and lets look once again at our Service Map, you should see the breakdowns present aroundn the instruments service as follows:
-
-Now, since we have Indexed our location tag, let's break down the traffic by location so we can see how that may have affected this 500 error.
+Return to the Splunk Observability UI and lets look once again at our Service Map, select the Instruments Service and click the breakdowns on the right and select "location"
 
 ![image](https://user-images.githubusercontent.com/32849847/214941419-2eaae297-e246-460b-a913-28c2a28fcd6a.png)
 
