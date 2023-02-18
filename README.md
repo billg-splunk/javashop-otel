@@ -15,6 +15,7 @@ Environment Variables:
 Using nano edit .env in javashop-otel directory
 
 ```
+cd javashop-otel-TKO-23
 nano .env
 ```
 
@@ -40,7 +41,7 @@ CTRL-X
 Let's get started by building and deploying our Application, the Buttercup Instrument Shop. Run the commands below to begin and start reading ahead as your traces are coming up !
 
 ```
-cd javashop-otel
+cd javashop-otel-TKO-23
 
 ./BuildAndDeploy.sh
 ```
@@ -201,7 +202,7 @@ To expedite manual instrumentation implementation for this exercise, we have pro
 # Run Manual Instrumentation Tool
 
 ```
-cd javashop-otel directory
+cd /home/ubuntu/javashop-otel-TKO-23
 	
 ./AutomateManualInstrumentation.sh
 ```
@@ -549,7 +550,7 @@ CTRL-X
 
 # Build and Deploy Application
 ```
-cd javashop-otel directory
+cd cd /home/ubuntu/javashop-otel-TKO-23
 
 ./BuildAndDeploy.sh
 ```
