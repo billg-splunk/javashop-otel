@@ -354,76 +354,60 @@ nano shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 - Search in Nano: `[CTRL]-w`
 - Enter in: `buildForLocale` **[Enter]**
 
-Look just above the buildForLocale function, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
+Look just above the `buildForLocale` function, notice the Annotation `@WithSpan`? `@WithSpan` is an [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/) for Java that automatically generates a span around a the function that follows.
 
  ![Screen Shot 2022-11-28 at 7 45 13 AM](https://user-images.githubusercontent.com/32849847/204349143-1e35b6e4-4059-4c56-8718-76c14d41727c.png)
 
 Now let's fix this code. We are going to simply comment this out for now and see if it fixes our latency issue.
 
-Using nano
-
-Place comments in front of the entire if statement as follows:
+- Place comments in front of the entire if statement as follows:
 
 ```
 if (!isEnglish(title)) {
-
   throw new InvalidLocaleException("Non English Characters found in Instrument Data");
-  
  } else {
- 
- System.out.println("Characters OK ");
- 
+   System.out.println("Characters OK ");
 }
 ```
 To this:
 
 ```
-//if (!isEnglish(title)) {
-
-//  throw new InvalidLocaleException("Non English Characters found in Instrument Data");
-
+// if (!isEnglish(title)) {
+//   throw new InvalidLocaleException("Non English Characters found in Instrument Data");
 // } else {
-
-//	System.out.println("Characters OK ");
-
-//}
+//   System.out.println("Characters OK ");
+// }
 ```
 
-Save Changes in nano
-
-CTRL-O
-
-Exit nano 
-
-CTRL-X
+- Save the changes: `[CTRL]-o` **[Enter]**
+- Exit: `[CTRL]-x`
 
 Make sure you saved your changes to shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 
 # Rebuild and Deploy Application
 
+- Run
 ```
 ./BuildAndDeploy.sh
 ```
 
 We are waiting a few minutes . . .
 
-Return to the service map
+- Return to the service map
 
-If you do NOT see RED in your service map, you have completed the Latency Repair for the Colorado Location !
+If you do NOT see RED in your service map, you have completed the Latency Repair for the Colorado Location!
 
 Now let's check for our exception in the traces.
 
-Click on shop service
+- Click on `shop` service
+- Click Traces ( on the right side ) 
+- Select "Errors Only" 
 
-click Traces ( right side ) 
-
-Select "Errors Only" 
-
-If you do not have red in your service map and you do not see Errors in traces, you have successfully completed our Inventory application review for Shri Lanka and Colorado locations  !!
+If you do not have red in your service map and you do not see Errors in traces, you have successfully completed our Inventory application review for Sri Lanka and Colorado locations!!! Well done!
 
 # We are nearly done, one more location to go... Chicago
 
-Last but not least, let's ensure Chicago was on-boarded correctly. However, since we have been having so many issues related to "location" and we have added that custom attribute via Opentelemetry Manual Instrumentation, lets go to the Splunk Observability UI and look at an APM metric set around that tag that I created for us. 
+Last, but not least, let's ensure Chicago was on-boarded correctly. However, since we have been having so many issues related to "location" and we have added that custom attribute via Opentelemetry Manual Instrumentation, lets go to the Splunk Observability UI and look at an APM metric set around that tag that I created for us.
 
 ![image](https://user-images.githubusercontent.com/32849847/213540265-5b0567ab-c9f3-412f-bec0-07277c7e8650.png)
 
