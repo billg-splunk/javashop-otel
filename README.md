@@ -331,6 +331,29 @@ place comments before every line in myCoolFunction234234234
 //  + 3000);
 ```
 
+To do this quickly, you can simply copy paste the solution from this document into your code
+
+Copy the entirety of this code block:
+
+```
+// if (999==myInt)
+	
+//  Thread.sleep(
+	
+//  sleepy.nextInt(5000 - 3000)
+	
+//  + 3000);
+```
+Paste this into the code over the exact same lines
+
+if (999==myInt)
+	
+Thread.sleep(
+	
+sleepy.nextInt(5000 - 3000)
+	
++ 3000);
+
 write out changes in nano
 
 CTRL-O
