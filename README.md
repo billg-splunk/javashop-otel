@@ -324,42 +324,35 @@ You may have noticed a new exception in our trace that was not present with Auto
 	
 ![Screen Shot 2022-11-28 at 7 36 50 AM](https://user-images.githubusercontent.com/32849847/204348492-84a4ad45-e11c-4e75-a6a9-d6e52e0eb13e.png)
 
-Note: we haven't changed the code at all by adding annotations.
+**Important Note**: We haven't changed the code at all by adding annotations.
 
-Click on a trace with an error present 
+- Click on a trace with an error present 
 
 ![Screen Shot 2022-11-28 at 7 38 33 AM](https://user-images.githubusercontent.com/32849847/204348687-12241153-b297-4bd7-9ea8-4b410369e82c.png)
 
 
-We can see our Exception is InvalidLocaleException !
+We can see our Exception is `InvalidLocaleException`.
 
-The real problem must be related to the new data associated with SRI LANKA as the Exception says "Non English Characters found in Instrument Data. 
+The real problem must be related to the new data associated with **Sri Lanka** as the Exception says `"Non English Characters found in Instrument Data"`.
 
 This exception had not surfaced in previous traces based on ONLY Auto-Instrumentation because the method where it was thrown 
 was NOT covered with Auto-Instrumentation.
 
 Once we completed the Manual Instrumentation via the Otel Annotator, 
-this method was instrumented  and we can now see we had a buried Exception being thrown. 
+this method was instrumented and we can now see we had a buried Exception being thrown. 
 
-# Let's play Developer once again and fix our issue !
+# Let's play Developer once again and fix our issue!
 
 We already know exactly what file to look in and what method to look at as it is called out in the trace.
 
 ![Screen Shot 2022-11-28 at 7 43 58 AM](https://user-images.githubusercontent.com/32849847/204349038-3b43a5ba-18e3-4d58-8985-29ee1f7da40a.png)
 
-
-Edit the file	
-
-Using nano
-
+- Using nano:
 ```
 nano shop/src/main/java/com/shabushabu/javashop/shop/model/Instrument.java
 ```
-
-Search in Nano
-CTRL-W 
-
-Enter in: buildForLocale
+- Search in Nano: `[CTRL]-w`
+- Enter in: `buildForLocale` **[Enter]**
 
 Look just above the buildForLocale function, notice the Annotation @WithSpan? @WithSpan is an [OpenTelemetry Annotation] (https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for Java that automatically generates a span around a the function that follows.
 
