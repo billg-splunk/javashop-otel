@@ -199,12 +199,14 @@ To expedite manual instrumentation implementation for this exercise, we have pro
 
 # Run Manual Instrumentation Tool
 
+- Run:
 ```
 ./AutomateManualInstrumentation.sh
 ```
 
 # Rebuild and Deploy Application
 
+- Run:
 ```
 ./BuildAndDeploy.sh
 ```
@@ -218,13 +220,10 @@ Let's try to find our latency root cause again, this time with every function an
 ![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206541846-7f0e6462-7659-44bc-bc48-3621c2872fc4.png)
 
 
-Click on `shop` service
-
-Click Traces ( on the right side ) 
-
-Sort by Duration
-
-Select the longest duration trace ( or one of the obvious much longer ones ) 
+- Click on `shop` service
+- Click Traces ( on the right side ) 
+- Sort by Duration
+- Select the longest duration trace ( or one of the obvious much longer ones ) 
 
 ![213582624-66466a19-00fa-4dda-acd0-f6970d594ba1](https://user-images.githubusercontent.com/32849847/219955286-f55cfc0e-3936-45be-ac95-3c4b547f2007.png)
 	
