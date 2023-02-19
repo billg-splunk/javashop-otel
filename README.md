@@ -181,7 +181,8 @@ OK, enough fun ..let's make this easier for our developer... and show off some S
 
 Ok exit your editor:
 
-Exit nano: `[CTRL]-X` ( If it asks you to save, hit `N` )
+- Exit nano: `[CTRL]-X`
+  - **Optional**: If it asks you to save, hit `N`
 
 # Custom Attribution
 
