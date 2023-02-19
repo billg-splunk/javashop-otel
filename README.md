@@ -136,8 +136,7 @@ Using Nano:
 nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 ```
 
-Search in Nano
-`CTRL-W`
+Search in Nano: `[CTRL]-W`
 
 Enter in: `getAllProducts` **[Enter]**
 
@@ -158,16 +157,13 @@ Enter in: `getAllProducts` **[Enter]**
 
 We can see here in getAllProducts, the first call is to `myCoolFunction1()`, so as may have guessed our next step is to go look at `myCoolFunction1()`.
 
-Search in Nano
-CTRL-W 
+Search in Nano: `[CTRL]-W`
 
-Enter in: myCoolFunction1
+Enter in: `myCoolFunction1` **[Enter]**
 
-CTRL-W
+Enter in: `[CTRL]-W` **[Enter]**
 
-Enter in: ENTER  
-
-Keep doing that until you get to the actual function definition, it looks like this:
+Keep repeating `[CTRL]-W` **[Enter]** until you get to the actual function definition, it looks like this:
 
 ```
 private void myCoolFunction1(String location) {
@@ -181,24 +177,23 @@ private void myCoolFunction1(String location) {
       }
     }
 ```    
-Now, myCoolFunction1 calls lookupLocation1(location) 
+Now, `myCoolFunction1` calls `lookupLocation1(location)`
 
-Search in Nano
-CTRL-W 
+Search in Nano: `[CTRL]-W`
 
-Enter in: lookupLocation1
+Enter in: `lookupLocation1` **[Enter]**
 
-I think you get the picture by now, you have no choice but to inspect every line of code and every function called and visually inspect them for problems. This can be a VERY long process and kills our customers Mean time to Repair. This happens quite often to our customers with our competition beacsue they can't provide all the traces 100% of the time and most can't scale to add more data, via Custom Attributes on top of that !
+I think you get the picture by now, you have no choice but to inspect every line of code and every function called and visually inspect them for problems. This can be a VERY long process and kills our customers Mean Time to Repair. This happens quite often to our customers with our competition beacsue they can't provide all the traces 100% of the time and most can't scale to add more data, via Custom Attributes on top of that!
 
 Remember, without Full Fidelty, you have to either reproduce errors / latency in another environment or inspect code line by line.
 
 So they are stuck where we are, quite often.
 
-OK, enough fun ..let's make this easier for our developer... and show off some Splunk APM Scale !
+OK, enough fun ..let's make this easier for our developer... and show off some Splunk APM Scale!
 
 Ok exit your editor:
 
-edit nano CTRL-X ( DO NOT SAVE IF MODIFIED )
+Exit nano: `[CTRL]-X` ( If it asks you to save, hit **N** )
 
 # Custom Attribution
 
