@@ -262,7 +262,7 @@ Take a look at the function signature
 
 `private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt)`
 
-`@SpanAttribute("myint")` is an[OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/) that was added by our Java Otel Annotator tool.
+`@SpanAttribute("myint")` is an [OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/) that was added by our Java Otel Annotator tool.
 
 Let's fix our code.
 
@@ -304,27 +304,23 @@ which is basically placing comments (`//`) before the lines in `myCoolFunction23
 // + 3000);
 ```
 
-- Save the changes: `[CTRL]-o`
+- Save the changes: `[CTRL]-o` **[Enter]**
 - Exit: `[CTRL]-x`
 
-Make sure you saved your changes to: `products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java`
+**Important Note**: Until we rebuild and restart our application this change isn't implemented.
     
 # Let's go see if our manual instrumentation uncovered any other issues we did not see before
 
-So you may be asking yourself, "How does manual instrumentation alone show us "more problems" than before latency is latency is it ? 
+So you may be asking yourself: **"How does manual instrumentation alone show us "more problems" than before? Latency is latency, isn't it?"** 
 
-The answer is, with auto-instrumentation you are in most situations NOT covering functions our customers development teams wrote, which is of course the bulk of what developers do, they write functions.... and of course this is where the  bulk of  software probnlems occur. 
+The answer is with auto-instrumentation you are in most situations NOT covering functions our customers' development teams wrote, which is of course the bulk of what developers do. They write functions.... and of course this is where the  bulk of software problems occur. 
 
-You may have noticed a new exception in our trace that was not present with Auto-Instrumentation during our latency fix use-case. Since we skipped over this,  let's walk you through it.
+You may have noticed a new exception in our trace that was not present with Auto-Instrumentation during our latency fix use-case. Since we skipped over this, let's walk you through it.
 
-
-Return to the service map
-
-Click on shop service
-
-click Traces ( right side ) 
-
-Select "Errors Only" 
+- Return to the service map
+- Click on `shop` service
+- Click Traces ( on the right side ) 
+- Select "Errors Only" 
 	
 ![Screen Shot 2022-11-28 at 7 36 50 AM](https://user-images.githubusercontent.com/32849847/204348492-84a4ad45-e11c-4e75-a6a9-d6e52e0eb13e.png)
 
