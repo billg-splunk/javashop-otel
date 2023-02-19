@@ -7,6 +7,13 @@ Our technical staff has already on-boarded the data from these new locations and
 
 We now have a total of 6 locations !
 
+# EC2 Access
+
+Select an ec2 on the Spreadsheet provided
+
+```
+ssh ubuntu@your.ec2.ip.address
+```
 
 # Set Environment Variables
 
