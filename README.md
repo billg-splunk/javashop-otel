@@ -296,48 +296,18 @@ try{
 } catch (Exception e){
 ```
 
-which is basically placing comments before the lines in `myCoolFunction234234234` that are causing the slowness.
-
+which is basically placing comments before the lines in `myCoolFunction234234234` that are causing the slowness:
 ```
 // if (999==myInt)
-	
 //  Thread.sleep(
-	
 //  sleepy.nextInt(5000 - 3000)
-	
 //  + 3000);
 ```
 
-To do this quickly, you can simply copy paste the solution from this document into your code
+- Save the changes: `[CTRL]-o`
+- Exit: `[CTRL]-x`
 
-Copy the entirety of this code block:
-
-```
-// if (999==myInt)
-	
-//  Thread.sleep(
-	
-//  sleepy.nextInt(5000 - 3000)
-	
-//  + 3000);
-```
-Paste this into the code over the exact same lines
-
-if (999==myInt)
-	
-Thread.sleep(
-	
-sleepy.nextInt(5000 - 3000)
-	
-+ 3000);
-
-write out changes in nano
-
-CTRL-O
-
-CTRL-X to exit.
-
-Make sure you saved your changes to:  products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+Make sure you saved your changes to: `products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java`
     
 # Let's go see if our manual instrumentation uncovered any other issues we did not see before
 
