@@ -100,13 +100,10 @@ If your instrumentation was successful, the service-map will show latency from t
 
 Ok let's triage this SOFTWARE ISSUE and skip directly to the traces.
 
-Click on shop service
-
-click Traces ( right side ) 
-
-Sort by Duration
-
-Select the longest duration trace ( or one of the obvious much longer ones ) 
+- Click on `shop` service
+- Click Traces ( on the right side ) 
+- Sort by Duration
+- Select the longest duration trace ( or one of the obvious much longer ones ) 
 
 ![LongTrace](https://user-images.githubusercontent.com/32849847/204347798-4f232b7f-7a7a-483f-9d61-f0b535e9ecf0.png)
 
@@ -193,7 +190,7 @@ OK, enough fun ..let's make this easier for our developer... and show off some S
 
 Ok exit your editor:
 
-Exit nano: `[CTRL]-X` ( If it asks you to save, hit **N** )
+Exit nano: `[CTRL]-X` ( If it asks you to save, hit `N` )
 
 # Custom Attribution
 
@@ -206,13 +203,11 @@ To add even more information to help our developers find the root cause faster,
 
 Splunk Full Fidelity APM allows our customers development teams to debug their code as it ran in production, 100% of the time . Add with Custom Attribution, you are providing repeatable Mean Time to Repair reduction...  100% of the time, only with Full Fidelity tracing.
  
-To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. This "annotator" tool will also tag every parameter in every function, which adds a span tag with Parameter=Value. 
+To expedite manual instrumentation implementation for this exercise, we have provided a tool which will annotate the entirety of the "shop" and "products" services with OpenTelemetry standard annotations for every method call without having to write any code. This "annotator" tool will also tag every parameter in every function, which adds a span tag with `Parameter=Value`. 
 
 # Run Manual Instrumentation Tool
 
 ```
-cd /home/ubuntu/javashop-otel-TKO-23
-	
 ./AutomateManualInstrumentation.sh
 ```
 
@@ -231,9 +226,9 @@ Let's try to find our latency root cause again, this time with every function an
 ![Screen Shot 2022-12-08 at 11 48 58 AM](https://user-images.githubusercontent.com/32849847/206541846-7f0e6462-7659-44bc-bc48-3621c2872fc4.png)
 
 
-Click on shop service
+Click on `shop` service
 
-click Traces ( right side ) 
+Click Traces ( on the right side ) 
 
 Sort by Duration
 
