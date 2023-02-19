@@ -239,26 +239,20 @@ NOTE: We added additional span information, which we call "Custom Attributes" he
 
 In our exmaple  the "myInt" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
 
-Using nano:
-
+- Using nano:
 ```
 nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 ```
 
-Search in Nano
-CTRL-W 
+- Search in Nano: `[CTRL]-w`
+- Enter in: `999` **[Enter]**
 
-Enter in: 999
-
-We can see here,  someone wrote some very bad code in the form of a long Sleep !
+We can see here, someone wrote some very bad code in the form of a long Sleep!
 
 ```
 if (999==myInt)
-	
-Thread.sleep(
-	
-sleepy.nextInt(5000 - 3000) + 3000);
-	
+  Thread.sleep(
+  sleepy.nextInt(5000 - 3000) + 3000);
 )
 ```
 
@@ -266,13 +260,13 @@ sleepy.nextInt(5000 - 3000) + 3000);
 
 Take a look at the function signature
 
-private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) 
+`private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt)`
 
-@SpanAttribute("myint") is an[OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ), that was added by our Java Otel Annotator tool.
+`@SpanAttribute("myint")` is an[OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/) that was added by our Java Otel Annotator tool.
 
 Let's fix our code.
 
-Change this:
+- Change this:
 
 ```
 private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
@@ -280,41 +274,29 @@ private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
 // Generate a FAST sleep of 0 time !
 Random sleepy = new Random();
 try{
-	
 if (999==myInt)
-	
 Thread.sleep(
-	
 sleepy.nextInt(5000 - 3000)
-	
 + 3000);
-	
 } catch (Exception e){
 ```
 
-To this:
+to this:
 
 ```
 private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) {
 
 // Generate a FAST sleep of 0 time !
 Random sleepy = new Random();
-try{
-	
+try{	
 // if (999==myInt)
-	
-//  Thread.sleep(
-	
-//  sleepy.nextInt(5000 - 3000)
-	
-//  + 3000);
-	
+// Thread.sleep(
+// sleepy.nextInt(5000 - 3000)	
+// + 3000);
 } catch (Exception e){
-
 ```
-Using nano
 
-place comments before every line in myCoolFunction234234234
+which is basically placing comments before the lines in `myCoolFunction234234234` that are causing the slowness.
 
 ```
 // if (999==myInt)
