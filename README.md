@@ -82,7 +82,7 @@ Translated, Developers are High Cost resources, with high opportunity cost. Less
 
 Please note it may take 3-4 minutes for traces to show up and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times each time we Build and Deploy. 
  
-It is recommended to use a -5m look back during this lab. Start there, use -15m if you feel you have to.
+It is recommended to use a -15m look back during this lab. You may need to change it from time to time (for example to -5m or a custom -10m) to make sure you are only looking at the newer traces after your changes.
 
 <img width="731" alt="Screen Shot 2023-02-14 at 8 25 19 PM" src="https://user-images.githubusercontent.com/32849847/218923108-6c6a7efb-588e-4f7b-b788-768037eae4bb.png">
 
