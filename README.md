@@ -95,7 +95,7 @@ If your instrumentation was successful, the service-map will show latency from t
 Ok let's triage this SOFTWARE ISSUE and skip directly to the traces.
 
 - Click on `shop` service
-- Click Traces ( on the right side ) 
+- Click **Traces** ( on the right side ) 
 - Sort by Duration
 - Select the longest duration trace ( or one of the obvious much longer ones ) 
 
@@ -221,7 +221,7 @@ Let's try to find our latency root cause again, this time with every function an
 
 
 - Click on `shop` service
-- Click Traces ( on the right side ) 
+- Click **Traces** ( on the right side ) 
 - Sort by Duration
 - Select the longest duration trace ( or one of the obvious much longer ones ) 
 
@@ -319,8 +319,8 @@ You may have noticed a new exception in our trace that was not present with Auto
 
 - Return to the service map
 - Click on `shop` service
-- Click Traces ( on the right side ) 
-- Select "Errors Only" 
+- Click **Traces** ( on the right side ) 
+- Click **Errors Only**
 	
 ![Screen Shot 2022-11-28 at 7 36 50 AM](https://user-images.githubusercontent.com/32849847/204348492-84a4ad45-e11c-4e75-a6a9-d6e52e0eb13e.png)
 
@@ -400,8 +400,8 @@ If you do NOT see RED in your service map, you have completed the Latency Repair
 Now let's check for our exception in the traces.
 
 - Click on `shop` service
-- Click Traces ( on the right side ) 
-- Select "Errors Only" 
+- Click **Traces** ( on the right side ) 
+- Click **Errors Only** 
 
 If you do not have red in your service map and you do not see Errors in traces, you have successfully completed our Inventory application review for Sri Lanka and Colorado locations!!! Well done!
 
@@ -412,32 +412,34 @@ Last, but not least, let's ensure Chicago was on-boarded correctly. However, sin
 ![image](https://user-images.githubusercontent.com/32849847/213540265-5b0567ab-c9f3-412f-bec0-07277c7e8650.png)
 
 - Open a browser and navigate to `http://[EC2-Address]:8010`
-  - Replace [EC2-Address] with the ip address of your host
-
-Select a few locations and hit the login button. Make sure to also select the Chicago Location and hit the login button.
+  - Replace **[EC2-Address]** with the ip address of your host
+- Select a few locations and hit the **Login** button.
+  - Make sure to also select the **Chicago** Location and hit the **Login** button.
 
 ![image](https://user-images.githubusercontent.com/32849847/213541843-30266285-787f-493b-bc90-ffb4ac6e4c77.png)
 
-Uhh ohh ! We received a 500 error, something is wrong there as well. 
+Uh oh! We received a 500 error, something is wrong there as well. 
 
 ![Screen Shot 2022-11-28 at 8 11 47 AM](https://user-images.githubusercontent.com/32849847/204349595-fca270ad-379e-48c5-b2e1-7f222af82c55.png)
 
-Return to the Splunk Observability UI and lets look once again at our Service Map, select the Instruments Service and click the breakdowns on the right and select "location"
+- Return to the Splunk Observability UI and lets look once again at our Service Map
+- Select the `Instruments` Service
+- Click the `Breakdowns` dropdown on the right and select `location`
 
 ![image](https://user-images.githubusercontent.com/32849847/214941419-2eaae297-e246-460b-a913-28c2a28fcd6a.png)
 
 
-We see there was an un-handled exception thrown in Instruments service and some latency from our database that is related to the Chicago location !
+We see there was an un-handled exception thrown in the `Instruments` service, and some latency from our database that is related to the Chicago location!
 
-Click on Traces on the right
-
-Select "Errors Only" 
+- Click on Traces on the right
+- Click **Errors Only**
+- Click one of the traces
 	
 ![Screen Shot 2022-11-28 at 8 14 50 AM](https://user-images.githubusercontent.com/32849847/204349696-dc19d62f-ed82-4533-ad27-138237821b8e.png)
 
 
 We can see the exception was thrown by Hibernate, however it was thrown in our method 
-"instruments: InstrumentRepository.findInstruments"
+`instruments: InstrumentRepository.findInstruments`
 	
 ![Screen Shot 2022-11-28 at 8 14 37 AM](https://user-images.githubusercontent.com/32849847/204351905-03fe632b-b21c-4e8d-8044-dc582fed2253.png)
 
@@ -446,66 +448,58 @@ We can see the exception was thrown by Hibernate, however it was thrown in our m
 
 Edit the file "instruments: InstrumentRepository.findInstruments"
 
-Using nano
-
+- Using nano:
 ```
 nano instruments/src/main/java/com/shabushabu/javashop/instruments/repositories/FindInstrumentRepositoryImpl.java
 ```
-	
+
+- Find the method: `findInstruments`
+  - You know how to do this now, right?
+
 ![Screen Shot 2022-11-28 at 8 20 24 AM](https://user-images.githubusercontent.com/32849847/204349802-06135d9d-d70b-4cf1-aaea-3ba737e5c2b9.png)
 
-We can see the developer accidently added the Instruments database with the Chicago Instruments database !
+We can see the developer accidently added the Instruments database with the Chicago Instruments database!
 
-Let's change the query and fix this, remove "instruments_for_sale" from our Query
+Let's change the query and fix this, remove `instruments_for_sale` from our query.
 
-Change this:
+- Change this:
 
 ```
 public Object findInstruments() {
-   LOGGER.info("findInstruments Called (All)");
-    	
-   Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale, instruments_for_sale_chicago").getResultList(); 
-	 
-   return obj;
+  LOGGER.info("findInstruments Called (All)");
+  Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale, instruments_for_sale_chicago").getResultList(); 
+  return obj;
 }
 ```
 
-To This:
+to This:
 
 ```
-// public Object findInstruments() {
-//    	LOGGER.info("findInstruments Called (All)");
-   	
-//   Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale_chicago").getResultList(); 
-	 
-//  return obj;
-//}
+public Object findInstruments() {
+  LOGGER.info("findInstruments Called (All)");
+  Object obj = entityManager.createNativeQuery( "SELECT * FROM instruments_for_sale_chicago").getResultList(); 
+  return obj;
+}
 ```   
 
-Save Changes in nano
-
-CTRL-O
-
-Exit nano 
-
-CTRL-X
+- Save the changes: `[CTRL]-o` **[Enter]**
+- Exit: `[CTRL]-x`
 
 # Build and Deploy Application
-```
-cd cd /home/ubuntu/javashop-otel-TKO-23
 
+- Run
+```
 ./BuildAndDeploy.sh
 ```
 
 Now let's test the Chicago location once again 
 
-Open a browser and navigate to http://localhost:8010
+- Open a browser and navigate to `http://[EC2-Address]:8010`
+- Select the `Chicago` location and `Login`
 
-Select the Chicago Location and Login
+We now see the 500 error is gone!
 
-We now see the 500 error is gone !
-
-Let's confirm a clean Service Map 
+Let's confirm a clean Service Map:
 
 ![Screen Shot 2022-11-28 at 8 35 11 AM](https://user-images.githubusercontent.com/32849847/204350088-fca43e3c-42ea-4933-8a61-01eb2083fd23.png)
 
