@@ -296,12 +296,12 @@ try{
 } catch (Exception e){
 ```
 
-which is basically placing comments before the lines in `myCoolFunction234234234` that are causing the slowness:
+which is basically placing comments (`//`) before the lines in `myCoolFunction234234234` that are causing the slowness:
 ```
 // if (999==myInt)
-//  Thread.sleep(
-//  sleepy.nextInt(5000 - 3000)
-//  + 3000);
+// Thread.sleep(
+// sleepy.nextInt(5000 - 3000)
+// + 3000);
 ```
 
 - Save the changes: `[CTRL]-o`
