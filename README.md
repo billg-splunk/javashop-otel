@@ -249,7 +249,7 @@ Consider the case of debugging code which each of you have just experienced. Ima
 
 NOTE: We added additional span information, which we call "Custom Attributes" here at Splunk, in this case our "Custom Attributes" are "Parameter Values at Time of Latency". 
 
-In our exmaple  the "Location" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
+In our exmaple  the "myInt" tag was created due our handy Annotator, that did the [OpenTelemetry Annotations](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ) for us.
 
 Using nano:
 
@@ -280,7 +280,7 @@ Take a look at the function signature
 
 private void myCoolFunction234234234(@SpanAttribute("myInt") int myInt) 
 
-@SpanAttribute("myint") is an Opentelemetry Java Annotation, that was added by our Java Otel Annotator tool.
+@SpanAttribute("myint") is an[OpenTelemetry Annotation](https://opentelemetry.io/docs/instrumentation/java/automatic/annotations/ ), that was added by our Java Otel Annotator tool.
 
 Let's fix our code.
 
