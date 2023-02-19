@@ -137,9 +137,9 @@ nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductRe
 ```
 
 Search in Nano
-CTRL-W 
+`CTRL-W`
 
-Enter in: getAllProducts
+Enter in: `getAllProducts` [Enter]
 
 
 ```
