@@ -232,7 +232,6 @@ Select the longest duration trace ( or one of the obvious much longer ones )
 
 ![image](https://user-images.githubusercontent.com/32849847/213582624-66466a19-00fa-4dda-acd0-f6970d594ba1.png)
 
-# NEED SCREEN OF LOCATION TAG  "ProductResource.myCoolFunction234234234" was "myInt" with a value of 999.
 	
 We can see that the actual function call that has the latency was not ProductResource.getAllProducts but 
 the function call "ProductResource.myCoolFunction234234234" !
