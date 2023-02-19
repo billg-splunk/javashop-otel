@@ -230,8 +230,7 @@ Sort by Duration
 
 Select the longest duration trace ( or one of the obvious much longer ones ) 
 
-![image](https://user-images.githubusercontent.com/32849847/213582624-66466a19-00fa-4dda-acd0-f6970d594ba1.png)
-
+![213582624-66466a19-00fa-4dda-acd0-f6970d594ba1](https://user-images.githubusercontent.com/32849847/219955286-f55cfc0e-3936-45be-ac95-3c4b547f2007.png)
 	
 We can see that the actual function call that has the latency was not ProductResource.getAllProducts but 
 the function call "ProductResource.myCoolFunction234234234" !
