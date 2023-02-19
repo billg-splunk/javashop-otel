@@ -1,11 +1,13 @@
 
 # Scenario
 
-Here at Buttercup Instruments, our business is expanding !  We have recently added 3 new locations, two locations in the USA, Colorado and Chicago and one international location in SRI Lanka ! 
+Here at Buttercup Instruments, our business is expanding!
 
-Our technical staff has already on-boarded the data from these new locations and incorporated them into our inventory application and it is our job to review these improvements and send any issues back to our developers for repairs.
+We have recently added 3 new locations: two locations in the USA (Colorado and Chicago) and one international location in Sri Lanka. 
 
-We now have a total of 6 locations !
+Our technical staff has already on-boarded the data from these new locations and incorporated them into our inventory application, and it is our job to review these improvements and send any issues back to our developers for repairs.
+
+We now have a total of 6 locations.
 
 # EC2 Access
 
@@ -20,9 +22,9 @@ ssh ubuntu@your.ec2.ip.address
 Environment Variables:
 
 Using nano edit .env in javashop-otel directory
-
+**Important Note**: Do not put any spaces in your name
 ```
-cd javashop-otel-TKO-23
+cd ~/javashop-otel-TKO-23
 nano .env
 ```
 
@@ -48,15 +50,14 @@ CTRL-X
 Let's get started by building and deploying our Application, the Buttercup Instrument Shop. Run the commands below to begin and start reading ahead as your traces are coming up !
 
 ```
-cd javashop-otel-TKO-23
-
+cd ~/javashop-otel-TKO-23
 ./BuildAndDeploy.sh
 ```
 
 # Users and Workflows
 	
-As we go through this workshop we will be switching roles from SRE to Developer.  First we will start with alert responders or SREs who will identify an issue in Splunk Observability UI.  Next, we will jump to a Developer Role to see how a Developer will debug and repair/fix a software problem using trace data provided by our SRE.
-	
+As we go through this workshop we will be switching roles from SRE to Developer. First we will start with alert responders or SREs who will identify an issue in Splunk Observability UI. Next, we will jump to a Developer Role to see how a Developer will debug and repair/fix a software problem using trace data provided by our SRE.
+
 Of course, we are not requiring 2 people for this workshop as each participant will play both roles.
 
 # Today we will learn 
@@ -69,18 +70,18 @@ Translated, Developers are High Cost resources, with high opportunity cost. Less
 
 # Let's define a few terms for those new to APM / Software Development or Java
 
-1. What's a Function in Java ?
+1. **What is a Function in Java?**
 	A Function  in most languages includeing Java, is a logical chunk of code when executed solves a repeatable task. This is basically what our 		customers Dev teams spend thier time building and where software issues will most commonly be.
-3. What's a  Method in Java ?
+3. **What is a Method in Java?**
  	See What's a function -> Function and method are synonomous.
-5. What's an Exception in Java ?
+5. **What is an Exception in Java?**
 	An Exceptional error condition that indicates abonormal or unhandled condition, that interrupts program execution abnormally.
 
 # View Service Map
 
 Please note it may take 3-4 minutes for traces to show up and you will see full map "form" as traces are coming in, so you may have to refresh the page a few times each time we Build and Deploy. 
  
-It is recommended to use a -5m look back during this lab. Start there, use 15 if you feel you have to.
+It is recommended to use a -5m look back during this lab. Start there, use -15m if you feel you have to.
 
 <img width="731" alt="Screen Shot 2023-02-14 at 8 25 19 PM" src="https://user-images.githubusercontent.com/32849847/218923108-6c6a7efb-588e-4f7b-b788-768037eae4bb.png">
 
@@ -125,7 +126,7 @@ We will do the visual inspection mehtod next.
 
 Using Nano:
 ```
-nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+nano ~/javashop-otel-TKO-23/products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 ```
 
 Search in Nano
@@ -599,5 +600,3 @@ Let's confirm a clean Service Map
 
 
 # Have a lovely day.
-
-
