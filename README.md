@@ -27,15 +27,13 @@ cd ~/javashop-otel-TKO-23
 
 # Set Environment Variables
 
-Environment Variables:
 
-Using nano edit the `.env` file.
-
-**Important Note**: Do not put any spaces in your name
+- Using nano edit the `.env` file.
+  - **Important Note**: Do not put any spaces in your name
 ```
 nano .env
 ```
-
+- Set the following values:
 ```
 SHOP_USER=<your_name>
 
@@ -44,19 +42,15 @@ SPLUNK_ACCESS_TOKEN=<your_token>
 SPLUNK_REALM=<your_realm>
 ```
 
-save in nano
-
-CTRL-O ENTER
-
-exit nano
-
-CTRL-X 
+- Save in nano with `[CTRL]-o` **[ENTER]**
+- Exit nano with `[CTRL]-x` 
 
 	
 # Build and Deploy Application
 
 Let's get started by building and deploying our Application, the Buttercup Instrument Shop. Run the commands below to begin and start reading ahead as your traces are coming up !
 
+- Build the app
 ```
 ./BuildAndDeploy.sh
 ```
@@ -128,14 +122,13 @@ Without anything to go on other than "BAD FUNCTION", a Developer must then look 
 
 We will do the visual inspection mehtod next.
 
-Using Nano:
+- Using Nano:
 ```
 nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 ```
 
-Search in Nano: `[CTRL]-W`
-
-Enter in: `getAllProducts` **[Enter]**
+- Search in Nano: `[CTRL]-w`
+- Enter in: `getAllProducts` **[Enter]**
 
 ```
   @GET
@@ -154,13 +147,10 @@ Enter in: `getAllProducts` **[Enter]**
 
 We can see here in getAllProducts, the first call is to `myCoolFunction1()`, so as may have guessed our next step is to go look at `myCoolFunction1()`.
 
-Search in Nano: `[CTRL]-W`
-
-Enter in: `myCoolFunction1` **[Enter]**
-
-Enter in: `[CTRL]-W` **[Enter]**
-
-Keep repeating `[CTRL]-W` **[Enter]** until you get to the actual function definition, it looks like this:
+- Search in Nano: `[CTRL]-w`
+- Enter in: `myCoolFunction1` **[Enter]**
+- Enter in: `[CTRL]-w` **[Enter]**
+- Keep repeating `[CTRL]-w` **[Enter]** until you get to the actual function definition, it looks like this:
 
 ```
 private void myCoolFunction1(String location) {
@@ -176,9 +166,8 @@ private void myCoolFunction1(String location) {
 ```    
 Now, `myCoolFunction1` calls `lookupLocation1(location)`
 
-Search in Nano: `[CTRL]-W`
-
-Enter in: `lookupLocation1` **[Enter]**
+- Search in Nano: `[CTRL]-w`
+- Enter in: `lookupLocation1` **[Enter]**
 
 I think you get the picture by now, you have no choice but to inspect every line of code and every function called and visually inspect them for problems. This can be a VERY long process and kills our customers Mean Time to Repair. This happens quite often to our customers with our competition beacsue they can't provide all the traces 100% of the time and most can't scale to add more data, via Custom Attributes on top of that!
 
