@@ -17,7 +17,9 @@ Select an ec2 on the Spreadsheet provided
 ssh ubuntu@your.ec2.ip.address
 ```
 
-For the rest of the lab we are going to be assuming you are starting from the root directory:
+For the rest of the lab we are going to be assuming you are starting from the project's root directory.
+
+Let's go there now:
 
 ```
 cd ~/javashop-otel-TKO-23
@@ -131,7 +133,7 @@ We will do the visual inspection mehtod next.
 
 Using Nano:
 ```
-nano ~/javashop-otel-TKO-23/products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
+nano products/src/main/java/com/shabushabu/javashop/products/resources/ProductResource.java
 ```
 
 Search in Nano
@@ -155,7 +157,7 @@ Enter in: getAllProducts
  ```
 
 
-We can see here in getAllProducts, the first call is to myCoolFunction1(), so as may have guessed our next step is to go look at myCoolFunction1()
+We can see here in getAllProducts, the first call is to `myCoolFunction1()`, so as may have guessed our next step is to go look at `myCoolFunction1()`.
 
 Search in Nano
 CTRL-W 
