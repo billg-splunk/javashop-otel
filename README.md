@@ -17,14 +17,20 @@ Select an ec2 on the Spreadsheet provided
 ssh ubuntu@your.ec2.ip.address
 ```
 
+For the rest of the lab we are going to be assuming you are starting from the root directory:
+
+```
+cd ~/javashop-otel-TKO-23
+```
+
 # Set Environment Variables
 
 Environment Variables:
 
-Using nano edit .env in javashop-otel directory
+Using nano edit the `.env` file.
+
 **Important Note**: Do not put any spaces in your name
 ```
-cd ~/javashop-otel-TKO-23
 nano .env
 ```
 
@@ -50,7 +56,6 @@ CTRL-X
 Let's get started by building and deploying our Application, the Buttercup Instrument Shop. Run the commands below to begin and start reading ahead as your traces are coming up !
 
 ```
-cd ~/javashop-otel-TKO-23
 ./BuildAndDeploy.sh
 ```
 
