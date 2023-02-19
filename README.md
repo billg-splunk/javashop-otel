@@ -411,9 +411,10 @@ Last, but not least, let's ensure Chicago was on-boarded correctly. However, sin
 
 ![image](https://user-images.githubusercontent.com/32849847/213540265-5b0567ab-c9f3-412f-bec0-07277c7e8650.png)
 
-Open a browser and navigate to http://localhost:8010
+- Open a browser and navigate to `http://[EC2-Address]:8010`
+  - Replace [EC2-Address] with the ip address of your host
 
-Select a few locations and hit the login button, remember to select the Chicago Location and Login
+Select a few locations and hit the login button. Make sure to also select the Chicago Location and hit the login button.
 
 ![image](https://user-images.githubusercontent.com/32849847/213541843-30266285-787f-493b-bc90-ffb4ac6e4c77.png)
 
