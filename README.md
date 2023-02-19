@@ -149,7 +149,7 @@ We can see here in getAllProducts, the first call is to `myCoolFunction1()`, so 
 
 - Search in Nano: `[CTRL]-w`
 - Enter in: `myCoolFunction1` **[Enter]**
-- Enter in: `[CTRL]-w` **[Enter]**
+- To find the next occurrence of `myCoolFunction1`: `[CTRL]-w` **[Enter]**
 - Keep repeating `[CTRL]-w` **[Enter]** until you get to the actual function definition, it looks like this:
 
 ```
